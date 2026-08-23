@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Експрес-тест НМТ: Прямокутник, ромб, квадрат | TETA School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+        }
+
+        /* Header Layout */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        /* Start Screen */
+        .start-screen {
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .start-screen h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--primary);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Progress Bar & Timer */
+        .progress-container {
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 5px;
+        }
+
+        /* Question Box */
+        .question-box {
+            display: none;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 15px 0;
+            background-color: #fafafa;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+
+        .diagram-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 1.05rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            transform: none;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .opt-label {
+            background: #0E9F6E;
+            color: #FFF;
+        }
+
+        .option-btn.wrong .opt-label {
+            background: var(--accent-red);
+            color: #FFF;
+        }
+
+        /* Feedback Box */
+        .feedback-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct {
+            background-color: #E6F4EA;
+            border: 1px solid #34A853;
+            color: #137333;
+        }
+
+        .feedback-box.wrong {
+            background-color: #FCE8E6;
+            border: 1px solid #EA4335;
+            color: #C5221F;
+        }
+
+        /* Action Buttons */
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .btn-primary:disabled {
+            background-color: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .actions-center {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .score-badge {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            box-shadow: 0 8px 20px rgba(0, 83, 134, 0.25);
+        }
+
+        .score-badge .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-badge .score-total {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .results-message {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .results-desc {
+            font-size: 1.05rem;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Math Typography Support */
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 4px;
+        }
+        .fraction .numerator {
+            border-bottom: 1px solid var(--dark-text);
+            padding: 0 4px;
+            font-size: 0.95em;
+            line-height: 1.2;
+        }
+        .fraction .denominator {
+            padding: 0 4px;
+            font-size: 0.95em;
+            line-height: 1.2;
+        }
+        .sqrt {
+            white-space: nowrap;
+        }
+        .sqrt-content {
+            border-top: 1px solid var(--dark-text);
+            padding-top: 1px;
+            margin-left: -2px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 25px 18px; }
+            .question-text { font-size: 1.1rem; }
+            .option-btn { padding: 12px 15px; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header with TETA School SVG Logo -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+                  <defs><style>.cls-1 { fill: #7d1111; }</style></defs>
+                  <g id="_Шар_1-2" data-name="Шар 1">
+                    <g>
+                      <g>
+                        <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+                        <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+                        <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+                        <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+                      </g>
+                      <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.37-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+                    </g>
+                  </g>
+                </svg>
+            </div>
+            <div class="test-title">Експрес-тест НМТ: Прямокутник, ромб, квадрат</div>
+            <div class="test-subtitle">Тема 5. Прямокутник, ромб, квадрат та їх властивості</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Експрес-тест НМТ: Прямокутник, ромб, квадрат</h1>
+            <p style="color: #666; font-size: 1.05rem;">Тема 5. Прямокутник, ромб, квадрат та їх властивості</p>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість запитань:</strong> 10</li>
+                    <li><strong>Час проходження:</strong> 10 хвилин</li>
+                    <li><strong>Рівень складності:</strong> легкий</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Progress Area -->
+        <div id="progress-container" class="progress-container">
+            <div class="progress-header">
+                <span id="question-number">Питання 1 з 10</span>
+                <div class="timer-badge">
+                    <span>⏱️</span>
+                    <span id="timer-display">10:00</span>
+                </div>
+                <span id="score-live">Бали: 0</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Question Area -->
+        <div id="question-box" class="question-box">
+            <div id="question-text" class="question-text"></div>
+
+            <div id="options-list" class="options-list"></div>
+            <div id="feedback-box" class="feedback-box"></div>
+            
+            <div class="actions-center">
+                <button id="next-btn" class="btn-primary" disabled>Наступне запитання</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <div id="results-message" class="results-message">Чудова робота!</div>
+            
+            <div class="score-badge">
+                <span id="final-score" class="score-num">0/10</span>
+                <span class="score-total">правильних</span>
+            </div>
+
+            <p id="results-desc" class="results-desc">Ви успішно пройшли експрес-тестування. Готові до нових математичних викликів!</p>
+
+            <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти ще раз</button>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        const rawQuizData = [
+            // ВАРІАНТ 1
+            [
+                {
+                    question: `1. Яке з наведених тверджень про прямокутник є правильним?`,
+                    options: [
+                        {label: "А", text: `Діагоналі перпендикулярні`, isCorrect: false, rationale: `Неправильно. Ця властивість характерна для ромба та квадрата, а не для будь-якого прямокутника.`},
+                        {label: "Б", text: `Діагоналі рівні`, isCorrect: true, rationale: `Правильно. У будь-якому прямокутнику діагоналі мають однакову довжину.`},
+                        {label: "В", text: `Діагоналі є бісектрисами кутів`, isCorrect: false, rationale: `Неправильно. Це властивість ромба та квадрата.`},
+                        {label: "Г", text: `Всі сторони рівні`, isCorrect: false, rationale: `Неправильно. Це ознака квадрата або ромба. У прямокутника рівні лише протилежні сторони.`},
+                        {label: "Д", text: `Сума сусідніх кутів 90&deg;`, isCorrect: false, rationale: `Неправильно. Оскільки всі кути прямокутника прямі (по 90&deg;), сума сусідніх кутів дорівнює 180&deg;.`}
+                    ]
+                },
+                {
+                    question: `2. Периметр квадрата дорівнює 24 см. Знайдіть його сторону.`,
+                    options: [
+                        {label: "А", text: `4 см`, isCorrect: false, rationale: `Неправильно. Сторона квадрата — це периметр, поділений на 4, тобто 24 : 4 = 6, а не 4.`},
+                        {label: "Б", text: `6 см`, isCorrect: true, rationale: `Правильно. У квадрата 4 рівні сторони. Периметр P = 4a. Отже, a = 24 : 4 = 6 см.`},
+                        {label: "В", text: `8 см`, isCorrect: false, rationale: `Неправильно. 8 * 4 = 32, що не дорівнює 24.`},
+                        {label: "Г", text: `12 см`, isCorrect: false, rationale: `Неправильно. Це половина периметра (сума двох сторін), а не одна сторона.`},
+                        {label: "Д", text: `16 см`, isCorrect: false, rationale: `Неправильно. 16 * 4 = 64, що не відповідає умові.`}
+                    ]
+                },
+                {
+                    question: `3. На рисунку зображено ромб ABCD, у якого гострий кут A = 60&deg;, а менша діагональ BD = 12 см. Знайдіть периметр цього ромба.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; } .angle-arc { fill: none; stroke: #000000; stroke-width: 2; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><path d="M 128.6 180 A 40 40 0 0 1 128.6 220" class="angle-arc" /><polygon points="94,200 250,110 406,200 250,290" class="main-line" /><line x1="250" y1="110" x2="250" y2="290" class="aux-line" /><circle cx="94" cy="200" r="4.5" class="point" /><circle cx="250" cy="110" r="4.5" class="point" /><circle cx="406" cy="200" r="4.5" class="point" /><circle cx="250" cy="290" r="4.5" class="point" /><text x="70" y="208" class="vertex-label">A</text><text x="242" y="90" class="vertex-label">B</text><text x="420" y="208" class="vertex-label">C</text><text x="242" y="322" class="vertex-label">D</text><text x="138" y="206" class="text-label">60°</text><text x="260" y="206" class="text-label">12 см</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `24 см`, isCorrect: false, rationale: `Неправильно. Це сума лише двох сторін ромба.`},
+                        {label: "Б", text: `36 см`, isCorrect: false, rationale: `Неправильно. Це сума трьох сторін ромба.`},
+                        {label: "В", text: `48 см`, isCorrect: true, rationale: `Правильно. У ромбі всі сторони рівні. Оскільки кут A = 60&deg;, трикутник ABD є рівностороннім (рівнобедрений з кутом 60&deg;). Отже, сторона ромба дорівнює діагоналі BD = 12 см. Периметр: P = 4 * 12 = 48 см.`},
+                        {label: "Г", text: `60 см`, isCorrect: false, rationale: `Неправильно. Такий периметр був би у ромба зі стороною 15 см.`},
+                        {label: "Д", text: `72 см`, isCorrect: false, rationale: `Неправильно. Такий результат вийде, якщо помилково помножити діагональ на 6.`}
+                    ]
+                },
+                {
+                    question: `4. Діагоналі прямокутника АВСD перетинаються під кутом 60&deg;. Знайдіть довжину діагоналі BD, якщо сторона CD = 8 см.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; } .angle-arc { fill: none; stroke: #000000; stroke-width: 2; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><path d="M 280.3 182.5 A 35 35 0 0 1 280.3 217.5" class="angle-arc" /><polygon points="120,275 120,125 380,125 380,275" class="main-line" /><line x1="120" y1="275" x2="380" y2="125" class="aux-line" /><line x1="120" y1="125" x2="380" y2="275" class="aux-line" /><circle cx="120" cy="275" r="4.5" class="point" /><circle cx="120" cy="125" r="4.5" class="point" /><circle cx="380" cy="125" r="4.5" class="point" /><circle cx="380" cy="275" r="4.5" class="point" /><circle cx="250" cy="200" r="4.5" class="point" /><text x="95" y="300" class="vertex-label">A</text><text x="95" y="115" class="vertex-label">B</text><text x="385" y="115" class="vertex-label">C</text><text x="385" y="300" class="vertex-label">D</text><text x="240" y="180" class="vertex-label">O</text><text x="295" y="206" class="text-label">60°</text><text x="395" y="206" class="text-label">8 см</text><text x="175" y="185" class="text-label">?</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `4 см`, isCorrect: false, rationale: `Неправильно. Це половина сторони CD, а нам потрібно знайти діагональ, яка є значно більшою.`},
+                        {label: "Б", text: `8 см`, isCorrect: false, rationale: `Неправильно. Це лише половина діагоналі (відрізок OD).`},
+                        {label: "В", text: `12 см`, isCorrect: false, rationale: `Неправильно. Діагональ повинна дорівнювати 2 * CD = 16 см.`},
+                        {label: "Г", text: `16 см`, isCorrect: true, rationale: `Правильно. Діагоналі прямокутника точкою перетину діляться навпіл (OC=OD). Отже, трикутник COD рівнобедрений. Оскільки кут між діагоналями 60&deg;, цей трикутник є рівностороннім. Тому OD = CD = 8 см. Уся діагональ BD = 2 * OD = 16 см.`},
+                        {label: "Д", text: `32 см`, isCorrect: false, rationale: `Неправильно. Цей результат є занадто великим (відповідає помноженню сторони на 4).`}
+                    ]
+                },
+                {
+                    question: `5. Довжина діагоналі квадрата дорівнює 6&radic;2 см. Обчисліть периметр цього квадрата.`,
+                    options: [
+                        {label: "А", text: `12 см`, isCorrect: false, rationale: `Неправильно. Це сума двох сторін квадрата, а не периметр.`},
+                        {label: "Б", text: `18 см`, isCorrect: false, rationale: `Неправильно. Це значення не відповідає формулі периметра P = 4a.`},
+                        {label: "В", text: `24 см`, isCorrect: true, rationale: `Правильно. Діагональ квадрата d = a<span class="sqrt">&radic;<span class="sqrt-content">2</span></span>, де a — сторона. Отже, a<span class="sqrt">&radic;<span class="sqrt-content">2</span></span> = 6<span class="sqrt">&radic;<span class="sqrt-content">2</span></span>, звідси a = 6 см. Периметр P = 4a = 4 * 6 = 24 см.`},
+                        {label: "Г", text: `36 см`, isCorrect: false, rationale: `Неправильно. Це площа квадрата (6 * 6), а не його периметр.`},
+                        {label: "Д", text: `72 см`, isCorrect: false, rationale: `Неправильно. Ця відповідь вийшла б, якби ви помножили площу на 2.`}
+                    ]
+                },
+                {
+                    question: `6. Знайдіть сторону ромба, якщо його периметр дорівнює 40 см.`,
+                    options: [
+                        {label: "А", text: `5 см`, isCorrect: false, rationale: `Неправильно. 5 * 4 = 20, що не дорівнює 40.`},
+                        {label: "Б", text: `10 см`, isCorrect: true, rationale: `Правильно. У ромба всі чотири сторони рівні. Периметр P = 4a. Отже, сторона a = 40 : 4 = 10 см.`},
+                        {label: "В", text: `15 см`, isCorrect: false, rationale: `Неправильно. 15 * 4 = 60, що не дорівнює 40.`},
+                        {label: "Г", text: `20 см`, isCorrect: false, rationale: `Неправильно. Це половина периметра (сума двох сторін).`},
+                        {label: "Д", text: `40 см`, isCorrect: false, rationale: `Неправильно. Це значення всього периметра, а не однієї сторони.`}
+                    ]
+                },
+                {
+                    question: `7. Периметр прямокутника дорівнює 30 см, а одна з його сторін — 7 см. Знайдіть довжину сусідньої сторони.`,
+                    options: [
+                        {label: "А", text: `8 см`, isCorrect: true, rationale: `Правильно. Периметр P = 2(a + b). 2(7 + b) = 30. Звідси 7 + b = 15, тобто b = 15 - 7 = 8 см.`},
+                        {label: "Б", text: `11 см`, isCorrect: false, rationale: `Неправильно. Якщо b = 11, то P = 2(7 + 11) = 36.`},
+                        {label: "В", text: `15 см`, isCorrect: false, rationale: `Неправильно. Це півпериметр (сума двох сусідніх сторін), а не одна сторона.`},
+                        {label: "Г", text: `16 см`, isCorrect: false, rationale: `Неправильно. 16 — це сума двох невідомих сторін (2 * 8), а не довжина однієї.`},
+                        {label: "Д", text: `23 см`, isCorrect: false, rationale: `Неправильно. Якщо відняти одну сторону від периметра, отримаємо 23, але забули про інші сторони прямокутника.`}
+                    ]
+                },
+                {
+                    question: `8. На рисунку зображено прямокутник ABCD, у якого AB = 6 см, BC = 8 см. Точка O — точка перетину його діагоналей. Знайдіть довжину відрізка AO.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .diag-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><polygon points="130,290 130,110 370,110 370,290" class="main-line" /><line x1="130" y1="290" x2="370" y2="110" class="diag-line" /><line x1="130" y1="110" x2="370" y2="290" class="diag-line" /><circle cx="130" cy="290" r="4.5" class="point" /><circle cx="130" cy="110" r="4.5" class="point" /><circle cx="370" cy="110" r="4.5" class="point" /><circle cx="370" cy="290" r="4.5" class="point" /><circle cx="250" cy="200" r="4.5" class="point" /><text x="105" y="315" class="vertex-label">A</text><text x="105" y="100" class="vertex-label">B</text><text x="375" y="100" class="vertex-label">C</text><text x="375" y="315" class="vertex-label">D</text><text x="240" y="175" class="vertex-label">O</text><text x="75" y="205" class="text-label">6 см</text><text x="225" y="90" class="text-label">8 см</text><text x="175" y="235" class="text-label">?</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `3 см`, isCorrect: false, rationale: `Неправильно. Це половина сторони AB, а не діагоналі.`},
+                        {label: "Б", text: `4 см`, isCorrect: false, rationale: `Неправильно. Це половина сторони BC, а не діагоналі.`},
+                        {label: "В", text: `5 см`, isCorrect: true, rationale: `Правильно. За теоремою Піфагора для трикутника ABC діагональ AC = <span class="sqrt">&radic;<span class="sqrt-content">6&sup2; + 8&sup2;</span></span> = <span class="sqrt">&radic;<span class="sqrt-content">36 + 64</span></span> = <span class="sqrt">&radic;<span class="sqrt-content">100</span></span> = 10 см. Точка перетину діагоналей ділить їх навпіл, тому AO = 10 : 2 = 5 см.`},
+                        {label: "Г", text: `10 см`, isCorrect: false, rationale: `Неправильно. 10 см — це довжина всієї діагоналі AC, а нам потрібен відрізок AO (половина діагоналі).`},
+                        {label: "Д", text: `14 см`, isCorrect: false, rationale: `Неправильно. Це сума сторін 6 + 8, а не гіпотенуза.`}
+                    ]
+                },
+                {
+                    question: `9. На рисунку діагональ ромба утворює зі стороною кут 25&deg;. Знайдіть тупий кут ромба.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .diag-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; } .angle-arc { fill: none; stroke: #000000; stroke-width: 2; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><path d="M 140 200 A 50 50 0 0 0 135.3 178.9" class="angle-arc" /><path d="M 222.8 137.7 A 30 30 0 0 0 277.2 137.7" class="angle-arc" /><polygon points="90,200 250,125 410,200 250,275" class="main-line" /><line x1="90" y1="200" x2="410" y2="200" class="diag-line" /><circle cx="90" cy="200" r="4.5" class="point" /><circle cx="250" cy="125" r="4.5" class="point" /><circle cx="410" cy="200" r="4.5" class="point" /><circle cx="250" cy="275" r="4.5" class="point" /><text x="65" y="208" class="vertex-label">A</text><text x="242" y="105" class="vertex-label">B</text><text x="425" y="208" class="vertex-label">C</text><text x="242" y="305" class="vertex-label">D</text><text x="148" y="194" class="text-label">25°</text><text x="250" y="165" text-anchor="middle" class="text-label">?</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `50&deg;`, isCorrect: false, rationale: `Неправильно. Це гострий кут ромба, а за умовою потрібно знайти тупий.`},
+                        {label: "Б", text: `100&deg;`, isCorrect: false, rationale: `Неправильно. Такий кут міг би вийти при неправильному застосуванні властивостей кутів чотирикутника.`},
+                        {label: "В", text: `130&deg;`, isCorrect: true, rationale: `Правильно. Діагоналі ромба є бісектрисами його кутів. Тому весь гострий кут ромба становить 25&deg; * 2 = 50&deg;. Сума сусідніх кутів ромба дорівнює 180&deg;. Отже, тупий кут дорівнює 180&deg; - 50&deg; = 130&deg;.`},
+                        {label: "Г", text: `140&deg;`, isCorrect: false, rationale: `Неправильно. Якщо тупий кут 140&deg;, то гострий має бути 40&deg; (тоді кут між діагоналлю і стороною був би 20&deg;).`},
+                        {label: "Д", text: `155&deg;`, isCorrect: false, rationale: `Неправильно. Це значення 180&deg; - 25&deg;, що є помилковим кроком обчислення.`}
+                    ]
+                },
+                {
+                    question: `10. У прямокутнику діагональ утворює зі стороною кут 30&deg;. Менша сторона дорівнює 5 см. Знайдіть довжину діагоналі.`,
+                    options: [
+                        {label: "А", text: `2,5 см`, isCorrect: false, rationale: `Неправильно. Діагональ — це гіпотенуза прямокутного трикутника, вона не може бути меншою за катет (5 см).`},
+                        {label: "Б", text: `5 см`, isCorrect: false, rationale: `Неправильно. Діагональ прямокутника завжди більша за будь-яку з його сторін.`},
+                        {label: "В", text: `5&radic;3 см`, isCorrect: false, rationale: `Неправильно. Це довжина більшої сторони прямокутника, а не діагоналі.`},
+                        {label: "Г", text: `10 см`, isCorrect: true, rationale: `Правильно. Діагональ і дві сторони прямокутника утворюють прямокутний трикутник. Менша сторона (катет) лежить напроти кута 30&deg;. За властивістю такого катета, він дорівнює половині гіпотенузи (діагоналі). Отже, діагональ дорівнює 5 * 2 = 10 см.`},
+                        {label: "Д", text: `10&radic;3 см`, isCorrect: false, rationale: `Неправильно. Таке значення виникло б при неправильному застосуванні тригонометричних функцій.`}
+                    ]
+                }
+            ],
+            // ВАРІАНТ 2
+            [
+                {
+                    question: `1. Яке з наведених тверджень щодо ромба є ХИБНИМ?`,
+                    options: [
+                        {label: "А", text: `Всі сторони рівні`, isCorrect: false, rationale: `Неправильно вибрана відповідь. Це твердження є правильним для будь-якого ромба за означенням.`},
+                        {label: "Б", text: `Діагоналі перетинаються під прямим кутом`, isCorrect: false, rationale: `Неправильно вибрана відповідь. Це правильна властивість ромба.`},
+                        {label: "В", text: `Діагоналі рівні`, isCorrect: true, rationale: `Правильно. Це хибне твердження. Діагоналі рівні у прямокутника та квадрата, але у довільного ромба одна діагональ довша за іншу.`},
+                        {label: "Г", text: `Діагоналі є бісектрисами кутів`, isCorrect: false, rationale: `Неправильно вибрана відповідь. Це правильна властивість ромба.`},
+                        {label: "Д", text: `Сума сусідніх кутів дорівнює 180&deg;`, isCorrect: false, rationale: `Неправильно вибрана відповідь. Це твердження є правильним, оскільки ромб є паралелограмом.`}
+                    ]
+                },
+                {
+                    question: `2. Сторона квадрата дорівнює 9 см. Знайдіть довжину його діагоналі.`,
+                    options: [
+                        {label: "А", text: `4,5 см`, isCorrect: false, rationale: `Неправильно. Це половина сторони квадрата, а діагональ є найдовшим відрізком у ньому.`},
+                        {label: "Б", text: `9&radic;2 см`, isCorrect: true, rationale: `Правильно. Довжина діагоналі квадрата обчислюється за формулою d = a<span class="sqrt">&radic;<span class="sqrt-content">2</span></span>, де a — сторона. Отже, d = 9<span class="sqrt">&radic;<span class="sqrt-content">2</span></span> см.`},
+                        {label: "В", text: `9&radic;3 см`, isCorrect: false, rationale: `Неправильно. Формула з &radic;3 використовується для діагоналі куба, а не квадрата.`},
+                        {label: "Г", text: `18 см`, isCorrect: false, rationale: `Неправильно. Це сума двох сторін, а діагональ обчислюється за теоремою Піфагора.`},
+                        {label: "Д", text: `81 см`, isCorrect: false, rationale: `Неправильно. 81 см&sup2; — це площа квадрата, а не довжина діагоналі.`}
+                    ]
+                },
+                {
+                    question: `3. Прямокутник ABKM складається з квадрата ABCD та прямокутника DCKM. Периметр квадрата ABCD дорівнює 40 см. Визначте довжину сторони МК.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .tick-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><polygon points="150,50 350,50 350,350 150,350" class="main-line" /><line x1="150" y1="250" x2="350" y2="250" class="main-line" /><line x1="250" y1="42" x2="250" y2="58" class="tick-line" /><line x1="342" y1="150" x2="358" y2="150" class="tick-line" /><line x1="250" y1="242" x2="250" y2="258" class="tick-line" /><line x1="142" y1="150" x2="158" y2="150" class="tick-line" /><circle cx="150" cy="50" r="4.5" class="point" /><circle cx="350" cy="50" r="4.5" class="point" /><circle cx="350" cy="250" r="4.5" class="point" /><circle cx="150" cy="250" r="4.5" class="point" /><circle cx="350" cy="350" r="4.5" class="point" /><circle cx="150" cy="350" r="4.5" class="point" /><text x="120" y="58" class="vertex-label">A</text><text x="365" y="58" class="vertex-label">B</text><text x="365" y="260" class="vertex-label">C</text><text x="120" y="260" class="vertex-label">D</text><text x="365" y="360" class="vertex-label">K</text><text x="120" y="360" class="vertex-label">M</text><text x="250" y="155" text-anchor="middle" class="text-label">P = 40 см</text><text x="250" y="380" text-anchor="middle" class="text-label">?</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `5 см`, isCorrect: false, rationale: `Неправильно. Сторона квадрата 10 см, тому протилежна їй сторона прямокутника також дорівнює 10 см, а не 5.`},
+                        {label: "Б", text: `10 см`, isCorrect: true, rationale: `Правильно. Периметр квадрата ABCD дорівнює 40 см, отже, його сторона a = 40 : 4 = 10 см. Сторона квадрата CD є водночас стороною прямокутника DCKM. Протилежна сторона прямокутника MK дорівнює стороні CD. Отже, MK = 10 см.`},
+                        {label: "В", text: `20 см`, isCorrect: false, rationale: `Неправильно. Це половина периметра квадрата.`},
+                        {label: "Г", text: `40 см`, isCorrect: false, rationale: `Неправильно. 40 см — це весь периметр квадрата, а не одна його сторона.`},
+                        {label: "Д", text: `100 см`, isCorrect: false, rationale: `Неправильно. Це площа квадрата (10 * 10), а не довжина сторони.`}
+                    ]
+                },
+                {
+                    question: `4. Периметр ромба дорівнює 64 см. Знайдіть його сторону.`,
+                    options: [
+                        {label: "А", text: `8 см`, isCorrect: false, rationale: `Неправильно. Це значення вийде, якщо поділити 64 на 8. У ромба 4 сторони.`},
+                        {label: "Б", text: `12 см`, isCorrect: false, rationale: `Неправильно. 12 * 4 = 48, а не 64.`},
+                        {label: "В", text: `16 см`, isCorrect: true, rationale: `Правильно. У ромба 4 рівні сторони. Сторона a = P : 4 = 64 : 4 = 16 см.`},
+                        {label: "Г", text: `32 см`, isCorrect: false, rationale: `Неправильно. Це половина периметра (сума двох сторін).`},
+                        {label: "Д", text: `128 см`, isCorrect: false, rationale: `Неправильно. Сторона має бути меншою за периметр, а не більшою.`}
+                    ]
+                },
+                {
+                    question: `5. Кут між діагоналями прямокутника дорівнює 80&deg;. Знайдіть менший кут, який утворює діагональ зі стороною прямокутника.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .diag-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; } .angle-arc { fill: none; stroke: #000000; stroke-width: 2; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><polygon points="100,325 100,75 400,75 400,325" class="main-line" /><line x1="100" y1="325" x2="400" y2="75" class="diag-line" /><line x1="100" y1="75" x2="400" y2="325" class="diag-line" /><path d="M 280.7 225.6 A 40 40 0 0 0 280.7 174.4" class="angle-arc" /><path d="M 145 325 A 45 45 0 0 0 134.6 296.2" class="angle-arc" /><circle cx="100" cy="325" r="4.5" class="point" /><circle cx="100" cy="75" r="4.5" class="point" /><circle cx="400" cy="75" r="4.5" class="point" /><circle cx="400" cy="325" r="4.5" class="point" /><circle cx="250" cy="200" r="4.5" class="point" /><text x="75" y="345" class="vertex-label">A</text><text x="75" y="65" class="vertex-label">B</text><text x="410" y="65" class="vertex-label">C</text><text x="410" y="345" class="vertex-label">D</text><text x="240" y="180" class="vertex-label">O</text><text x="290" y="206" class="text-label">80°</text><text x="155" y="318" class="text-label">?</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `10&deg;`, isCorrect: false, rationale: `Неправильно. Такий кут можливий, якби кут між діагоналями був 160&deg;.`},
+                        {label: "Б", text: `40&deg;`, isCorrect: true, rationale: `Правильно. Діагоналі прямокутника рівні і діляться навпіл, тому утворюють рівнобедрені трикутники. Розглянемо два такі трикутники: один з кутом при вершині 80&deg;, інший — 100&deg;. Кути при основах будуть <span class="fraction"><span class="numerator">180&deg; - 80&deg;</span><span class="denominator">2</span></span> = 50&deg; та <span class="fraction"><span class="numerator">180&deg; - 100&deg;</span><span class="denominator">2</span></span> = 40&deg;. Менший з них дорівнює 40&deg;.`},
+                        {label: "В", text: `50&deg;`, isCorrect: false, rationale: `Неправильно. 50&deg; — це більший з кутів, який утворює діагональ зі стороною.`},
+                        {label: "Г", text: `80&deg;`, isCorrect: false, rationale: `Неправильно. Це сам кут між діагоналями, а не кут зі стороною.`},
+                        {label: "Д", text: `100&deg;`, isCorrect: false, rationale: `Неправильно. Це суміжний кут до 80&deg; при перетині діагоналей.`}
+                    ]
+                },
+                {
+                    question: `6. Точка перетину діагоналей квадрата віддалена від його сторони на 3 см. Знайдіть периметр цього квадрата.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .diag-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; } .right-angle { fill: none; stroke: #000000; stroke-width: 2; stroke-linejoin: round; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><polyline points="250,310 265,310 265,325" class="right-angle" /><polygon points="125,325 125,75 375,75 375,325" class="main-line" /><line x1="125" y1="325" x2="375" y2="75" class="diag-line" /><line x1="125" y1="75" x2="375" y2="325" class="diag-line" /><line x1="250" y1="200" x2="250" y2="325" class="diag-line" /><circle cx="125" cy="325" r="4.5" class="point" /><circle cx="125" cy="75" r="4.5" class="point" /><circle cx="375" cy="75" r="4.5" class="point" /><circle cx="375" cy="325" r="4.5" class="point" /><circle cx="250" cy="200" r="4.5" class="point" /><circle cx="250" cy="325" r="4.5" class="point" /><text x="100" y="345" class="vertex-label">A</text><text x="100" y="65" class="vertex-label">B</text><text x="380" y="65" class="vertex-label">C</text><text x="380" y="345" class="vertex-label">D</text><text x="240" y="185" class="vertex-label">O</text><text x="242" y="355" class="vertex-label">K</text><text x="265" y="270" class="text-label">3 см</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `12 см`, isCorrect: false, rationale: `Неправильно. Це периметр квадрата зі стороною 3 см, але 3 см — це лише половина сторони.`},
+                        {label: "Б", text: `18 см`, isCorrect: false, rationale: `Неправильно. Це периметр фігури, якщо помилково вважати її сторону за 4,5 см.`},
+                        {label: "В", text: `24 см`, isCorrect: true, rationale: `Правильно. Відстань від точки перетину діагоналей до сторони квадрата дорівнює половині довжини сторони. Отже, половина сторони — 3 см, тоді вся сторона a = 2 * 3 = 6 см. Периметр P = 4 * 6 = 24 см.`},
+                        {label: "Г", text: `36 см`, isCorrect: false, rationale: `Неправильно. Це площа квадрата (6 * 6), а не периметр.`},
+                        {label: "Д", text: `48 см`, isCorrect: false, rationale: `Неправильно. Цей результат вийде, якщо сторону помилково прийняти за 12 см.`}
+                    ]
+                },
+                {
+                    question: `7. У квадраті ABCD проведено діагональ AC. Яку градусну міру має кут BCA?`,
+                    options: [
+                        {label: "А", text: `30&deg;`, isCorrect: false, rationale: `Неправильно. Діагональ квадрата ділить прямий кут рівно навпіл.`},
+                        {label: "Б", text: `45&deg;`, isCorrect: true, rationale: `Правильно. Всі кути квадрата прямі (90&deg;). Діагональ квадрата є бісектрисою його кута, тому вона ділить кут 90&deg; навпіл. Отже, кут BCA дорівнює 90&deg; : 2 = 45&deg;.`},
+                        {label: "В", text: `60&deg;`, isCorrect: false, rationale: `Неправильно. Діагональ ділить прямий кут навпіл, тому отримуємо 45&deg;, а не 60&deg;.`},
+                        {label: "Г", text: `90&deg;`, isCorrect: false, rationale: `Неправильно. Це градусна міра всього кута C квадрата, а нам потрібна лише його половина.`},
+                        {label: "Д", text: `120&deg;`, isCorrect: false, rationale: `Неправильно. Кут у квадраті не може бути тупим.`}
+                    ]
+                },
+                {
+                    question: `8. Чотирикутник, у якого всі сторони рівні і є хоча б один прямий кут, гарантовано є:`,
+                    options: [
+                        {label: "А", text: `Трапецією`, isCorrect: false, rationale: `Неправильно. У трапеції паралельні лише дві сторони, і всі сторони рідко бувають рівними.`},
+                        {label: "Б", text: `Ромбом (але не квадратом)`, isCorrect: false, rationale: `Неправильно. Ромб, що має прямий кут, автоматично стає квадратом.`},
+                        {label: "В", text: `Прямокутником (але не квадратом)`, isCorrect: false, rationale: `Неправильно. У довільного прямокутника сусідні сторони не обов'язково рівні.`},
+                        {label: "Г", text: `Квадратом`, isCorrect: true, rationale: `Правильно. Чотирикутник з усіма рівними сторонами є ромбом. Якщо ромб має хоча б один прямий кут, всі його кути стають прямими (оскільки сума сусідніх кутів 180&deg;). Отже, це квадрат.`},
+                        {label: "Д", text: `Паралелограмом`, isCorrect: false, rationale: `Неправильно. Хоча квадрат є паралелограмом, ця відповідь не дає найточнішого визначення (гарантовано є квадратом).`}
+                    ]
+                },
+                {
+                    question: `9. Кут між діагоналями прямокутника дорівнює 60&deg;, а сама діагональ — 12 см. Знайдіть меншу сторону прямокутника.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .diag-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; } .angle-arc { fill: none; stroke: #000000; stroke-width: 2; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><path d="M 215.4 220 A 40 40 0 0 1 215.4 180" class="angle-arc" /><polygon points="120,275 120,125 380,125 380,275" class="main-line" /><line x1="120" y1="275" x2="380" y2="125" class="diag-line" /><line x1="120" y1="125" x2="380" y2="275" class="diag-line" /><circle cx="120" cy="275" r="4.5" class="point" /><circle cx="120" cy="125" r="4.5" class="point" /><circle cx="380" cy="125" r="4.5" class="point" /><circle cx="380" cy="275" r="4.5" class="point" /><circle cx="250" cy="200" r="4.5" class="point" /><text x="95" y="300" class="vertex-label">A</text><text x="95" y="115" class="vertex-label">B</text><text x="385" y="115" class="vertex-label">C</text><text x="385" y="300" class="vertex-label">D</text><text x="240" y="175" class="vertex-label">O</text><text x="165" y="206" class="text-label">60°</text><text x="90" y="206" class="text-label">?</text><text x="280" y="235" transform="rotate(30, 280, 235)" class="text-label">12 см</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `6 см`, isCorrect: true, rationale: `Правильно. Діагоналі прямокутника точкою перетину діляться навпіл, тому утворюється рівнобедрений трикутник з бічними сторонами по 12 : 2 = 6 см. Оскільки кут між ними 60&deg;, цей трикутник є рівностороннім. Отже, основа (менша сторона прямокутника) дорівнює 6 см.`},
+                        {label: "Б", text: `6&radic;2 см`, isCorrect: false, rationale: `Неправильно. Таке значення було б, якби трикутник був прямокутним (кут 90&deg;).`},
+                        {label: "В", text: `6&radic;3 см`, isCorrect: false, rationale: `Неправильно. Це довжина більшої сторони прямокутника, яку можна знайти через косинус 30&deg;.`},
+                        {label: "Г", text: `12 см`, isCorrect: false, rationale: `Неправильно. 12 см — це довжина всієї діагоналі, а сторона є меншою за неї.`},
+                        {label: "Д", text: `24 см`, isCorrect: false, rationale: `Неправильно. Це значення подвоєної діагоналі.`}
+                    ]
+                },
+                {
+                    question: `10. Менша діагональ ромба дорівнює його стороні. Знайдіть більший кут цього ромба.`,
+                    options: [
+                        {label: "А", text: `60&deg;`, isCorrect: false, rationale: `Неправильно. Це менший (гострий) кут ромба, а питається про більший.`},
+                        {label: "Б", text: `90&deg;`, isCorrect: false, rationale: `Неправильно. Якби кут був 90&deg;, фігура була б квадратом, і діагональ дорівнювала б стороні, помноженій на &radic;2.`},
+                        {label: "В", text: `120&deg;`, isCorrect: true, rationale: `Правильно. Якщо менша діагональ дорівнює стороні ромба, вона розбиває його на два рівносторонні трикутники (всі сторони рівні). У рівносторонньому трикутнику всі кути по 60&deg;. Отже, гострий кут ромба 60&deg;, а тупий кут дорівнює 180&deg; - 60&deg; = 120&deg;.`},
+                        {label: "Г", text: `135&deg;`, isCorrect: false, rationale: `Неправильно. Такий кут можливий для ромба з кутами 45&deg; і 135&deg;, де діагональ не дорівнює стороні.`},
+                        {label: "Д", text: `150&deg;`, isCorrect: false, rationale: `Неправильно. 150&deg; — це тупий кут ромба, в якого гострий кут становить 30&deg;.`}
+                    ]
+                }
+            ],
+            // ВАРІАНТ 3
+            [
+                {
+                    question: `1. Сума довжин трьох сторін квадрата дорівнює 15 см. Знайдіть периметр цього квадрата.`,
+                    options: [
+                        {label: "А", text: `10 см`, isCorrect: false, rationale: `Неправильно. Це сума лише двох сторін.`},
+                        {label: "Б", text: `20 см`, isCorrect: true, rationale: `Правильно. У квадрата всі сторони рівні. Три сторони дорівнюють 15 см, отже, одна сторона a = 15 : 3 = 5 см. Периметр P = 4 * 5 = 20 см.`},
+                        {label: "В", text: `25 см`, isCorrect: false, rationale: `Неправильно. Це площа квадрата (5 * 5), а не його периметр.`},
+                        {label: "Г", text: `30 см`, isCorrect: false, rationale: `Неправильно. Це результат помноження 15 на 2 (периметр не може бути у 2 рази більший за 3 сторони).`},
+                        {label: "Д", text: `60 см`, isCorrect: false, rationale: `Неправильно. Це помилковий результат множення 15 на 4.`}
+                    ]
+                },
+                {
+                    question: `2. За малюнком бісектриса кута прямокутника ділить його більшу сторону на відрізки 3 см і 4 см. Знайдіть периметр цього прямокутника.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .bisector-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; } .angle-arc { fill: none; stroke: #000000; stroke-width: 2; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><path d="M 115 300 A 40 40 0 0 0 103.3 271.7" class="angle-arc" /><path d="M 103.3 271.7 A 40 40 0 0 0 75 260" class="angle-arc" /><polygon points="75,300 75,150 425,150 425,300" class="main-line" /><line x1="75" y1="300" x2="225" y2="150" class="bisector-line" /><circle cx="75" cy="300" r="4.5" class="point" /><circle cx="75" cy="150" r="4.5" class="point" /><circle cx="425" cy="150" r="4.5" class="point" /><circle cx="425" cy="300" r="4.5" class="point" /><circle cx="225" cy="150" r="4.5" class="point" /><text x="50" y="325" class="vertex-label">A</text><text x="50" y="140" class="vertex-label">B</text><text x="435" y="140" class="vertex-label">C</text><text x="435" y="325" class="vertex-label">D</text><text x="215" y="135" class="vertex-label">M</text><text x="150" y="140" text-anchor="middle" class="text-label">3 см</text><text x="325" y="140" text-anchor="middle" class="text-label">4 см</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `14 см`, isCorrect: false, rationale: `Неправильно. 14 — це периметр квадрата зі стороною 3.5, або подвоєна більша сторона.`},
+                        {label: "Б", text: `20 см`, isCorrect: true, rationale: `Правильно. Бісектриса відтинає від прямокутника рівнобедрений прямокутний трикутник ABM (оскільки кут MAB=45&deg;). Отже, менша сторона AB = BM = 3 см. Більша сторона BC = 3 + 4 = 7 см. Периметр P = 2(3 + 7) = 20 см.`},
+                        {label: "В", text: `22 см`, isCorrect: false, rationale: `Неправильно. Такий периметр був би, якби менша сторона дорівнювала 4 см (тобто 2 * (4 + 7)). Але за малюнком менша сторона відповідає відрізку 3 см.`},
+                        {label: "Г", text: `28 см`, isCorrect: false, rationale: `Неправильно. Це периметр квадрата зі стороною 7 см.`},
+                        {label: "Д", text: `10 см`, isCorrect: false, rationale: `Неправильно. Це сума двох сусідніх сторін (півпериметр), а не периметр.`}
+                    ]
+                },
+                {
+                    question: `3. Діагоналі ромба дорівнюють 12 см і 16 см. Знайдіть сторону ромба.`,
+                    options: [
+                        {label: "А", text: `10 см`, isCorrect: true, rationale: `Правильно. Діагоналі ромба перетинаються під прямим кутом і точкою перетину діляться навпіл. Вони розбивають ромб на чотири прямокутні трикутники з катетами 12 : 2 = 6 см та 16 : 2 = 8 см. Гіпотенуза (сторона ромба) = <span class="sqrt">&radic;<span class="sqrt-content">6&sup2; + 8&sup2;</span></span> = <span class="sqrt">&radic;<span class="sqrt-content">100</span></span> = 10 см.`},
+                        {label: "Б", text: `14 см`, isCorrect: false, rationale: `Неправильно. Це напівсума діагоналей (12+16):2, а не гіпотенуза за теоремою Піфагора.`},
+                        {label: "В", text: `20 см`, isCorrect: false, rationale: `Неправильно. Це значення вийшло б, якби катети були 12 і 16 (тобто без поділу навпіл).`},
+                        {label: "Г", text: `28 см`, isCorrect: false, rationale: `Неправильно. Це сума діагоналей, а не довжина сторони.`},
+                        {label: "Д", text: `100 см`, isCorrect: false, rationale: `Неправильно. Це квадрат сторони (квадрат гіпотенузи 6&sup2; + 8&sup2;), а не сама сторона. Потрібно було добути корінь.`}
+                    ]
+                },
+                {
+                    question: `4. Якщо діагоналі ромба рівні між собою, то ця фігура є:`,
+                    options: [
+                        {label: "А", text: `Прямокутником (але не квадратом)`, isCorrect: false, rationale: `Неправильно. Ромб із рівними діагоналями автоматично має всі прямі кути і рівні сторони, тобто є квадратом.`},
+                        {label: "Б", text: `Довільним паралелограмом`, isCorrect: false, rationale: `Неправильно. У довільному паралелограмі діагоналі не рівні, а сторони не всі рівні.`},
+                        {label: "В", text: `Квадратом`, isCorrect: true, rationale: `Правильно. Фігура, що є ромбом, має всі рівні сторони. Якщо при цьому діагоналі рівні, кути стають прямими (це властивість прямокутника). Отже, фігура, що поєднує властивості ромба і прямокутника — це квадрат.`},
+                        {label: "Г", text: `Трапецією`, isCorrect: false, rationale: `Неправильно. Трапеція не є ромбом.`},
+                        {label: "Д", text: `Неможливо визначити`, isCorrect: false, rationale: `Неправильно. Властивості однозначно вказують на квадрат.`}
+                    ]
+                },
+                {
+                    question: `5. Прямокутник має сторони 5 см і 12 см. Обчисліть довжину його діагоналі.`,
+                    options: [
+                        {label: "А", text: `10 см`, isCorrect: false, rationale: `Неправильно. Це значення менше за більшу сторону, що неможливо для діагоналі.`},
+                        {label: "Б", text: `13 см`, isCorrect: true, rationale: `Правильно. Сторони прямокутника і його діагональ утворюють прямокутний трикутник. За теоремою Піфагора діагональ d = <span class="sqrt">&radic;<span class="sqrt-content">5&sup2; + 12&sup2;</span></span> = <span class="sqrt">&radic;<span class="sqrt-content">25 + 144</span></span> = <span class="sqrt">&radic;<span class="sqrt-content">169</span></span> = 13 см.`},
+                        {label: "В", text: `15 см`, isCorrect: false, rationale: `Неправильно. 15 см не задовольняє теорему Піфагора для катетів 5 і 12.`},
+                        {label: "Г", text: `17 см`, isCorrect: false, rationale: `Неправильно. Це сума двох сторін прямокутника.`},
+                        {label: "Д", text: `26 см`, isCorrect: false, rationale: `Неправильно. Це значення подвоєної діагоналі.`}
+                    ]
+                },
+                {
+                    question: `6. Периметр ромба на 30 см більший за його сторону. Знайдіть сторону ромба.`,
+                    options: [
+                        {label: "А", text: `5 см`, isCorrect: false, rationale: `Неправильно. Якщо a = 5, то P = 20, і різниця 20 - 5 = 15, а не 30.`},
+                        {label: "Б", text: `7,5 см`, isCorrect: false, rationale: `Неправильно. Це значення вийде, якщо поділити 30 на 4, забувши про саму змінну сторони у рівнянні.`},
+                        {label: "В", text: `10 см`, isCorrect: true, rationale: `Правильно. Нехай сторона ромба дорівнює a. Тоді периметр P = 4a. За умовою 4a = a + 30. Звідси 3a = 30, отже, a = 10 см.`},
+                        {label: "Г", text: `15 см`, isCorrect: false, rationale: `Неправильно. Якщо a = 15, то P = 60, і різниця 60 - 15 = 45, а не 30.`},
+                        {label: "Д", text: `30 см`, isCorrect: false, rationale: `Неправильно. Це сама різниця, а не значення сторони.`}
+                    ]
+                },
+                {
+                    question: `7. У паралелограмі діагоналі є бісектрисами його кутів, а один із кутів дорівнює 90&deg;. Якою фігурою гарантовано є цей паралелограм?`,
+                    options: [
+                        {label: "А", text: `Довільним ромбом`, isCorrect: false, rationale: `Неправильно. Якщо один з кутів дорівнює 90&deg;, то довільний ромб стає квадратом.`},
+                        {label: "Б", text: `Прямокутником`, isCorrect: false, rationale: `Неправильно. У довільному прямокутнику діагоналі НЕ є бісектрисами кутів.`},
+                        {label: "В", text: `Квадратом`, isCorrect: true, rationale: `Правильно. Якщо діагоналі є бісектрисами кутів, то цей паралелограм — ромб (усі сторони рівні). Якщо ромб має прямий кут (90&deg;), то всі його кути прямі, і він є квадратом.`},
+                        {label: "Г", text: `Трапецією`, isCorrect: false, rationale: `Неправильно. Трапеція не є паралелограмом.`},
+                        {label: "Д", text: `Довільним паралелограмом`, isCorrect: false, rationale: `Неправильно. Властивості чітко обмежують фігуру до конкретного типу — квадрата.`}
+                    ]
+                },
+                {
+                    question: `8. За даними рисунка знайдіть сторону квадрата, якщо його діагональ дорівнює 10&radic;2 см.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .diag-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; } .right-angle { fill: none; stroke: #000000; stroke-width: 2; stroke-linejoin: round; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><polyline points="360,325 360,310 375,310" class="right-angle" /><polygon points="125,325 125,75 375,75 375,325" class="main-line" /><line x1="125" y1="325" x2="375" y2="75" class="diag-line" /><circle cx="125" cy="325" r="4.5" class="point" /><circle cx="125" cy="75" r="4.5" class="point" /><circle cx="375" cy="75" r="4.5" class="point" /><circle cx="375" cy="325" r="4.5" class="point" /><text x="100" y="345" class="vertex-label">A</text><text x="100" y="65" class="vertex-label">B</text><text x="385" y="65" class="vertex-label">C</text><text x="385" y="345" class="vertex-label">D</text><text x="250" y="355" text-anchor="middle" class="text-label">?</text><text x="250" y="190" text-anchor="middle" transform="rotate(-45, 250, 200)" class="text-label">10√2 см</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `5 см`, isCorrect: false, rationale: `Неправильно. Це половина правильної відповіді.`},
+                        {label: "Б", text: `10 см`, isCorrect: true, rationale: `Правильно. Діагональ квадрата пов'язана зі стороною формулою d = a<span class="sqrt">&radic;<span class="sqrt-content">2</span></span>. Звідси a<span class="sqrt">&radic;<span class="sqrt-content">2</span></span> = 10<span class="sqrt">&radic;<span class="sqrt-content">2</span></span>. Отже, a = 10 см.`},
+                        {label: "В", text: `20 см`, isCorrect: false, rationale: `Неправильно. Таке значення вийшло б, якби діагональ була 20&radic;2.`},
+                        {label: "Г", text: `50 см`, isCorrect: false, rationale: `Неправильно. Ця відповідь вийшла б внаслідок неправильних перетворень.`},
+                        {label: "Д", text: `100 см`, isCorrect: false, rationale: `Неправильно. Це площа квадрата (10 * 10), а не його сторона.`}
+                    ]
+                },
+                {
+                    question: `9. Висота ромба, проведена з вершини тупого кута, ділить його сторону навпіл. Знайдіть периметр ромба, якщо його менша діагональ дорівнює 8 см.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%"><defs><style>.main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; } .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; } .tick-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; } .right-angle { fill: none; stroke: #000000; stroke-width: 2; stroke-linejoin: round; } .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; } .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; } .point { fill: #000000; }</style></defs><rect width="100%" height="100%" fill="#ffffff" /><polyline points="200,285 215,285 215,300" class="right-angle" /><polygon points="100,300 200,127 400,127 300,300" class="main-line" /><line x1="200" y1="127" x2="300" y2="300" class="aux-line" /><line x1="200" y1="127" x2="200" y2="300" class="aux-line" /><line x1="150" y1="292" x2="150" y2="308" class="tick-line" /><line x1="250" y1="292" x2="250" y2="308" class="tick-line" /><circle cx="100" cy="300" r="4.5" class="point" /><circle cx="200" cy="127" r="4.5" class="point" /><circle cx="400" cy="127" r="4.5" class="point" /><circle cx="300" cy="300" r="4.5" class="point" /><circle cx="200" cy="300" r="4.5" class="point" /><text x="75" y="308" class="vertex-label">A</text><text x="195" y="112" class="vertex-label">B</text><text x="415" y="135" class="vertex-label">C</text><text x="315" y="315" class="vertex-label">D</text><text x="185" y="328" class="vertex-label">H</text><text x="260" y="215" class="text-label">8 см</text></svg></div>`,
+                    options: [
+                        {label: "А", text: `16 см`, isCorrect: false, rationale: `Неправильно. Це сума двох сторін ромба, а не периметр.`},
+                        {label: "Б", text: `24 см`, isCorrect: false, rationale: `Неправильно. Це периметр рівностороннього трикутника ABD.`},
+                        {label: "В", text: `32 см`, isCorrect: true, rationale: `Правильно. Висота BH є водночас медіаною для трикутника ABD, отже трикутник ABD — рівнобедрений (AB = BD). Оскільки AB = AD (сторони ромба), трикутник ABD є рівностороннім. Таким чином, всі сторони ромба дорівнюють меншій діагоналі BD = 8 см. Периметр P = 4 * 8 = 32 см.`},
+                        {label: "Г", text: `48 см`, isCorrect: false, rationale: `Неправильно. Такий периметр був у ромба зі стороною 12 см.`},
+                        {label: "Д", text: `64 см`, isCorrect: false, rationale: `Неправильно. Це результат помноження діагоналі на 8, що є помилковим.`}
+                    ]
+                },
+                {
+                    question: `10. Квадрат діагоналі прямокутника завжди дорівнює:`,
+                    options: [
+                        {label: "А", text: `Добутку двох сусідніх сторін`, isCorrect: false, rationale: `Неправильно. Добуток сусідніх сторін — це площа прямокутника.`},
+                        {label: "Б", text: `Сумі квадратів двох сусідніх сторін`, isCorrect: true, rationale: `Правильно. Це прямий наслідок теореми Піфагора. У прямокутнику діагональ є гіпотенузою прямокутного трикутника, катети якого — це сусідні сторони прямокутника. Тому d&sup2; = a&sup2; + b&sup2;.`},
+                        {label: "В", text: `Подвоєному добутку сторін`, isCorrect: false, rationale: `Неправильно. Це не має математичного змісту в контексті діагоналі.`},
+                        {label: "Г", text: `Сумі довжин усіх сторін`, isCorrect: false, rationale: `Неправильно. Сума довжин сторін — це периметр.`},
+                        {label: "Д", text: `Квадрату його периметра`, isCorrect: false, rationale: `Неправильно. Квадрат периметра дорівнює 4(a+b)&sup2;, що значно більше за d&sup2;.`}
+                    ]
+                }
+            ]
+        ];
+
+        let poolCounter = 0;
+        let currentPoolQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOptionIndex = null;
+        
+        let timerInterval = null;
+        let totalSeconds = 600; // 10 minutes
+
+        const startScreen = document.getElementById('start-screen');
+        const questionBox = document.getElementById('question-box');
+        const resultsScreen = document.getElementById('results-screen');
+        const progressContainer = document.getElementById('progress-container');
+        
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        const questionText = document.getElementById('question-text');
+        const optionsList = document.getElementById('options-list');
+        const feedbackBox = document.getElementById('feedback-box');
+        
+        const questionNumber = document.getElementById('question-number');
+        const scoreLive = document.getElementById('score-live');
+        const progressFill = document.getElementById('progress-fill');
+        const timerDisplay = document.getElementById('timer-display');
+        const finalScore = document.getElementById('final-score');
+        const resultsMessage = document.getElementById('results-message');
+        const resultsDesc = document.getElementById('results-desc');
+
+        function startTimer() {
+            totalSeconds = 600;
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                updateTimerDisplay();
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function initQuiz() {
+            const activePoolIndex = poolCounter % rawQuizData.length;
+            currentPoolQuestions = rawQuizData[activePoolIndex];
+            poolCounter++;
+
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            startScreen.style.display = 'none';
+            resultsScreen.style.display = 'none';
+            questionBox.style.display = 'block';
+            progressContainer.style.display = 'block';
+
+            scoreLive.textContent = `Бали: ${score}`;
+            startTimer();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = currentPoolQuestions[currentQuestionIndex];
+            selectedOptionIndex = null;
+            
+            questionNumber.textContent = `Питання ${currentQuestionIndex + 1} з 10`;
+            progressFill.style.width = `${((currentQuestionIndex) / 10) * 100}%`;
+            
+            questionText.innerHTML = currentQ.question;
+
+            optionsList.innerHTML = '';
+            feedbackBox.style.display = 'none';
+            nextBtn.disabled = true;
+            nextBtn.textContent = (currentQuestionIndex === 9) ? "Завершити тест" : "Наступне запитання";
+
+            currentQ.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="opt-label">${opt.label}</span><span>${opt.text}</span>`;
+                btn.addEventListener('click', () => selectOption(idx));
+                optionsList.appendChild(btn);
+            });
+        }
+
+        function selectOption(index) {
+            if (selectedOptionIndex !== null) return;
+            
+            selectedOptionIndex = index;
+            const currentQ = currentPoolQuestions[currentQuestionIndex];
+            const optionBtns = optionsList.querySelectorAll('.option-btn');
+            const chosenOption = currentQ.options[index];
+            const correctIndex = currentQ.options.findIndex(o => o.isCorrect);
+
+            optionBtns.forEach(btn => btn.disabled = true);
+
+            if (chosenOption.isCorrect) {
+                score++;
+                scoreLive.textContent = `Бали: ${score}`;
+                optionBtns[index].classList.add('correct');
+                feedbackBox.className = 'feedback-box correct';
+                feedbackBox.innerHTML = `<strong>✓</strong> <span>${chosenOption.rationale}</span>`;
+            } else {
+                optionBtns[index].classList.add('wrong');
+                if (correctIndex !== -1) {
+                    optionBtns[correctIndex].classList.add('correct');
+                }
+                feedbackBox.className = 'feedback-box wrong';
+                feedbackBox.innerHTML = `<strong>✗</strong> <span>${chosenOption.rationale}</span>`;
+            }
+
+            feedbackBox.style.display = 'block';
+            nextBtn.disabled = false;
+        }
+
+        function handleNext() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < 10) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            questionBox.style.display = 'none';
+            progressContainer.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            finalScore.textContent = `${score}/10`;
+
+            if (score >= 9) {
+                resultsMessage.textContent = "Чудовий результат!";
+                resultsDesc.textContent = "Ви успішно пройшли експрес-тестування. Готові до нових математичних викликів!";
+            } else if (score >= 7) {
+                resultsMessage.textContent = "Добре впоралися!";
+                resultsDesc.textContent = "Ви непогано впоралися з тестуванням, але є над чим попрацювати!";
+            } else if (score >= 5) {
+                resultsMessage.textContent = "Непогано, але варто повторити теорію!";
+                resultsDesc.textContent = "Варто ще раз переглянути матеріали теми та закріпити навички.";
+            } else {
+                resultsMessage.textContent = "Потрібно ще попрацювати над темою!";
+                resultsDesc.textContent = "Рекомендуємо повторити теоретичний матеріал і спробувати пройти тест знову.";
+            }
+        }
+
+        if (startBtn) startBtn.addEventListener('click', initQuiz);
+        if (nextBtn) nextBtn.addEventListener('click', handleNext);
+        if (restartBtn) restartBtn.addEventListener('click', initQuiz);
+    </script>
+</body>
+</html>

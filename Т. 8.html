@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Експрес-тест НМТ: Теорема Фалеса, Бісектриси та Медіани | TETA School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+        }
+
+        /* Header Layout */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        /* Start Screen */
+        .start-screen {
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .start-screen h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--primary);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Progress Bar & Timer */
+        .progress-container {
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 5px;
+        }
+
+        /* Question Box */
+        .question-box {
+            display: none;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 15px 0;
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px dashed #a0aec0;
+        }
+
+        .diagram-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Hint section */
+        .hint-container {
+            margin-bottom: 15px;
+        }
+
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: underline;
+        }
+
+        .hint-btn:hover {
+            color: var(--accent-red);
+        }
+
+        .hint-box {
+            background-color: #FFFBEB;
+            border: 1px solid #FCD34D;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 0.92rem;
+            color: #92400E;
+            margin-top: 8px;
+            display: none;
+            line-height: 1.4;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 1.05rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            transform: none;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .opt-label {
+            background: #0E9F6E;
+            color: #FFF;
+        }
+
+        .option-btn.wrong .opt-label {
+            background: var(--accent-red);
+            color: #FFF;
+        }
+
+        /* Feedback Box */
+        .feedback-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct {
+            background-color: #E6F4EA;
+            border: 1px solid #34A853;
+            color: #137333;
+        }
+
+        .feedback-box.wrong {
+            background-color: #FCE8E6;
+            border: 1px solid #EA4335;
+            color: #C5221F;
+        }
+
+        /* Action Buttons */
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .btn-primary:disabled {
+            background-color: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .actions-center {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .score-badge {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            box-shadow: 0 8px 20px rgba(0, 83, 134, 0.25);
+        }
+
+        .score-badge .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-badge .score-total {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .results-message {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .results-desc {
+            font-size: 1.05rem;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Math Typography Support */
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 4px;
+        }
+        .fraction .numerator {
+            border-bottom: 1px solid var(--dark-text);
+            padding: 0 4px;
+            font-size: 0.95em;
+            line-height: 1.2;
+        }
+        .fraction .denominator {
+            padding: 0 4px;
+            font-size: 0.95em;
+            line-height: 1.2;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 25px 18px; }
+            .question-text { font-size: 1.1rem; }
+            .option-btn { padding: 12px 15px; font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header with TETA School SVG Logo -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+                  <defs><style>.cls-1 { fill: #7d1111; }</style></defs>
+                  <g id="_Шар_1-2" data-name="Шар 1">
+                    <g>
+                      <g>
+                        <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+                        <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+                        <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+                        <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+                      </g>
+                      <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.37-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+                    </g>
+                  </g>
+                </svg>
+            </div>
+            <div class="test-title">Експрес-тест НМТ: Теорема Фалеса, Бісектриси та Медіани</div>
+            <div class="test-subtitle">Тема. Застосування теорем та властивостей в геометричних фігурах</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Експрес-тест НМТ: Теорема Фалеса, Бісектриси та Медіани</h1>
+            <p style="color: #666; font-size: 1.05rem;">Тема. Застосування теорем та властивостей в геометричних фігурах</p>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість запитань:</strong> 10</li>
+                    <li><strong>Час проходження:</strong> 10 хвилин</li>
+                    <li><strong>Рівень складності:</strong> легкий/середній</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Progress Area -->
+        <div id="progress-container" class="progress-container">
+            <div class="progress-header">
+                <span id="question-number">Питання 1 з 10</span>
+                <div class="timer-badge">
+                    <span>⏱️</span>
+                    <span id="timer-display">10:00</span>
+                </div>
+                <span id="score-live">Бали: 0</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Question Area -->
+        <div id="question-box" class="question-box">
+            <div id="question-text" class="question-text"></div>
+
+            <div class="hint-container">
+                <button type="button" class="hint-btn" id="hint-toggle-btn">💡 Підказка</button>
+                <div id="hint-box" class="hint-box"></div>
+            </div>
+
+            <div id="options-list" class="options-list"></div>
+            <div id="feedback-box" class="feedback-box"></div>
+            
+            <div class="actions-center">
+                <button id="next-btn" class="btn-primary" disabled>Наступне запитання</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <div id="results-message" class="results-message">Чудова робота!</div>
+            
+            <div class="score-badge">
+                <span id="final-score" class="score-num">0/10</span>
+                <span class="score-total">правильних</span>
+            </div>
+
+            <p id="results-desc" class="results-desc">Ви успішно пройшли експрес-тестування. Готові до нових математичних викликів!</p>
+
+            <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти ще раз</button>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        const rawQuizData = [
+            // ВАРІАНТ 1
+            [
+                {
+                    question: `1. Що стверджує теорема Фалеса, якщо паралельні прямі відтинають на одній стороні кута рівні відрізки?`,
+                    hint: `Згадайте класичне формулювання теореми Фалеса щодо паралельних прямих.`,
+                    options: [
+                        {label: "А", text: `Вони відтинають пропорційні відрізки на другій стороні.`, isCorrect: false, rationale: `Це твердження узагальненої теореми, а не класичної для рівних відрізків.`},
+                        {label: "Б", text: `Вони відтинають рівні відрізки і на другій стороні кута.`, isCorrect: true, rationale: `За класичною теоремою Фалеса, паралельні прямі відтинають рівні відрізки і на другій стороні.`},
+                        {label: "В", text: `Вони ділять кут навпіл.`, isCorrect: false, rationale: `Це не відповідає жодній з теорем Фалеса.`},
+                        {label: "Г", text: `Вони перетинаються в одній точці.`, isCorrect: false, rationale: `Паралельні прямі не перетинаються.`}
+                    ]
+                },
+                {
+                    question: `2. За даними на рисунку, де паралельні прямі AC та BD перетинають сторони кута O, знайдіть довжину відрізка CD.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <line x1="80" y1="150" x2="420" y2="150" class="main-line" />
+  <line x1="80" y1="150" x2="310" y2="380" class="main-line" />
+  <line x1="195" y1="90" x2="145" y2="290" class="aux-line" />
+  <line x1="345" y1="90" x2="270" y2="390" class="aux-line" />
+  <circle cx="80" cy="150" r="4.5" class="point" />
+  <circle cx="180" cy="150" r="4.5" class="point" />
+  <circle cx="330" cy="150" r="4.5" class="point" />
+  <circle cx="160" cy="230" r="4.5" class="point" />
+  <circle cx="280" cy="350" r="4.5" class="point" />
+  <text x="55" y="145" class="vertex-label">O</text>
+  <text x="175" y="135" class="vertex-label">A</text>
+  <text x="325" y="135" class="vertex-label">B</text>
+  <text x="135" y="245" class="vertex-label">C</text>
+  <text x="255" y="365" class="vertex-label">D</text>
+  <text x="130" y="140" text-anchor="middle" class="text-label">4 см</text>
+  <text x="255" y="140" text-anchor="middle" class="text-label">6 см</text>
+  <text x="115" y="175" transform="rotate(45, 115, 175)" text-anchor="middle" class="text-label">10 см</text>
+  <text x="215" y="275" transform="rotate(45, 215, 275)" text-anchor="middle" class="text-label">?</text>
+</svg></div>`,
+                    hint: `Використайте узагальнену теорему Фалеса про пропорційність відрізків.`,
+                    options: [
+                        {label: "А", text: `12 см`, isCorrect: false, rationale: `Неправильно складена пропорція.`},
+                        {label: "Б", text: `15 см`, isCorrect: true, rationale: `4 : 6 = 10 : x &rarr; 2 : 3 = 10 : x &rarr; x = 15 см.`},
+                        {label: "В", text: `24 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "Г", text: `18 см`, isCorrect: false, rationale: `Перерахуйте пропорцію.`}
+                    ]
+                },
+                {
+                    question: `3. У якому відношенні, рахуючи від вершини, точка перетину медіан ділить кожну медіану?`,
+                    hint: `Пригадайте фундаментальну властивість точки перетину медіан.`,
+                    options: [
+                        {label: "А", text: `1:2`, isCorrect: false, rationale: `Відлік завжди йде від вершини, тому навпаки.`},
+                        {label: "Б", text: `1:1`, isCorrect: false, rationale: `Медіани не діляться навпіл.`},
+                        {label: "В", text: `2:1`, isCorrect: true, rationale: `За теоремою, медіани перетинаються в одній точці і діляться у відношенні 2:1, починаючи від вершини.`},
+                        {label: "Г", text: `3:1`, isCorrect: false, rationale: `Це неправильне відношення.`}
+                    ]
+                },
+                {
+                    question: `4. За даними на рисунку, де AM та BN — медіани трикутника ABC, а G — точка їх перетину, знайдіть довжину відрізка GM, якщо AM = 18 см.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .tick-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <polygon points="250,80 100,320 400,320" class="main-line" />
+  <line x1="250" y1="80" x2="250" y2="320" class="aux-line" />
+  <line x1="100" y1="320" x2="325" y2="200" class="aux-line" />
+  <line x1="175" y1="312" x2="175" y2="328" class="tick-line" />
+  <line x1="325" y1="312" x2="325" y2="328" class="tick-line" />
+  <line x1="281" y1="145" x2="294" y2="135" class="tick-line" />
+  <line x1="285" y1="150" x2="298" y2="140" class="tick-line" />
+  <line x1="356" y1="265" x2="369" y2="255" class="tick-line" />
+  <line x1="360" y1="270" x2="373" y2="260" class="tick-line" />
+  <circle cx="250" cy="80" r="4.5" class="point" />
+  <circle cx="100" cy="320" r="4.5" class="point" />
+  <circle cx="400" cy="320" r="4.5" class="point" />
+  <circle cx="250" cy="320" r="4.5" class="point" />
+  <circle cx="325" cy="200" r="4.5" class="point" />
+  <circle cx="250" cy="240" r="4.5" class="point" />
+  <text x="250" y="65" text-anchor="middle" class="vertex-label">A</text>
+  <text x="85" y="335" class="vertex-label">B</text>
+  <text x="405" y="335" class="vertex-label">C</text>
+  <text x="250" y="350" text-anchor="middle" class="vertex-label">M</text>
+  <text x="340" y="195" class="vertex-label">N</text>
+  <text x="225" y="235" class="vertex-label">G</text>
+  <text x="280" y="110" class="text-label">AM = 18 см</text>
+  <text x="260" y="290" class="text-label">?</text>
+</svg></div>`,
+                    hint: `Точка перетину ділить медіану у відношенні 2:1. Яку частину всієї медіани становить відрізок від точки перетину до сторони?`,
+                    options: [
+                        {label: "А", text: `6 см`, isCorrect: true, rationale: `Відрізок GM становить <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span> від усієї медіани. 18 : 3 = 6 см.`},
+                        {label: "Б", text: `9 см`, isCorrect: false, rationale: `Це була б половина медіани.`},
+                        {label: "В", text: `12 см`, isCorrect: false, rationale: `Це довжина відрізка від вершини до точки перетину (AG).`},
+                        {label: "Г", text: `3 см`, isCorrect: false, rationale: `Неправильний розрахунок.`}
+                    ]
+                },
+                {
+                    question: `5. Як бісектриса трикутника ділить його протилежну сторону?`,
+                    hint: `Згадайте властивість відрізків, на які бісектриса ділить протилежну сторону.`,
+                    options: [
+                        {label: "А", text: `На рівні відрізки.`, isCorrect: false, rationale: `Це властивість медіани.`},
+                        {label: "Б", text: `На відрізки 2:1.`, isCorrect: false, rationale: `Це властивість точки перетину медіан.`},
+                        {label: "В", text: `На відрізки, пропорційні прилеглим сторонам.`, isCorrect: true, rationale: `Це базова властивість бісектриси трикутника.`},
+                        {label: "Г", text: `На відрізки, сума яких дорівнює периметру.`, isCorrect: false, rationale: `Це твердження позбавлене математичного сенсу.`}
+                    ]
+                },
+                {
+                    question: `6. За даними рисунка, де AL — бісектриса трикутника ABC, знайдіть довжину сторони AC.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .bisector-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .angle-arc { fill: none; stroke: #000000; stroke-width: 2; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <path d="M 172.5 223 A 40 40 0 0 0 206.1 233.6" class="angle-arc" />
+  <path d="M 206.1 233.6 A 40 40 0 0 0 235 213.3" class="angle-arc" />
+  <polygon points="200,194 90,310 410,310" class="main-line" />
+  <line x1="200" y1="194" x2="218" y2="310" class="bisector-line" />
+  <circle cx="200" cy="194" r="4.5" class="point" />
+  <circle cx="90" cy="310" r="4.5" class="point" />
+  <circle cx="410" cy="310" r="4.5" class="point" />
+  <circle cx="218" cy="310" r="4.5" class="point" />
+  <text x="190" y="180" class="vertex-label">A</text>
+  <text x="65" y="325" class="vertex-label">B</text>
+  <text x="425" y="325" class="vertex-label">C</text>
+  <text x="210" y="345" class="vertex-label">L</text>
+  <text x="125" y="240" transform="rotate(-46, 125, 240)" class="text-label">10 см</text>
+  <text x="315" y="245" transform="rotate(29, 315, 245)" class="text-label">?</text>
+  <text x="154" y="295" text-anchor="middle" class="text-label">8 см</text>
+  <text x="314" y="295" text-anchor="middle" class="text-label">12 см</text>
+</svg></div>`,
+                    hint: `Бісектриса ділить протилежну сторону на відрізки, пропорційні прилеглим до них сторонам. Складіть пропорцію.`,
+                    options: [
+                        {label: "А", text: `12 см`, isCorrect: false, rationale: `Неправильна пропорція.`},
+                        {label: "Б", text: `15 см`, isCorrect: true, rationale: `AB : AC = BL : LC &rarr; 10 : AC = 8 : 12 &rarr; 10 : AC = 2 : 3 &rarr; AC = 15 см.`},
+                        {label: "В", text: `18 см`, isCorrect: false, rationale: `Перерахуйте пропорцію.`},
+                        {label: "Г", text: `20 см`, isCorrect: false, rationale: `Неправильний розрахунок.`}
+                    ]
+                },
+                {
+                    question: `7. За даними рисунка, де O — точка перетину медіан BM та AK трикутника ABC, знайдіть довжину медіани BM, якщо BO = 12 см.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .tick-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <polygon points="100,320 250,80 400,320" class="main-line" />
+  <line x1="250" y1="80" x2="250" y2="320" class="aux-line" />
+  <line x1="100" y1="320" x2="325" y2="200" class="aux-line" />
+  <line x1="175" y1="312" x2="175" y2="328" class="tick-line" />
+  <line x1="325" y1="312" x2="325" y2="328" class="tick-line" />
+  <line x1="279" y1="145" x2="295" y2="135" class="tick-line" />
+  <line x1="284" y1="153" x2="300" y2="143" class="tick-line" />
+  <line x1="354" y1="265" x2="370" y2="255" class="tick-line" />
+  <line x1="359" y1="273" x2="375" y2="263" class="tick-line" />
+  <circle cx="100" cy="320" r="4.5" class="point" />
+  <circle cx="250" cy="80" r="4.5" class="point" />
+  <circle cx="400" cy="320" r="4.5" class="point" />
+  <circle cx="250" cy="320" r="4.5" class="point" />
+  <circle cx="325" cy="200" r="4.5" class="point" />
+  <circle cx="250" cy="240" r="4.5" class="point" />
+  <text x="80" y="335" class="vertex-label">A</text>
+  <text x="250" y="65" text-anchor="middle" class="vertex-label">B</text>
+  <text x="415" y="335" class="vertex-label">C</text>
+  <text x="250" y="350" text-anchor="middle" class="vertex-label">M</text>
+  <text x="340" y="195" class="vertex-label">K</text>
+  <text x="220" y="235" class="vertex-label">O</text>
+  <text x="265" y="160" text-anchor="middle" transform="rotate(-90, 265, 160)" class="text-label">12 см</text>
+  <text x="320" y="100" class="text-label">BM = ?</text>
+</svg></div>`,
+                    hint: `Точка перетину ділить медіани у відношенні 2:1 від вершини. Знайдіть меншу частину та додайте її до більшої.`,
+                    options: [
+                        {label: "А", text: `16 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "Б", text: `18 см`, isCorrect: true, rationale: `BO = 2x = 12 &rarr; x = 6 (це OM). Вся медіана BM = 12 + 6 = 18 см.`},
+                        {label: "В", text: `24 см`, isCorrect: false, rationale: `Медіана не вдвічі більша за відрізок від вершини.`},
+                        {label: "Г", text: `36 см`, isCorrect: false, rationale: `Це втричі більше, що є помилкою.`}
+                    ]
+                },
+                {
+                    question: `8. На стороні кута O відкладено рівні відрізки OA₁ = A₁A₂. Паралельні прямі перетинають другу сторону в B₁ і B₂. Знайдіть OB₁, якщо B₁B₂ = 7 см.`,
+                    hint: `Скористайтеся класичною теоремою Фалеса: рівним відрізкам на одній стороні відповідають рівні відрізки на іншій.`,
+                    options: [
+                        {label: "А", text: `3,5 см`, isCorrect: false, rationale: `Не треба ділити навпіл.`},
+                        {label: "Б", text: `7 см`, isCorrect: true, rationale: `Якщо OA₁ = A₁A₂, то за теоремою Фалеса OB₁ = B₁B₂ = 7 см.`},
+                        {label: "В", text: `14 см`, isCorrect: false, rationale: `Неправильно.`},
+                        {label: "Г", text: `21 см`, isCorrect: false, rationale: `Неправильно.`}
+                    ]
+                },
+                {
+                    question: `9. Бісектриса ділить протилежну сторону на відрізки 6 см і 10 см. Знайдіть меншу з двох інших сторін, якщо їх сума 24 см.`,
+                    hint: `Використайте властивість бісектриси, щоб знайти відношення сторін. Потім складіть рівняння, врахувавши їхню суму.`,
+                    options: [
+                        {label: "А", text: `9 см`, isCorrect: true, rationale: `Сторони відносяться як 6 : 10 = 3 : 5. Тоді 3x + 5x = 24 &rarr; 8x = 24 &rarr; x = 3. Менша сторона: 3 &times; 3 = 9 см.`},
+                        {label: "Б", text: `12 см`, isCorrect: false, rationale: `Це означало б, що сторони рівні.`},
+                        {label: "В", text: `15 см`, isCorrect: false, rationale: `Це більша сторона, а не менша.`},
+                        {label: "Г", text: `18 см`, isCorrect: false, rationale: `Неправильно.`}
+                    ]
+                },
+                {
+                    question: `10. Паралельні прямі A₁B₁ та A₂B₂ перетинають сторони кута O. Відомо, що OA₁ = 6 см, A₁A₂ = 9 см, OB₁ = 8 см. Знайдіть B₁B₂.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" width="240" height="160" viewBox="0 0 240 160">
+                      <line x1="20" y1="140" x2="220" y2="40" stroke="black" stroke-width="2"/>
+                      <line x1="20" y1="140" x2="220" y2="140" stroke="black" stroke-width="2"/>
+                      <line x1="100" y1="100" x2="80" y2="140" stroke="black" stroke-width="2"/>
+                      <line x1="160" y1="70" x2="140" y2="140" stroke="black" stroke-width="2"/>
+                      <circle cx="20" cy="140" r="3" fill="black"/>
+                      <text x="5" y="145" fill="black" font-size="14" font-family="Arial">O</text>
+                      <circle cx="100" cy="100" r="3" fill="black"/>
+                      <text x="90" y="90" fill="black" font-size="14" font-family="Arial">A₁</text>
+                      <circle cx="160" cy="70" r="3" fill="black"/>
+                      <text x="150" y="60" fill="black" font-size="14" font-family="Arial">A₂</text>
+                      <circle cx="80" cy="140" r="3" fill="black"/>
+                      <text x="70" y="160" fill="black" font-size="14" font-family="Arial">B₁</text>
+                      <circle cx="140" cy="140" r="3" fill="black"/>
+                      <text x="130" y="160" fill="black" font-size="14" font-family="Arial">B₂</text>
+                      <text x="45" y="110" fill="black" font-size="12" font-family="Arial">6 см</text>
+                      <text x="115" y="75" fill="black" font-size="12" font-family="Arial">9 см</text>
+                      <text x="45" y="135" fill="black" font-size="12" font-family="Arial">8 см</text>
+                      <text x="105" y="135" fill="black" font-size="12" font-family="Arial">?</text>
+                    </svg></div>`,
+                    hint: `Застосуйте узагальнену теорему Фалеса, склавши пропорцію з відрізків на обох сторонах кута.`,
+                    options: [
+                        {label: "А", text: `10 см`, isCorrect: false, rationale: `Пропорція складена невірно.`},
+                        {label: "Б", text: `12 см`, isCorrect: true, rationale: `6 : 9 = 8 : x &rarr; 2 : 3 = 8 : x &rarr; x = 12 см.`},
+                        {label: "В", text: `14 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "Г", text: `16 см`, isCorrect: false, rationale: `Перерахуйте пропорцію.`}
+                    ]
+                }
+            ],
+            // ВАРІАНТ 2
+            [
+                {
+                    question: `1. Яке з наведених тверджень є правильним згідно з узагальненою теоремою Фалеса?`,
+                    hint: `Пригадайте ключову відмінність між класичною та узагальненою теоремою Фалеса.`,
+                    options: [
+                        {label: "А", text: `Будь-які прямі відтинають рівні відрізки.`, isCorrect: false, rationale: `Це не відповідає теоремі.`},
+                        {label: "Б", text: `Паралельні прямі відтинають пропорційні відрізки.`, isCorrect: true, rationale: `Узагальнена теорема Фалеса стверджує, що паралельні прямі відтинають на сторонах кута пропорційні відрізки.`},
+                        {label: "В", text: `Медіани діляться у відношенні 2:1.`, isCorrect: false, rationale: `Це теорема про медіани, а не Фалеса.`},
+                        {label: "Г", text: `Бісектриса завжди є медіаною.`, isCorrect: false, rationale: `Це неправильне твердження.`}
+                    ]
+                },
+                {
+                    question: `2. Точка C лежить на відрізку AB так, що AC : CB = 3 : 5. Знайдіть довжину AC, якщо AB = 32 см.`,
+                    hint: `Позначте одну частину як x, складіть рівняння суми двох відрізків та знайдіть потрібну частину.`,
+                    options: [
+                        {label: "А", text: `10 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "Б", text: `12 см`, isCorrect: true, rationale: `3x + 5x = 32 &rarr; 8x = 32 &rarr; x = 4. AC = 3 &times; 4 = 12 см.`},
+                        {label: "В", text: `15 см`, isCorrect: false, rationale: `Спробуйте ще раз.`},
+                        {label: "Г", text: `20 см`, isCorrect: false, rationale: `Це довжина іншого відрізка (CB).`}
+                    ]
+                },
+                {
+                    question: `3. Що є центром перетину трьох медіан у будь-якому трикутнику?`,
+                    hint: `Подумайте, чи може центр мас (перетин медіан) виходити за межі фігури.`,
+                    options: [
+                        {label: "А", text: `Точка, що лежить завжди всередині трикутника.`, isCorrect: true, rationale: `Центр мас (точка перетину медіан) завжди лежить всередині будь-якого трикутника.`},
+                        {label: "Б", text: `Точка на одній зі сторін трикутника.`, isCorrect: false, rationale: `Такого не буває.`},
+                        {label: "В", text: `Точка, що може лежати поза трикутником.`, isCorrect: false, rationale: `Це властивість висот для тупокутного трикутника.`},
+                        {label: "Г", text: `Точка, яка ділить кут навпіл.`, isCorrect: false, rationale: `Це властивість бісектриси.`}
+                    ]
+                },
+                {
+                    question: `4. За даними рисунка, де O — точка перетину медіан трикутника ABC, знайдіть довжину відрізка OM, якщо BO = 14 см.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .tick-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <polygon points="100,320 250,80 400,320" class="main-line" />
+  <line x1="250" y1="80" x2="250" y2="320" class="aux-line" />
+  <line x1="100" y1="320" x2="325" y2="200" class="aux-line" />
+  <line x1="175" y1="312" x2="175" y2="328" class="tick-line" />
+  <line x1="325" y1="312" x2="325" y2="328" class="tick-line" />
+  <line x1="279" y1="145" x2="295" y2="135" class="tick-line" />
+  <line x1="284" y1="153" x2="300" y2="143" class="tick-line" />
+  <line x1="354" y1="265" x2="370" y2="255" class="tick-line" />
+  <line x1="359" y1="273" x2="375" y2="263" class="tick-line" />
+  <circle cx="100" cy="320" r="4.5" class="point" />
+  <circle cx="250" cy="80" r="4.5" class="point" />
+  <circle cx="400" cy="320" r="4.5" class="point" />
+  <circle cx="250" cy="320" r="4.5" class="point" />
+  <circle cx="325" cy="200" r="4.5" class="point" />
+  <circle cx="250" cy="240" r="4.5" class="point" />
+  <text x="80" y="335" class="vertex-label">A</text>
+  <text x="250" y="65" text-anchor="middle" class="vertex-label">B</text>
+  <text x="415" y="335" class="vertex-label">C</text>
+  <text x="250" y="350" text-anchor="middle" class="vertex-label">M</text>
+  <text x="340" y="195" class="vertex-label">K</text>
+  <text x="220" y="235" class="vertex-label">O</text>
+  <text x="265" y="160" text-anchor="middle" transform="rotate(-90, 265, 160)" class="text-label">14 см</text>
+  <text x="270" y="288" text-anchor="middle" class="text-label">?</text>
+</svg></div>`,
+                    hint: `За властивістю медіан, точка їх перетину ділить відрізок у відношенні 2:1, починаючи від вершини.`,
+                    options: [
+                        {label: "А", text: `5 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "Б", text: `7 см`, isCorrect: true, rationale: `Відношення 2:1. Отже, 14 : 2 = 7 см.`},
+                        {label: "В", text: `14 см`, isCorrect: false, rationale: `Це довжина більшої частини.`},
+                        {label: "Г", text: `21 см`, isCorrect: false, rationale: `Це довжина всієї медіани.`}
+                    ]
+                },
+                {
+                    question: `5. Користуючись даними на рисунку, де BD — бісектриса трикутника ABC, знайдіть довжину відрізка DC.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .bisector-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .angle-arc { fill: none; stroke: #000000; stroke-width: 2; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <path d="M 163.8 175.6 A 40 40 0 0 0 191.2 178.9" class="angle-arc" />
+  <path d="M 191.2 178.9 A 40 40 0 0 0 214.3 163.7" class="angle-arc" />
+  <polygon points="100,300 182,140 400,300" class="main-line" />
+  <line x1="182" y1="140" x2="220" y2="300" class="bisector-line" />
+  <circle cx="100" cy="300" r="4.5" class="point" />
+  <circle cx="182" cy="140" r="4.5" class="point" />
+  <circle cx="400" cy="300" r="4.5" class="point" />
+  <circle cx="220" cy="300" r="4.5" class="point" />
+  <text x="75" y="315" class="vertex-label">A</text>
+  <text x="175" y="125" class="vertex-label">B</text>
+  <text x="415" y="315" class="vertex-label">C</text>
+  <text x="212" y="335" class="vertex-label">D</text>
+  <text x="131" y="210" transform="rotate(-63, 131, 210)" text-anchor="middle" class="text-label">12 см</text>
+  <text x="305" y="210" transform="rotate(36, 305, 210)" text-anchor="middle" class="text-label">18 см</text>
+  <text x="160" y="290" text-anchor="middle" class="text-label">8 см</text>
+  <text x="310" y="290" text-anchor="middle" class="text-label">?</text>
+</svg></div>`,
+                    hint: `Застосуйте властивість бісектриси (співвідношення прилеглих сторін до утворених відрізків).`,
+                    options: [
+                        {label: "А", text: `10 см`, isCorrect: false, rationale: `Пропорція складена невірно.`},
+                        {label: "Б", text: `9 см`, isCorrect: false, rationale: `Спробуйте ще раз.`},
+                        {label: "В", text: `12 см`, isCorrect: true, rationale: `12 : 18 = 8 : DC &rarr; 2 : 3 = 8 : DC &rarr; DC = 12 см.`},
+                        {label: "Г", text: `16 см`, isCorrect: false, rationale: `Неправильний розрахунок.`}
+                    ]
+                },
+                {
+                    question: `6. Бісектриса ділить сторону 30 см на відрізки 2:3. Знайдіть різницю цих відрізків.`,
+                    hint: `Виразіть обидва відрізки через частину (x), знайдіть їх значення та обчисліть різницю.`,
+                    options: [
+                        {label: "А", text: `6 см`, isCorrect: true, rationale: `2x + 3x = 30 &rarr; 5x = 30 &rarr; x = 6. Відрізки 12 см і 18 см. Різниця 18 - 12 = 6 см.`},
+                        {label: "Б", text: `8 см`, isCorrect: false, rationale: `Невірно обчислено різницю.`},
+                        {label: "В", text: `10 см`, isCorrect: false, rationale: `Це не різниця.`},
+                        {label: "Г", text: `12 см`, isCorrect: false, rationale: `Це менший відрізок, а не різниця.`}
+                    ]
+                },
+                {
+                    question: `7. Користуючись даними на рисунку, де G — точка перетину медіан, знайдіть довжину медіани AM, якщо AG = 10 см.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .tick-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <polygon points="250,80 100,320 400,320" class="main-line" />
+  <line x1="250" y1="80" x2="250" y2="320" class="aux-line" />
+  <line x1="100" y1="320" x2="325" y2="200" class="aux-line" />
+  <line x1="175" y1="312" x2="175" y2="328" class="tick-line" />
+  <line x1="325" y1="312" x2="325" y2="328" class="tick-line" />
+  <line x1="279" y1="145" x2="295" y2="135" class="tick-line" />
+  <line x1="284" y1="153" x2="300" y2="143" class="tick-line" />
+  <line x1="354" y1="265" x2="370" y2="255" class="tick-line" />
+  <line x1="359" y1="273" x2="375" y2="263" class="tick-line" />
+  <circle cx="250" cy="80" r="4.5" class="point" />
+  <circle cx="100" cy="320" r="4.5" class="point" />
+  <circle cx="400" cy="320" r="4.5" class="point" />
+  <circle cx="250" cy="320" r="4.5" class="point" />
+  <circle cx="325" cy="200" r="4.5" class="point" />
+  <circle cx="250" cy="240" r="4.5" class="point" />
+  <text x="250" y="65" text-anchor="middle" class="vertex-label">A</text>
+  <text x="80" y="335" class="vertex-label">B</text>
+  <text x="415" y="335" class="vertex-label">C</text>
+  <text x="250" y="350" text-anchor="middle" class="vertex-label">M</text>
+  <text x="340" y="195" class="vertex-label">K</text>
+  <text x="220" y="235" class="vertex-label">G</text>
+  <text x="265" y="160" text-anchor="middle" transform="rotate(-90, 265, 160)" class="text-label">10 см</text>
+  <text x="320" y="100" class="text-label">AM = ?</text>
+</svg></div>`,
+                    hint: `Пам'ятайте, що точка перетину ділить медіани у відношенні 2:1. Спочатку знайдіть відрізок GM, а потім додайте його до AG.`,
+                    options: [
+                        {label: "А", text: `12 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "Б", text: `15 см`, isCorrect: true, rationale: `AG = 10 (це <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>). Отже GM = 5 (це <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span>). Вся медіана AM = 10 + 5 = 15 см.`},
+                        {label: "В", text: `20 см`, isCorrect: false, rationale: `Це невірно.`},
+                        {label: "Г", text: `30 см`, isCorrect: false, rationale: `Це було б втричі більше, що є помилкою.`}
+                    ]
+                },
+                {
+                    question: `8. За даними на рисунку, де паралельні прямі AC та BD перетинають сторони кута O, знайдіть довжину відрізка CD.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <line x1="80" y1="150" x2="380" y2="150" class="main-line" />
+  <line x1="80" y1="150" x2="260" y2="390" class="main-line" />
+  <line x1="170" y1="110" x2="120" y2="310" class="aux-line" />
+  <line x1="290" y1="110" x2="220" y2="390" class="aux-line" />
+  <circle cx="80" cy="150" r="4.5" class="point" />
+  <circle cx="160" cy="150" r="4.5" class="point" />
+  <circle cx="280" cy="150" r="4.5" class="point" />
+  <circle cx="140" cy="230" r="4.5" class="point" />
+  <circle cx="230" cy="350" r="4.5" class="point" />
+  <text x="55" y="145" class="vertex-label">O</text>
+  <text x="150" y="135" class="vertex-label">A</text>
+  <text x="275" y="135" class="vertex-label">B</text>
+  <text x="115" y="240" class="vertex-label">C</text>
+  <text x="200" y="360" class="vertex-label">D</text>
+  <text x="120" y="140" text-anchor="middle" class="text-label">8 см</text>
+  <text x="220" y="140" text-anchor="middle" class="text-label">12 см</text>
+  <text x="95" y="205" transform="rotate(53, 95, 205)" text-anchor="middle" class="text-label">10 см</text>
+  <text x="165" y="285" transform="rotate(53, 165, 285)" text-anchor="middle" class="text-label">?</text>
+</svg></div>`,
+                    hint: `Застосуйте узагальнену теорему Фалеса про пропорційність відрізків.`,
+                    options: [
+                        {label: "А", text: `12 см`, isCorrect: false, rationale: `Пропорція складена невірно.`},
+                        {label: "Б", text: `14 см`, isCorrect: false, rationale: `Перерахуйте пропорцію.`},
+                        {label: "В", text: `15 см`, isCorrect: true, rationale: `8 : 12 = 10 : x &rarr; 2 : 3 = 10 : x &rarr; x = 15 см.`},
+                        {label: "Г", text: `18 см`, isCorrect: false, rationale: `Спробуйте ще раз.`}
+                    ]
+                },
+                {
+                    question: `9. Користуючись даними рисунка, де AL — бісектриса трикутника ABC, знайдіть довжину відрізка BL.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .bisector-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .angle-arc { fill: none; stroke: #000000; stroke-width: 2; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <path d="M 185.2 137.1 A 40 40 0 0 0 210.0 138.7" class="angle-arc" />
+  <path d="M 210.0 138.7 A 40 40 0 0 0 231.2 125.0" class="angle-arc" />
+  <polygon points="200,100 120,300 450,300" class="main-line" />
+  <line x1="200" y1="100" x2="252" y2="300" class="bisector-line" />
+  <circle cx="200" cy="100" r="4.5" class="point" />
+  <circle cx="120" cy="300" r="4.5" class="point" />
+  <circle cx="450" cy="300" r="4.5" class="point" />
+  <circle cx="252" cy="300" r="4.5" class="point" />
+  <text x="190" y="85" class="vertex-label">A</text>
+  <text x="95" y="315" class="vertex-label">B</text>
+  <text x="465" y="315" class="vertex-label">C</text>
+  <text x="245" y="335" class="vertex-label">L</text>
+  <text x="145" y="195" transform="rotate(-68, 145, 195)" text-anchor="middle" class="text-label">16 см</text>
+  <text x="345" y="195" transform="rotate(39, 345, 195)" text-anchor="middle" class="text-label">24 см</text>
+  <text x="186" y="290" text-anchor="middle" class="text-label">?</text>
+  <text x="351" y="290" text-anchor="middle" class="text-label">15 см</text>
+</svg></div>`,
+                    hint: `Використайте властивість бісектриси, яка встановлює пропорційність відрізків основи до прилеглих сторін.`,
+                    options: [
+                        {label: "А", text: `8 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "Б", text: `10 см`, isCorrect: true, rationale: `16 : 24 = BL : 15 &rarr; 2 : 3 = BL : 15 &rarr; BL = 10 см.`},
+                        {label: "В", text: `12 см`, isCorrect: false, rationale: `Перерахуйте пропорцію.`},
+                        {label: "Г", text: `14 см`, isCorrect: false, rationale: `Спробуйте ще раз.`}
+                    ]
+                },
+                {
+                    question: `10. У рівнобедреному трикутнику ABC (AB=BC) точка O — перетин медіан. За даними рисунка знайдіть відстань від O до вершини B, якщо відстань від O до AC дорівнює 8 см.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .tick-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; }
+      .right-angle { fill: none; stroke: #000000; stroke-width: 2; stroke-linejoin: round; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <polygon points="100,320 250,80 400,320" class="main-line" />
+  <line x1="250" y1="80" x2="250" y2="320" class="aux-line" />
+  <line x1="100" y1="320" x2="325" y2="200" class="aux-line" />
+  <polyline points="250,305 265,305 265,320" class="right-angle" />
+  <line x1="175" y1="312" x2="175" y2="328" class="tick-line" />
+  <line x1="325" y1="312" x2="325" y2="328" class="tick-line" />
+  <line x1="166" y1="198" x2="179" y2="210" class="tick-line" />
+  <line x1="171" y1="190" x2="184" y2="202" class="tick-line" />
+  <line x1="316" y1="202" x2="329" y2="190" class="tick-line" />
+  <line x1="321" y1="210" x2="334" y2="198" class="tick-line" />
+  <circle cx="100" cy="320" r="4.5" class="point" />
+  <circle cx="250" cy="80" r="4.5" class="point" />
+  <circle cx="400" cy="320" r="4.5" class="point" />
+  <circle cx="250" cy="320" r="4.5" class="point" />
+  <circle cx="325" cy="200" r="4.5" class="point" />
+  <circle cx="250" cy="240" r="4.5" class="point" />
+  <text x="80" y="335" class="vertex-label">A</text>
+  <text x="250" y="65" text-anchor="middle" class="vertex-label">B</text>
+  <text x="415" y="335" class="vertex-label">C</text>
+  <text x="250" y="350" text-anchor="middle" class="vertex-label">M</text>
+  <text x="340" y="195" class="vertex-label">K</text>
+  <text x="220" y="235" class="vertex-label">O</text>
+  <text x="265" y="285" class="text-label">8 см</text>
+  <text x="265" y="165" class="text-label">?</text>
+</svg></div>`,
+                    hint: `Медіана до основи є одночасно і висотою. Використайте властивість точки перетину медіан.`,
+                    options: [
+                        {label: "А", text: `8 см`, isCorrect: false, rationale: `Вони не рівні.`},
+                        {label: "Б", text: `12 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "В", text: `16 см`, isCorrect: true, rationale: `За властивістю медіан відстань від вершини до O вдвічі більша, ніж від O до сторони: 8 &times; 2 = 16 см.`},
+                        {label: "Г", text: `24 см`, isCorrect: false, rationale: `Це довжина всієї медіани.`}
+                    ]
+                }
+            ],
+            // ВАРІАНТ 3
+            [
+                {
+                    question: `1. Якщо паралельні прямі відтинають на одній стороні кута пропорційні відрізки, що відбувається на іншій?`,
+                    hint: `Це класичне формулювання узагальненої теореми Фалеса. Згадайте її наслідки.`,
+                    options: [
+                        {label: "А", text: `Відтинаються рівні відрізки.`, isCorrect: false, rationale: `Вони пропорційні, а не обов'язково рівні.`},
+                        {label: "Б", text: `Відтинаються обернено пропорційні відрізки.`, isCorrect: false, rationale: `Вони не обернено пропорційні.`},
+                        {label: "В", text: `Вони відтинають на ній пропорційні відрізки.`, isCorrect: true, rationale: `Це класичне формулювання узагальненої теореми Фалеса.`},
+                        {label: "Г", text: `Прямі збігаються.`, isCorrect: false, rationale: `Це безглузде твердження в цьому контексті.`}
+                    ]
+                },
+                {
+                    question: `2. За даними на рисунку, де прямі AC та BD паралельні, знайдіть довжину відрізка CD.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <line x1="100" y1="120" x2="450" y2="120" class="main-line" />
+  <line x1="100" y1="120" x2="250" y2="382" class="main-line" />
+  <line x1="242" y1="95" x2="126" y2="229" class="aux-line" />
+  <line x1="449" y1="86" x2="199" y2="378" class="aux-line" />
+  <circle cx="100" cy="120" r="4.5" class="point" />
+  <circle cx="220" cy="120" r="4.5" class="point" />
+  <circle cx="420" cy="120" r="4.5" class="point" />
+  <circle cx="148" cy="204" r="4.5" class="point" />
+  <circle cx="228" cy="344" r="4.5" class="point" />
+  <text x="85" y="110" class="vertex-label">O</text>
+  <text x="215" y="105" class="vertex-label">A</text>
+  <text x="415" y="105" class="vertex-label">B</text>
+  <text x="120" y="225" class="vertex-label">C</text>
+  <text x="200" y="365" class="vertex-label">D</text>
+  <text x="160" y="110" text-anchor="middle" class="text-label">15 см</text>
+  <text x="320" y="110" text-anchor="middle" class="text-label">25 см</text>
+  <text x="105" y="160" transform="rotate(60, 105, 160)" text-anchor="middle" class="text-label">12 см</text>
+  <text x="165" y="270" transform="rotate(60, 165, 270)" text-anchor="middle" class="text-label">?</text>
+</svg></div>`,
+                    hint: `Застосуйте узагальнену теорему Фалеса про пропорційність відрізків.`,
+                    options: [
+                        {label: "А", text: `15 см`, isCorrect: false, rationale: `Пропорція складена невірно.`},
+                        {label: "Б", text: `18 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "В", text: `20 см`, isCorrect: true, rationale: `15 : 25 = 12 : CD &rarr; 3 : 5 = 12 : CD &rarr; CD = 20 см.`},
+                        {label: "Г", text: `24 см`, isCorrect: false, rationale: `Спробуйте ще раз.`}
+                    ]
+                },
+                {
+                    question: `3. Медіана трикутника дорівнює 27 см. Знайдіть менший з відрізків, на які її ділить точка перетину медіан.`,
+                    hint: `Пам'ятайте, що точка перетину медіан ділить їх у відношенні 2:1. Визначте, яку частину від усієї медіани становить менший відрізок.`,
+                    options: [
+                        {label: "А", text: `6 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "Б", text: `9 см`, isCorrect: true, rationale: `Менший відрізок (від точки до сторони) дорівнює <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span> від усієї медіани. 27 : 3 = 9 см.`},
+                        {label: "В", text: `12 см`, isCorrect: false, rationale: `Спробуйте ще раз.`},
+                        {label: "Г", text: `18 см`, isCorrect: false, rationale: `Це довжина більшого відрізка, а не меншого.`}
+                    ]
+                },
+                {
+                    question: `4. З якої точки починається відлік відношення 2:1 для медіан трикутника?`,
+                    hint: `Згадайте формулювання теореми про точку перетину медіан.`,
+                    options: [
+                        {label: "А", text: `Від вершини трикутника.`, isCorrect: true, rationale: `За теоремою, відношення 2:1 завжди рахується від вершини трикутника.`},
+                        {label: "Б", text: `Від середини сторони.`, isCorrect: false, rationale: `Відлік йде з протилежного боку.`},
+                        {label: "В", text: `Від точки перетину бісектрис.`, isCorrect: false, rationale: `Бісектриси тут ні до чого.`},
+                        {label: "Г", text: `Від основи висоти.`, isCorrect: false, rationale: `Це твердження помилкове.`}
+                    ]
+                },
+                {
+                    question: `5. Користуючись даними рисунка, де BD — бісектриса трикутника ABC, а його периметр дорівнює 45 см, знайдіть довжину сторони AB.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .bisector-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .angle-arc { fill: none; stroke: #000000; stroke-width: 2; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <path d="M 125.0 101.7 A 40 40 0 0 0 144.2 99.5" class="angle-arc" />
+  <path d="M 144.2 99.5 A 40 40 0 0 0 160.0 88.4" class="angle-arc" />
+  <polygon points="100,300 130,62 400,300" class="main-line" />
+  <line x1="130" y1="62" x2="220" y2="300" class="bisector-line" />
+  <circle cx="100" cy="300" r="4.5" class="point" />
+  <circle cx="130" cy="62" r="4.5" class="point" />
+  <circle cx="400" cy="300" r="4.5" class="point" />
+  <circle cx="220" cy="300" r="4.5" class="point" />
+  <text x="80" y="325" class="vertex-label">A</text>
+  <text x="125" y="45" class="vertex-label">B</text>
+  <text x="415" y="325" class="vertex-label">C</text>
+  <text x="212" y="335" class="vertex-label">D</text>
+  <text x="460" y="45" text-anchor="end" class="text-label">P = 45 см</text>
+  <text x="160" y="290" text-anchor="middle" class="text-label">6 см</text>
+  <text x="310" y="290" text-anchor="middle" class="text-label">9 см</text>
+  <text x="95" y="181" transform="rotate(-83, 95, 181)" text-anchor="middle" class="text-label">?</text>
+</svg></div>`,
+                    hint: `Використайте властивість бісектриси, щоб знайти відношення сторін AB та BC. Потім виразіть їх через частину (x) та складіть рівняння з використанням периметра.`,
+                    options: [
+                        {label: "А", text: `12 см`, isCorrect: true, rationale: `AB : BC = 6 : 9 = 2 : 3. Отже AB = 2x, BC = 3x. Периметр: 2x + 3x + 15 = 45 &rarr; 5x = 30 &rarr; x = 6. AB = 12 см.`},
+                        {label: "Б", text: `15 см`, isCorrect: false, rationale: `Це довжина основи AC.`},
+                        {label: "В", text: `18 см`, isCorrect: false, rationale: `Це сторона BC, а не AB.`},
+                        {label: "Г", text: `24 см`, isCorrect: false, rationale: `Неправильний розрахунок.`}
+                    ]
+                },
+                {
+                    question: `6. Яке з тверджень про бісектрису є НЕПРАВИЛЬНИМ для довільного різностороннього трикутника?`,
+                    hint: `Подумайте, чи збігається бісектриса з іншими лініями трикутника, якщо він не рівнобедрений.`,
+                    options: [
+                        {label: "А", text: `Вона ділить кут навпіл.`, isCorrect: false, rationale: `Це правильне твердження за означенням.`},
+                        {label: "Б", text: `Вона ділить протилежну сторону пропорційно двом іншим.`, isCorrect: false, rationale: `Це базова властивість бісектриси, отже твердження правильне.`},
+                        {label: "В", text: `Вона завжди є одночасно і медіаною.`, isCorrect: true, rationale: `Бісектриса є медіаною тільки у рівнобедреному (проведена до основи) або рівносторонньому трикутнику.`},
+                        {label: "Г", text: `Три бісектриси перетинаються в одній точці.`, isCorrect: false, rationale: `Це правильне твердження, яке працює для всіх трикутників.`}
+                    ]
+                },
+                {
+                    question: `7. За даними рисунка, де паралельні прямі AC та BD перетинають сторони кута O, знайдіть довжину відрізка CD.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .aux-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <line x1="60" y1="150" x2="380" y2="150" class="main-line" />
+  <line x1="60" y1="150" x2="220" y2="358" class="main-line" />
+  <line x1="100" y1="280" x2="220" y2="124" class="aux-line" />
+  <line x1="150" y1="345" x2="320" y2="124" class="aux-line" />
+  <circle cx="60" cy="150" r="4.5" class="point" />
+  <circle cx="200" cy="150" r="4.5" class="point" />
+  <circle cx="300" cy="150" r="4.5" class="point" />
+  <circle cx="130" cy="241" r="4.5" class="point" />
+  <circle cx="180" cy="306" r="4.5" class="point" />
+  <text x="40" y="145" class="vertex-label">O</text>
+  <text x="190" y="135" class="vertex-label">A</text>
+  <text x="290" y="135" class="vertex-label">B</text>
+  <text x="100" y="251" class="vertex-label">C</text>
+  <text x="150" y="316" class="vertex-label">D</text>
+  <text x="130" y="140" text-anchor="middle" class="text-label">14 см</text>
+  <text x="250" y="140" text-anchor="middle" class="text-label">10 см</text>
+  <text x="80" y="200" transform="rotate(52, 80, 200)" text-anchor="middle" class="text-label">21 см</text>
+  <text x="140" y="280" transform="rotate(52, 140, 280)" text-anchor="middle" class="text-label">?</text>
+</svg></div>`,
+                    hint: `Застосуйте узагальнену теорему Фалеса про пропорційність відрізків.`,
+                    options: [
+                        {label: "А", text: `12 см`, isCorrect: false, rationale: `Пропорція складена невірно.`},
+                        {label: "Б", text: `15 см`, isCorrect: true, rationale: `14 : 21 = 10 : x &rarr; 2 : 3 = 10 : x &rarr; x = 15 см.`},
+                        {label: "В", text: `18 см`, isCorrect: false, rationale: `Перерахуйте пропорцію.`},
+                        {label: "Г", text: `20 см`, isCorrect: false, rationale: `Спробуйте ще раз.`}
+                    ]
+                },
+                {
+                    question: `8. Точка G — перетин медіан. Відрізок AG = 16 см. Яка довжина всієї медіани AM?`,
+                    hint: `Відрізок від вершини до точки перетину становить 2/3 від усієї довжини медіани.`,
+                    options: [
+                        {label: "А", text: `18 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "Б", text: `20 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "В", text: `24 см`, isCorrect: true, rationale: `AG = 16 (це 2 частини). Одна частина (GM) = 8. Вся медіана AM = 16 + 8 = 24 см.`},
+                        {label: "Г", text: `32 см`, isCorrect: false, rationale: `Це подвоєна довжина відрізка, а не медіана.`}
+                    ]
+                },
+                {
+                    question: `9. Бісектриса ділить сторону на відрізки з різницею 5 см і відношенням 4:3. Знайдіть довжину сторони.`,
+                    hint: `Виразіть обидва відрізки через частину (x) та складіть рівняння, знаючи їхню різницю.`,
+                    options: [
+                        {label: "А", text: `15 см`, isCorrect: false, rationale: `Це довжина меншого відрізка.`},
+                        {label: "Б", text: `25 см`, isCorrect: false, rationale: `Неправильний розрахунок.`},
+                        {label: "В", text: `30 см`, isCorrect: false, rationale: `Спробуйте ще раз.`},
+                        {label: "Г", text: `35 см`, isCorrect: true, rationale: `4x - 3x = 5 &rarr; x = 5. Довжина сторони: 7x = 7 &times; 5 = 35 см.`}
+                    ]
+                },
+                {
+                    question: `10. За даними рисунка, де AL — бісектриса трикутника ABC, знайдіть відношення BL : LC.<div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="100%">
+  <defs>
+    <style>
+      .main-line { stroke: #000000; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .bisector-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; fill: none; }
+      .angle-arc { fill: none; stroke: #000000; stroke-width: 2; }
+      .vertex-label { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #000000; }
+      .text-label { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #000000; }
+      .point { fill: #000000; }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  <path d="M 133.6 136.4 A 40 40 0 0 0 160.8 138.4" class="angle-arc" />
+  <path d="M 160.8 138.4 A 40 40 0 0 0 181.2 124.8" class="angle-arc" />
+  <polygon points="150,100 60,300 400,300" class="main-line" />
+  <line x1="150" y1="100" x2="206" y2="300" class="bisector-line" />
+  <circle cx="150" cy="100" r="4.5" class="point" />
+  <circle cx="60" cy="300" r="4.5" class="point" />
+  <circle cx="400" cy="300" r="4.5" class="point" />
+  <circle cx="206" cy="300" r="4.5" class="point" />
+  <text x="140" y="85" class="vertex-label">A</text>
+  <text x="35" y="315" class="vertex-label">B</text>
+  <text x="415" y="315" class="vertex-label">C</text>
+  <text x="195" y="335" class="vertex-label">L</text>
+  <text x="90" y="195" transform="rotate(-66, 90, 195)" text-anchor="middle" class="text-label">9 см</text>
+  <text x="285" y="195" transform="rotate(39, 285, 195)" text-anchor="middle" class="text-label">12 см</text>
+  <text x="230" y="375" text-anchor="middle" class="text-label">BL : LC = ?</text>
+</svg></div>`,
+                    hint: `За властивістю бісектриси, відношення утворених відрізків дорівнює відношенню прилеглих до них сторін.`,
+                    options: [
+                        {label: "А", text: `1:2`, isCorrect: false, rationale: `Неправильне відношення.`},
+                        {label: "Б", text: `3:4`, isCorrect: true, rationale: `За властивістю бісектриси, BL : LC = AB : AC = 9 : 12 = 3 : 4.`},
+                        {label: "В", text: `2:3`, isCorrect: false, rationale: `Перерахуйте пропорцію.`},
+                        {label: "Г", text: `4:5`, isCorrect: false, rationale: `Неправильний розрахунок.`}
+                    ]
+                }
+            ]
+        ];
+
+        let poolCounter = 0;
+        let currentPoolQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOptionIndex = null;
+        
+        let timerInterval = null;
+        let totalSeconds = 600; // 10 minutes
+
+        const startScreen = document.getElementById('start-screen');
+        const questionBox = document.getElementById('question-box');
+        const resultsScreen = document.getElementById('results-screen');
+        const progressContainer = document.getElementById('progress-container');
+        
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        const questionText = document.getElementById('question-text');
+        const optionsList = document.getElementById('options-list');
+        const feedbackBox = document.getElementById('feedback-box');
+        
+        const questionNumber = document.getElementById('question-number');
+        const scoreLive = document.getElementById('score-live');
+        const progressFill = document.getElementById('progress-fill');
+        const timerDisplay = document.getElementById('timer-display');
+        const finalScore = document.getElementById('final-score');
+        const resultsMessage = document.getElementById('results-message');
+        const resultsDesc = document.getElementById('results-desc');
+
+        const hintToggleBtn = document.getElementById('hint-toggle-btn');
+        const hintBox = document.getElementById('hint-box');
+
+        function startTimer() {
+            totalSeconds = 600;
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                updateTimerDisplay();
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function initQuiz() {
+            const activePoolIndex = poolCounter % rawQuizData.length;
+            currentPoolQuestions = rawQuizData[activePoolIndex];
+            poolCounter++;
+
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            startScreen.style.display = 'none';
+            resultsScreen.style.display = 'none';
+            questionBox.style.display = 'block';
+            progressContainer.style.display = 'block';
+
+            scoreLive.textContent = `Бали: ${score}`;
+            startTimer();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = currentPoolQuestions[currentQuestionIndex];
+            selectedOptionIndex = null;
+            
+            questionNumber.textContent = `Питання ${currentQuestionIndex + 1} з 10`;
+            progressFill.style.width = `${((currentQuestionIndex) / 10) * 100}%`;
+            
+            questionText.innerHTML = currentQ.question;
+
+            // Setup Hint
+            if (currentQ.hint) {
+                hintBox.textContent = currentQ.hint;
+                hintBox.style.display = 'none';
+                hintToggleBtn.style.display = 'inline-block';
+                hintToggleBtn.textContent = '💡 Підказка';
+            } else {
+                hintToggleBtn.style.display = 'none';
+                hintBox.style.display = 'none';
+            }
+
+            optionsList.innerHTML = '';
+            feedbackBox.style.display = 'none';
+            nextBtn.disabled = true;
+            nextBtn.textContent = (currentQuestionIndex === 9) ? "Завершити тест" : "Наступне запитання";
+
+            currentQ.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="opt-label">${opt.label}</span><span>${opt.text}</span>`;
+                btn.addEventListener('click', () => selectOption(idx));
+                optionsList.appendChild(btn);
+            });
+        }
+
+        hintToggleBtn.addEventListener('click', () => {
+            if (hintBox.style.display === 'block') {
+                hintBox.style.display = 'none';
+                hintToggleBtn.textContent = '💡 Підказка';
+            } else {
+                hintBox.style.display = 'block';
+                hintToggleBtn.textContent = 'Приховати підказку';
+            }
+        });
+
+        function selectOption(index) {
+            if (selectedOptionIndex !== null) return;
+            
+            selectedOptionIndex = index;
+            const currentQ = currentPoolQuestions[currentQuestionIndex];
+            const optionBtns = optionsList.querySelectorAll('.option-btn');
+            const chosenOption = currentQ.options[index];
+            const correctIndex = currentQ.options.findIndex(o => o.isCorrect);
+
+            optionBtns.forEach(btn => btn.disabled = true);
+
+            if (chosenOption.isCorrect) {
+                score++;
+                scoreLive.textContent = `Бали: ${score}`;
+                optionBtns[index].classList.add('correct');
+                feedbackBox.className = 'feedback-box correct';
+                feedbackBox.innerHTML = `<strong>✓</strong> <span>${chosenOption.rationale}</span>`;
+            } else {
+                optionBtns[index].classList.add('wrong');
+                if (correctIndex !== -1) {
+                    optionBtns[correctIndex].classList.add('correct');
+                }
+                feedbackBox.className = 'feedback-box wrong';
+                feedbackBox.innerHTML = `<strong>✗</strong> <span>${chosenOption.rationale}</span>`;
+            }
+
+            feedbackBox.style.display = 'block';
+            nextBtn.disabled = false;
+        }
+
+        function handleNext() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < 10) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            questionBox.style.display = 'none';
+            progressContainer.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            finalScore.textContent = `${score}/10`;
+
+            if (score >= 9) {
+                resultsMessage.textContent = "Чудовий результат!";
+                resultsDesc.textContent = "Ви успішно пройшли експрес-тестування. Готові до нових математичних викликів!";
+            } else if (score >= 7) {
+                resultsMessage.textContent = "Добре впоралися!";
+                resultsDesc.textContent = "Ви непогано впоралися з тестуванням, але є над чим попрацювати!";
+            } else if (score >= 5) {
+                resultsMessage.textContent = "Непогано, але варто повторити теорію!";
+                resultsDesc.textContent = "Варто ще раз переглянути матеріали теми та закріпити навички.";
+            } else {
+                resultsMessage.textContent = "Потрібно ще попрацювати над темою!";
+                resultsDesc.textContent = "Рекомендуємо повторити теоретичний матеріал і спробувати пройти тест знову.";
+            }
+        }
+
+        if (startBtn) startBtn.addEventListener('click', initQuiz);
+        if (nextBtn) nextBtn.addEventListener('click', handleNext);
+        if (restartBtn) restartBtn.addEventListener('click', initQuiz);
+    </script>
+</body>
+</html>
