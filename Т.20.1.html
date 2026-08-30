@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест: Багатогранники. Призма | TETA School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .sticky-timer-bar {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .start-screen h1 {
+            color: var(--accent-red);
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--accent-red);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 0.98rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        .questions-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .single-q-card {
+            background: #FDFEFE;
+            border: 2px solid var(--accent-red);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.05);
+            transition: var(--transition);
+        }
+
+        .single-q-card:hover {
+            box-shadow: 0 6px 16px rgba(125, 17, 17, 0.12);
+        }
+
+        .q-number-header {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .svg-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .svg-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.98rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: #E6FEFE;
+            font-weight: 600;
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.selected .opt-label {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-btn.correct .opt-label { background: #0E9F6E; color: #FFF; }
+        .option-btn.wrong .opt-label { background: var(--accent-red); color: #FFF; }
+
+        .matching-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .matching-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FCFD;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #E2E8F0;
+            gap: 10px;
+        }
+
+        .matching-label { font-weight: 600; font-size: 0.92rem; flex: 1; }
+
+        .matching-select {
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1.5px solid var(--secondary);
+            font-size: 0.9rem;
+            background: white;
+            color: var(--dark-text);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .short-input {
+            width: 100%;
+            max-width: 220px;
+            padding: 10px 14px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .short-input:focus { border-color: var(--primary); }
+
+        .feedback-box {
+            margin-top: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct { background-color: #E6F4EA; border: 1px solid #34A853; color: #137333; }
+        .feedback-box.wrong { background-color: #FCE8E6; border: 1px solid #EA4335; color: #C5221F; }
+
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .finish-btn-wrapper {
+            margin-top: 35px;
+            text-align: center;
+        }
+
+        .results-screen {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .results-screen h1.res-title,
+        .analysis-card h3.res-analysis-title,
+        .results-screen h2.res-review-title {
+            color: var(--accent-red) !important;
+            font-weight: 800;
+        }
+
+        .results-summary-card {
+            background: var(--light-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid var(--accent-red);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .res-stat-item {
+            text-align: center;
+        }
+
+        .res-stat-val {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-red);
+        }
+
+        .res-stat-lbl {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .analysis-card {
+            background: #FFF;
+            border: 2px solid var(--accent-red);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 0.2em;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .frac > span {
+            display: block;
+            padding: 0.1em;
+        }
+        .frac span.frac-den {
+            border-top: 1px solid #000;
+        }
+        
+        .sqrt-content {
+            border-top: 1px solid currentColor;
+            padding-top: 1px;
+            margin-left: 1px;
+        }
+
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 0;
+            display: inline-block;
+        }
+        .hint-btn:hover {
+            color: var(--accent-red);
+        }
+        .hint-box {
+            display: none;
+            background: #FFF9E6;
+            border-left: 4px solid #FFC107;
+            padding: 12px 15px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #4B5563;
+            border-radius: 6px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 20px 15px; }
+            .question-text { font-size: 1rem; }
+            .matching-row { flex-direction: column; align-items: flex-start; }
+            .matching-select { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo Header -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+                  <defs><style>.cls-1 { fill: #7d1111; }</style></defs>
+                  <g id="_Шар_1-2" data-name="Шар 1">
+                    <g>
+                      <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+                      <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+                      <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+                      <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+                    </g>
+                    <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.37-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+                  </g>
+                </svg>
+            </div>
+            <div id="variant-indicator" class="test-title">НМТ Експрес-Контроль (Варіант 1)</div>
+            <div class="test-subtitle">Тема: Багатогранники. Призма (11 клас)</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Перевірте свої знання з теми. Успіхів!</h1>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість завдань:</strong> 15</li>
+                    <li><strong>Час на виконання:</strong> 15 хвилин</li>
+                    <li><strong>Завдання 1–10:</strong> вибір однієї правильної відповіді (1 бал)</li>
+                    <li><strong>Завдання 11–13:</strong> встановлення відповідності (1 бал за повністю вірне співвідношення)</li>
+                    <li><strong>Завдання 14–15:</strong> коротка відповідь (1 бал)</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Timer Bar -->
+        <div id="sticky-timer-bar" class="sticky-timer-bar" style="display: none;">
+            <span style="font-weight: 700; color: var(--accent-red);">Виконайте всі завдання нижче:</span>
+            <div class="timer-badge">
+                <span>⏱️</span>
+                <span id="timer-display">15:00</span>
+            </div>
+        </div>
+
+        <!-- Questions List Screen -->
+        <div id="test-content" style="display: none;">
+            <div id="questions-wrapper" class="questions-wrapper"></div>
+            
+            <div class="finish-btn-wrapper">
+                <button id="finish-btn" class="btn-primary" style="min-width: 260px;">Завершити тест</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <h1 class="res-title" style="font-size: 1.8rem; margin-bottom: 10px;">Результати тестування</h1>
+            <p style="color: #666; font-size: 1rem;">Нижче наведено детальний аналіз вашої роботи.</p>
+
+            <div class="results-summary-card">
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-score-val">0 з 15</div>
+                    <div class="res-stat-lbl">Виконаних завдань</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-time-val">00:00</div>
+                    <div class="res-stat-lbl">Витрачений час</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-pct-val">0%</div>
+                    <div class="res-stat-lbl">Успішність</div>
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <h3 class="res-analysis-title" style="font-size: 1.15rem; margin-bottom: 10px;">Аналіз результату:</h3>
+                <p id="analysis-text">Завантаження аналізу...</p>
+            </div>
+
+            <h2 class="res-review-title" style="font-size: 1.3rem; margin: 30px 0 15px; text-align: left;">Розбір завдань:</h2>
+            <div id="review-wrapper" class="questions-wrapper"></div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти наступний варіант</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        const allQuizPools = [
+            // ================== ВАРІАНТ 1 ==================
+            [
+                {
+                    id: 1, type: "single",
+                    question: `Визначте кількість граней трикутної призми.`,
+                    hint: `Трикутна призма має дві основи і три бічні грані.`,
+                    options: [
+                        { label: "А", text: "3", isCorrect: false },
+                        { label: "Б", text: "4", isCorrect: false },
+                        { label: "В", text: "5", isCorrect: true, rationale: `Правильно: 2 основи + 3 бічні грані = 5.` },
+                        { label: "Г", text: "6", isCorrect: false },
+                        { label: "Д", text: "9", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 2, type: "single",
+                    question: `Знайдіть довжину ребра куба, площа повної поверхні якого дорівнює 96 см&sup2;.`,
+                    hint: `Площа повної поверхні куба обчислюється за формулою S = 6a&sup2;.`,
+                    options: [
+                        { label: "А", text: "2 см", isCorrect: false },
+                        { label: "Б", text: "3 см", isCorrect: false },
+                        { label: "В", text: "4 см", isCorrect: true, rationale: `Правильно: S = 6a&sup2; &rArr; 6a&sup2; = 96 &rArr; a&sup2; = 16 &rArr; a = 4 см.` },
+                        { label: "Г", text: "6 см", isCorrect: false },
+                        { label: "Д", text: "8 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 3, type: "single",
+                    question: `Знайдіть довжину діагоналі прямокутного паралелепіпеда, виміри якого дорівнюють 2 см, 3 см і 4 см.`,
+                    hint: `Використайте формулу d = &radic;<span class='sqrt-content'>a&sup2; + b&sup2; + c&sup2;</span>.`,
+                    options: [
+                        { label: "А", text: "5 см", isCorrect: false },
+                        { label: "Б", text: "9 см", isCorrect: false },
+                        { label: "В", text: "&radic;<span class='sqrt-content'>29</span> см", isCorrect: true, rationale: `Правильно: d = &radic;<span class='sqrt-content'>2&sup2; + 3&sup2; + 4&sup2;</span> = &radic;<span class='sqrt-content'>4 + 9 + 16</span> = &radic;<span class='sqrt-content'>29</span> см.` },
+                        { label: "Г", text: "&radic;<span class='sqrt-content'>13</span> см", isCorrect: false },
+                        { label: "Д", text: "2&radic;<span class='sqrt-content'>5</span> см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 4, type: "single",
+                    question: `Знайдіть площу повної поверхні куба, діагональ якого дорівнює 2&radic;<span class='sqrt-content'>3</span> см.`,
+                    hint: `Діагональ куба d = a&radic;<span class='sqrt-content'>3</span>, де a — його ребро.`,
+                    options: [
+                        { label: "А", text: "8 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "16 см&sup2;", isCorrect: false },
+                        { label: "В", text: "20 см&sup2;", isCorrect: false },
+                        { label: "Г", text: "24 см&sup2;", isCorrect: true, rationale: `Правильно: d = a&radic;<span class='sqrt-content'>3</span> = 2&radic;<span class='sqrt-content'>3</span> &rArr; a = 2. S = 6a&sup2; = 6 &middot; 4 = 24 см&sup2;.` },
+                        { label: "Д", text: "36&radic;<span class='sqrt-content'>2</span> см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 5, type: "single",
+                    question: `Сума довжин усіх ребер куба дорівнює 72 см. Визначте довжину одного ребра цього куба.`,
+                    hint: `Скільки всього ребер має куб?`,
+                    options: [
+                        { label: "А", text: "6 см", isCorrect: true, rationale: `Правильно: У куба 12 ребер. 12a = 72 &rArr; a = 6 см.` },
+                        { label: "Б", text: "8 см", isCorrect: false },
+                        { label: "В", text: "9 см", isCorrect: false },
+                        { label: "Г", text: "12 см", isCorrect: false },
+                        { label: "Д", text: "18 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 6, type: "single",
+                    question: `Знайдіть площу бічної поверхні правильної шестикутної призми, сторона основи якої дорівнює 5 см, а висота призми 4 см.`,
+                    hint: `Площа бічної поверхні прямої призми дорівнює добутку периметра основи на висоту.`,
+                    options: [
+                        { label: "А", text: "50 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "60 см&sup2;", isCorrect: false },
+                        { label: "В", text: "80 см&sup2;", isCorrect: false },
+                        { label: "Г", text: "100 см&sup2;", isCorrect: false },
+                        { label: "Д", text: "120 см&sup2;", isCorrect: true, rationale: `Правильно: Правильна шестикутна призма має 6 однакових бічних граней. S<sub>біч</sub> = 6 &middot; a &middot; h = 6 &middot; 5 &middot; 4 = 120 см&sup2;.` }
+                    ]
+                },
+                {
+                    id: 7, type: "single",
+                    question: `Сторона основи правильної чотирикутної призми дорівнює 3 см, а периметр її бічної грані 22 см. Знайдіть площу бічної поверхні цієї призми.`,
+                    hint: `Спочатку знайдіть висоту призми з периметра бічної грані.`,
+                    options: [
+                        { label: "А", text: "66 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "72 см&sup2;", isCorrect: false },
+                        { label: "В", text: "96 см&sup2;", isCorrect: true, rationale: `Правильно: Периметр бічної грані дорівнює 2 &middot; (a + h) = 22 &rArr; 3 + h = 11 &rArr; h = 8. Площа бічної поверхні S<sub>біч</sub> = 4 &middot; a &middot; h = 4 &middot; 3 &middot; 8 = 96 см&sup2;.` },
+                        { label: "Г", text: "114 см&sup2;", isCorrect: false },
+                        { label: "Д", text: "264 см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 8, type: "single",
+                    question: `Сума довжин усіх бічних ребер прямокутного паралелепіпеда дорівнює 120 см. Визначте довжину його висоти.`,
+                    hint: `Скільки бічних ребер має прямокутний паралелепіпед?`,
+                    options: [
+                        { label: "А", text: "15 см", isCorrect: false },
+                        { label: "Б", text: "30 см", isCorrect: true, rationale: `Правильно: У прямокутного паралелепіпеда 4 рівних бічних ребра (висоти). 4h = 120 &rArr; h = 30 см.` },
+                        { label: "В", text: "40 см", isCorrect: false },
+                        { label: "Г", text: "60 см", isCorrect: false },
+                        { label: "Д", text: "10 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 9, type: "single",
+                    question: `Основою прямої трикутної призми є прямокутний трикутник з катетами 5 см і 12 см. Визначте площу бічної поверхні цієї призми, якщо її висота дорівнює 6 см.`,
+                    hint: `Знайдіть гіпотенузу основи, а потім обчисліть периметр основи.`,
+                    options: [
+                        { label: "А", text: "180 см&sup2;", isCorrect: true, rationale: `Правильно: Гіпотенуза основи c = &radic;<span class='sqrt-content'>5&sup2; + 12&sup2;</span> = 13 см. Периметр основи P = 5 + 12 + 13 = 30 см. S<sub>біч</sub> = P &middot; h = 30 &middot; 6 = 180 см&sup2;.` },
+                        { label: "Б", text: "156 см&sup2;", isCorrect: false },
+                        { label: "В", text: "360 см&sup2;", isCorrect: false },
+                        { label: "Г", text: "90 см&sup2;", isCorrect: false },
+                        { label: "Д", text: "240 см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 10, type: "single",
+                    question: `На рисунку зображено розгортку прямокутного паралелепіпеда. Використовуючи зазначені на рисунку розміри (3 см, 4 см, 12 см), обчисліть об'єм цього паралелепіпеда.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 320" width="350">
+                  <defs>
+                    <style>
+                      .outline { fill: #ffffff; stroke: #000000; stroke-width: 2.5; stroke-linejoin: round; }
+                      .fold-line { fill: none; stroke: #000000; stroke-width: 2.5; stroke-linejoin: round; }
+                      .dim-line { stroke: #000000; stroke-width: 0.8; }
+                      .dim-text { font-family: 'Times New Roman', Times, serif; font-weight: bold; font-size: 16px; fill: #000000; }
+                    </style>
+                  </defs>
+                  <rect x="0" y="0" width="350" height="320" fill="#ffffff" />
+                  <path d="M 140 100 L 170 100 L 170 70 L 210 70 L 210 100 L 280 100 L 280 220 L 210 220 L 210 250 L 170 250 L 170 220 L 140 220 Z" class="outline" />
+                  <path d="M 170 100 L 170 220 M 170 100 L 210 100 M 170 220 L 210 220 M 210 100 L 210 220 M 240 100 L 240 220" class="fold-line" />
+                  <line x1="140" y1="100" x2="110" y2="100" class="dim-line" />
+                  <line x1="140" y1="220" x2="110" y2="220" class="dim-line" />
+                  <line x1="120" y1="100" x2="120" y2="220" class="dim-line" />
+                  <polyline points="117,106 120,100 123,106" class="dim-line" fill="none" />
+                  <polyline points="117,214 120,220 123,214" class="dim-line" fill="none" />
+                  <text x="105" y="165" class="dim-text" text-anchor="end">12 см</text>
+                  <line x1="170" y1="70" x2="170" y2="40" class="dim-line" />
+                  <line x1="210" y1="70" x2="210" y2="40" class="dim-line" />
+                  <line x1="170" y1="50" x2="210" y2="50" class="dim-line" />
+                  <polyline points="176,47 170,50 176,53" class="dim-line" fill="none" />
+                  <polyline points="204,47 210,50 204,53" class="dim-line" fill="none" />
+                  <text x="190" y="35" class="dim-text" text-anchor="middle">4 см</text>
+                  <line x1="140" y1="220" x2="140" y2="250" class="dim-line" />
+                  <line x1="170" y1="220" x2="170" y2="250" class="dim-line" />
+                  <line x1="140" y1="240" x2="170" y2="240" class="dim-line" />
+                  <polyline points="146,237 140,240 146,243" class="dim-line" fill="none" />
+                  <polyline points="164,237 170,240 164,243" class="dim-line" fill="none" />
+                  <text x="155" y="265" class="dim-text" text-anchor="middle">3 см</text>
+                </svg>
+            </div>`,
+                    hint: `Об'єм прямокутного паралелепіпеда дорівнює добутку трьох його вимірів.`,
+                    options: [
+                        { label: "А", text: "144 см&sup3;", isCorrect: true, rationale: `Правильно: Виміри паралелепіпеда з розгортки: 3, 4, 12. Об'єм V = 3 &middot; 4 &middot; 12 = 144 см&sup3;.` },
+                        { label: "Б", text: "108 см&sup3;", isCorrect: false },
+                        { label: "В", text: "128 см&sup3;", isCorrect: false },
+                        { label: "Г", text: "136 см&sup3;", isCorrect: false },
+                        { label: "Д", text: "96 см&sup3;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 11, type: "matching",
+                    question: `На малюнку зображено прямокутний паралелепіпед ABCDA&#8321;B&#8321;C&#8321;D&#8321;, сторони основи якого AB=9, AD=12, а висота AA&#8321;=20. Установіть відповідність між геометричною величиною (1-3) та її числовим значенням (А-Д).<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -30 320 310" width="320">
+                  <defs>
+                    <style>
+                      .main-line { stroke: #000000; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                      .dashed-line { stroke: #000000; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 6, 6; fill: none; }
+                      .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 18px; font-style: italic; fill: #000000; }
+                      .value-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #000000; }
+                      .point { fill: #000000; }
+                    </style>
+                  </defs>
+                  <rect x="0" y="-30" width="320" height="310" fill="#ffffff" />
+                  <line x1="260" y1="180" x2="130" y2="180" class="dashed-line" />
+                  <line x1="130" y1="180" x2="70" y2="240" class="dashed-line" />
+                  <line x1="130" y1="180" x2="130" y2="0" class="dashed-line" />
+                  <line x1="70" y1="240" x2="200" y2="240" class="main-line" />
+                  <line x1="200" y1="240" x2="260" y2="180" class="main-line" />
+                  <line x1="70" y1="240" x2="70" y2="60" class="main-line" />
+                  <line x1="200" y1="240" x2="200" y2="60" class="main-line" />
+                  <line x1="260" y1="180" x2="260" y2="0" class="main-line" />
+                  <line x1="70" y1="60" x2="200" y2="60" class="main-line" />
+                  <line x1="200" y1="60" x2="260" y2="0" class="main-line" />
+                  <line x1="260" y1="0" x2="130" y2="0" class="main-line" />
+                  <line x1="130" y1="0" x2="70" y2="60" class="main-line" />
+                  <circle cx="70" cy="240" r="3" class="point" />
+                  <circle cx="200" cy="240" r="3" class="point" />
+                  <circle cx="260" cy="180" r="3" class="point" />
+                  <circle cx="130" cy="180" r="3" class="point" />
+                  <circle cx="70" cy="60" r="3" class="point" />
+                  <circle cx="200" cy="60" r="3" class="point" />
+                  <circle cx="260" cy="0" r="3" class="point" />
+                  <circle cx="130" cy="0" r="3" class="point" />
+                  <text x="45" y="250" class="vertex-label">A</text>
+                  <text x="210" y="250" class="vertex-label">B</text>
+                  <text x="270" y="185" class="vertex-label">C</text>
+                  <text x="110" y="175" class="vertex-label">D</text>
+                  <text x="40" y="55" class="vertex-label">A<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="210" y="55" class="vertex-label">B<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="270" y="0" class="vertex-label">C<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="105" y="-5" class="vertex-label">D<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="130" y="260" class="value-label">9</text>
+                  <text x="240" y="225" class="value-label">12</text>
+                  <text x="40" y="155" class="value-label">20</text>
+                </svg>
+            </div>`,
+                    hint: `Використайте формули площі поверхні, об'єму та діагоналі прямокутного паралелепіпеда.`,
+                    leftItems: ["1) Площа повної поверхні", "2) Об'єм", "3) Діагональ паралелепіпеда"],
+                    rightItems: ["А) 25", "Б) 164", "В) 300", "Г) 1056", "Д) 2160"],
+                    correctAnswers: { 0: "Г", 1: "Д", 2: "А" },
+                    rationale: "1 &rArr; Г (S = 2 &middot; (9&middot;12 + 9&middot;20 + 12&middot;20) = 1056);<br>2 &rArr; Д (V = 9 &middot; 12 &middot; 20 = 2160);<br>3 &rArr; А (d = &radic;<span class='sqrt-content'>9&sup2; + 12&sup2; + 20&sup2;</span> = &radic;<span class='sqrt-content'>625</span> = 25)."
+                },
+                {
+                    id: 12, type: "matching",
+                    question: `Установіть відповідність між площами діагональних перерізів (1-3), які є квадратами у правильних чотирикутних призмах, та об'ємами цих призм (А-Д).`,
+                    hint: `Якщо діагональний переріз — квадрат, то діагональ основи дорівнює висоті призми.`,
+                    leftItems: ["1) 64 см&sup2;", "2) 16 см&sup2;", "3) 36 см&sup2;"],
+                    rightItems: ["А) 32 см&sup3;", "Б) 234 см&sup3;", "В) 108 см&sup3;", "Г) 256 см&sup3;", "Д) 4 см&sup3;"],
+                    correctAnswers: { 0: "Г", 1: "А", 2: "В" },
+                    rationale: "Площа перерізу S = h&sup2;, звідки висота h. Площа основи = a&sup2; = <span class='frac'><span class='frac-num'>d&sup2;</span><span class='frac-den'>2</span></span> = <span class='frac'><span class='frac-num'>h&sup2;</span><span class='frac-den'>2</span></span>.<br>1 &rArr; Г (V = <span class='frac'><span class='frac-num'>64</span><span class='frac-den'>2</span></span> &middot; 8 = 256);<br>2 &rArr; А (V = <span class='frac'><span class='frac-num'>16</span><span class='frac-den'>2</span></span> &middot; 4 = 32);<br>3 &rArr; В (V = <span class='frac'><span class='frac-num'>36</span><span class='frac-den'>2</span></span> &middot; 6 = 108)."
+                },
+                {
+                    id: 13, type: "matching",
+                    question: `Установіть відповідність між сторонами основи та діагоналями (1-3) бічних граней правильних трикутних призм та площами їх бічних поверхонь (А-Д).`,
+                    hint: `За теоремою Піфагора знайдіть висоту, а потім площу бічної поверхні S<sub>біч</sub> = 3 &middot; a &middot; h.`,
+                    leftItems: ["1) 3 см, 5 см", "2) 6 см, 10 см", "3) 5 см, 13 см"],
+                    rightItems: ["А) 180 см&sup2;", "Б) 504 см&sup2;", "В) 36 см&sup2;", "Г) 144 см&sup2;", "Д) 164 см&sup2;"],
+                    correctAnswers: { 0: "В", 1: "Г", 2: "А" },
+                    rationale: "1 &rArr; В (h = &radic;<span class='sqrt-content'>5&sup2; - 3&sup2;</span> = 4, S<sub>біч</sub> = 3 &middot; 3 &middot; 4 = 36);<br>2 &rArr; Г (h = &radic;<span class='sqrt-content'>10&sup2; - 6&sup2;</span> = 8, S<sub>біч</sub> = 3 &middot; 6 &middot; 8 = 144);<br>3 &rArr; А (h = &radic;<span class='sqrt-content'>13&sup2; - 5&sup2;</span> = 12, S<sub>біч</sub> = 3 &middot; 5 &middot; 12 = 180)."
+                },
+                {
+                    id: 14, type: "short",
+                    question: `Відро вміщує 12 л води. Скільки відер води знадобиться, щоб заповнити акваріум, що має форму прямокутного паралелепіпеда з вимірами 45 см, 80 см і 60 см?<br>(У відповідь пишемо лише число)`,
+                    hint: `Знайдіть об'єм акваріума в см&sup3; та переведіть у літри (1 л = 1000 см&sup3;).`,
+                    correctAnswer: "18",
+                    rationale: `Правильно: V = 45 &middot; 80 &middot; 60 = 216000 см&sup3; = 216 л. Кількість відер = 216 : 12 = 18.`
+                },
+                {
+                    id: 15, type: "short",
+                    question: `Дерев'яний брусок має форму прямокутного паралелепіпеда з вимірами 10 см, 20 см, 80 см. Скільки лаку потрібно (у грамах) для того, щоб один раз покрити ним усю поверхню цього бруска, якщо на 1 м&sup2; витрачається 100 г лаку?<br>(У відповідь пишемо лише число)`,
+                    hint: `Знайдіть площу повної поверхні в см&sup2;, переведіть у м&sup2; (1 м&sup2; = 10000 см&sup2;) та помножте на витрати лаку.`,
+                    correctAnswer: "52",
+                    rationale: `Правильно: S<sub>повн</sub> = 2 &middot; (10&middot;20 + 10&middot;80 + 20&middot;80) = 5200 см&sup2; = 0.52 м&sup2;. Маса лаку = 0.52 &middot; 100 = 52 г.`
+                }
+            ],
+            // ================== ВАРІАНТ 2 ==================
+            [
+                {
+                    id: 16, type: "single",
+                    question: `Визначте кількість граней чотирикутної призми.`,
+                    hint: `Чотирикутна призма має дві основи і чотири бічні грані.`,
+                    options: [
+                        { label: "А", text: "4", isCorrect: false },
+                        { label: "Б", text: "5", isCorrect: false },
+                        { label: "В", text: "6", isCorrect: true, rationale: `Правильно: 2 основи + 4 бічні грані = 6.` },
+                        { label: "Г", text: "8", isCorrect: false },
+                        { label: "Д", text: "10", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 17, type: "single",
+                    question: `Знайдіть довжину ребра куба, площа повної поверхні якого дорівнює 54 см&sup2;.`,
+                    hint: `Площа повної поверхні куба обчислюється за формулою S = 6a&sup2;.`,
+                    options: [
+                        { label: "А", text: "2 см", isCorrect: false },
+                        { label: "Б", text: "3 см", isCorrect: true, rationale: `Правильно: 6a&sup2; = 54 &rArr; a&sup2; = 9 &rArr; a = 3 см.` },
+                        { label: "В", text: "4 см", isCorrect: false },
+                        { label: "Г", text: "6 см", isCorrect: false },
+                        { label: "Д", text: "9 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 18, type: "single",
+                    question: `Знайдіть довжину діагоналі прямокутного паралелепіпеда, виміри якого дорівнюють 2 см, 4 см і 4 см.`,
+                    hint: `Використайте формулу d = &radic;<span class='sqrt-content'>a&sup2; + b&sup2; + c&sup2;</span>.`,
+                    options: [
+                        { label: "А", text: "4 см", isCorrect: false },
+                        { label: "Б", text: "6 см", isCorrect: true, rationale: `Правильно: d = &radic;<span class='sqrt-content'>2&sup2; + 4&sup2; + 4&sup2;</span> = &radic;<span class='sqrt-content'>36</span> = 6 см.` },
+                        { label: "В", text: "&radic;<span class='sqrt-content'>24</span> см", isCorrect: false },
+                        { label: "Г", text: "8 см", isCorrect: false },
+                        { label: "Д", text: "36 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 19, type: "single",
+                    question: `Знайдіть площу повної поверхні куба, діагональ якого дорівнює &radic;<span class='sqrt-content'>3</span> см.`,
+                    hint: `Діагональ куба d = a&radic;<span class='sqrt-content'>3</span>, де a — його ребро.`,
+                    options: [
+                        { label: "А", text: "3 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "6 см&sup2;", isCorrect: true, rationale: `Правильно: d = a&radic;<span class='sqrt-content'>3</span> = &radic;<span class='sqrt-content'>3</span> &rArr; a = 1. S = 6a&sup2; = 6 см&sup2;.` },
+                        { label: "В", text: "9 см&sup2;", isCorrect: false },
+                        { label: "Г", text: "12 см&sup2;", isCorrect: false },
+                        { label: "Д", text: "18 см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 20, type: "single",
+                    question: `Сума довжин усіх ребер куба дорівнює 48 см. Визначте довжину одного ребра цього куба.`,
+                    hint: `Скільки всього ребер має куб?`,
+                    options: [
+                        { label: "А", text: "2 см", isCorrect: false },
+                        { label: "Б", text: "3 см", isCorrect: false },
+                        { label: "В", text: "4 см", isCorrect: true, rationale: `Правильно: 12a = 48 &rArr; a = 4 см.` },
+                        { label: "Г", text: "6 см", isCorrect: false },
+                        { label: "Д", text: "8 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 21, type: "single",
+                    question: `Знайдіть площу бічної поверхні правильної шестикутної призми, сторона основи якої дорівнює 3 см, а висота призми 10 см.`,
+                    hint: `Площа бічної поверхні прямої призми дорівнює добутку периметра основи на висоту.`,
+                    options: [
+                        { label: "А", text: "60 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "90 см&sup2;", isCorrect: false },
+                        { label: "В", text: "120 см&sup2;", isCorrect: false },
+                        { label: "Г", text: "150 см&sup2;", isCorrect: false },
+                        { label: "Д", text: "180 см&sup2;", isCorrect: true, rationale: `Правильно: S<sub>біч</sub> = 6 &middot; a &middot; h = 6 &middot; 3 &middot; 10 = 180 см&sup2;.` }
+                    ]
+                },
+                {
+                    id: 22, type: "single",
+                    question: `Сторона основи правильної чотирикутної призми дорівнює 4 см, а периметр її бічної грані 20 см. Знайдіть площу бічної поверхні цієї призми.`,
+                    hint: `Спочатку знайдіть висоту призми з периметра бічної грані.`,
+                    options: [
+                        { label: "А", text: "80 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "96 см&sup2;", isCorrect: true, rationale: `Правильно: 2(a+h)=20 &rArr; 4+h=10 &rArr; h=6. S<sub>біч</sub> = 4 &middot; a &middot; h = 4 &middot; 4 &middot; 6 = 96 см&sup2;.` },
+                        { label: "В", text: "120 см&sup2;", isCorrect: false },
+                        { label: "Г", text: "144 см&sup2;", isCorrect: false },
+                        { label: "Д", text: "160 см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 23, type: "single",
+                    question: `Сума довжин усіх бічних ребер прямокутного паралелепіпеда дорівнює 80 см. Визначте довжину його висоти.`,
+                    hint: `Скільки бічних ребер має прямокутний паралелепіпед?`,
+                    options: [
+                        { label: "А", text: "10 см", isCorrect: false },
+                        { label: "Б", text: "20 см", isCorrect: true, rationale: `Правильно: 4h = 80 &rArr; h = 20 см.` },
+                        { label: "В", text: "30 см", isCorrect: false },
+                        { label: "Г", text: "40 см", isCorrect: false },
+                        { label: "Д", text: "80 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 24, type: "single",
+                    question: `Основою прямої трикутної призми є прямокутний трикутник з катетами 6 см і 8 см. Визначте площу бічної поверхні цієї призми, якщо її висота дорівнює 5 см.`,
+                    hint: `Знайдіть гіпотенузу основи, а потім обчисліть периметр основи.`,
+                    options: [
+                        { label: "А", text: "100 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "120 см&sup2;", isCorrect: true, rationale: `Правильно: c = &radic;<span class='sqrt-content'>6&sup2; + 8&sup2;</span> = 10. P = 6 + 8 + 10 = 24. S<sub>біч</sub> = P &middot; h = 24 &middot; 5 = 120 см&sup2;.` },
+                        { label: "В", text: "140 см&sup2;", isCorrect: false },
+                        { label: "Г", text: "160 см&sup2;", isCorrect: false },
+                        { label: "Д", text: "240 см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 25, type: "single",
+                    question: `На рисунку зображено розгортку прямокутного паралелепіпеда. Використовуючи зазначені розміри (2 см, 5 см, 10 см), обчисліть об'єм цього паралелепіпеда.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 320" width="350">
+                  <defs>
+                    <style>
+                      .outline { fill: #ffffff; stroke: #000000; stroke-width: 2.5; stroke-linejoin: round; }
+                      .fold-line { fill: none; stroke: #000000; stroke-width: 2.5; stroke-linejoin: round; }
+                      .dim-line { stroke: #000000; stroke-width: 0.8; }
+                      .dim-text { font-family: 'Times New Roman', Times, serif; font-weight: bold; font-size: 16px; fill: #000000; }
+                    </style>
+                  </defs>
+                  <rect x="0" y="0" width="350" height="320" fill="#ffffff" />
+                  <path d="M 140 100 L 170 100 L 170 70 L 210 70 L 210 100 L 280 100 L 280 220 L 210 220 L 210 250 L 170 250 L 170 220 L 140 220 Z" class="outline" />
+                  <path d="M 170 100 L 170 220 M 170 100 L 210 100 M 170 220 L 210 220 M 210 100 L 210 220 M 240 100 L 240 220" class="fold-line" />
+                  <line x1="140" y1="100" x2="110" y2="100" class="dim-line" />
+                  <line x1="140" y1="220" x2="110" y2="220" class="dim-line" />
+                  <line x1="120" y1="100" x2="120" y2="220" class="dim-line" />
+                  <polyline points="117,106 120,100 123,106" class="dim-line" fill="none" />
+                  <polyline points="117,214 120,220 123,214" class="dim-line" fill="none" />
+                  <text x="105" y="165" class="dim-text" text-anchor="end">10 см</text>
+                  <line x1="170" y1="70" x2="170" y2="40" class="dim-line" />
+                  <line x1="210" y1="70" x2="210" y2="40" class="dim-line" />
+                  <line x1="170" y1="50" x2="210" y2="50" class="dim-line" />
+                  <polyline points="176,47 170,50 176,53" class="dim-line" fill="none" />
+                  <polyline points="204,47 210,50 204,53" class="dim-line" fill="none" />
+                  <text x="190" y="35" class="dim-text" text-anchor="middle">5 см</text>
+                  <line x1="140" y1="220" x2="140" y2="250" class="dim-line" />
+                  <line x1="170" y1="220" x2="170" y2="250" class="dim-line" />
+                  <line x1="140" y1="240" x2="170" y2="240" class="dim-line" />
+                  <polyline points="146,237 140,240 146,243" class="dim-line" fill="none" />
+                  <polyline points="164,237 170,240 164,243" class="dim-line" fill="none" />
+                  <text x="155" y="265" class="dim-text" text-anchor="middle">2 см</text>
+                </svg>
+            </div>`,
+                    hint: `Об'єм прямокутного паралелепіпеда дорівнює добутку трьох його вимірів.`,
+                    options: [
+                        { label: "А", text: "50 см&sup3;", isCorrect: false },
+                        { label: "Б", text: "70 см&sup3;", isCorrect: false },
+                        { label: "В", text: "100 см&sup3;", isCorrect: true, rationale: `Правильно: Виміри: 2, 5, 10. V = 2 &middot; 5 &middot; 10 = 100 см&sup3;.` },
+                        { label: "Г", text: "120 см&sup3;", isCorrect: false },
+                        { label: "Д", text: "200 см&sup3;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 26, type: "matching",
+                    question: `На малюнку зображено прямокутний паралелепіпед ABCDA&#8321;B&#8321;C&#8321;D&#8321;, сторони основи якого AB=6, AD=8, а висота AA&#8321;=10. Установіть відповідність між геометричною величиною (1-3) та її числовим значенням (А-Д).<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -30 320 310" width="320">
+                  <defs>
+                    <style>
+                      .main-line { stroke: #000000; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                      .dashed-line { stroke: #000000; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 6, 6; fill: none; }
+                      .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 18px; font-style: italic; fill: #000000; }
+                      .value-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #000000; }
+                      .point { fill: #000000; }
+                    </style>
+                  </defs>
+                  <rect x="0" y="-30" width="320" height="310" fill="#ffffff" />
+                  <line x1="260" y1="180" x2="130" y2="180" class="dashed-line" />
+                  <line x1="130" y1="180" x2="70" y2="240" class="dashed-line" />
+                  <line x1="130" y1="180" x2="130" y2="0" class="dashed-line" />
+                  <line x1="70" y1="240" x2="200" y2="240" class="main-line" />
+                  <line x1="200" y1="240" x2="260" y2="180" class="main-line" />
+                  <line x1="70" y1="240" x2="70" y2="60" class="main-line" />
+                  <line x1="200" y1="240" x2="200" y2="60" class="main-line" />
+                  <line x1="260" y1="180" x2="260" y2="0" class="main-line" />
+                  <line x1="70" y1="60" x2="200" y2="60" class="main-line" />
+                  <line x1="200" y1="60" x2="260" y2="0" class="main-line" />
+                  <line x1="260" y1="0" x2="130" y2="0" class="main-line" />
+                  <line x1="130" y1="0" x2="70" y2="60" class="main-line" />
+                  <circle cx="70" cy="240" r="3" class="point" />
+                  <circle cx="200" cy="240" r="3" class="point" />
+                  <circle cx="260" cy="180" r="3" class="point" />
+                  <circle cx="130" cy="180" r="3" class="point" />
+                  <circle cx="70" cy="60" r="3" class="point" />
+                  <circle cx="200" cy="60" r="3" class="point" />
+                  <circle cx="260" cy="0" r="3" class="point" />
+                  <circle cx="130" cy="0" r="3" class="point" />
+                  <text x="45" y="250" class="vertex-label">A</text>
+                  <text x="210" y="250" class="vertex-label">B</text>
+                  <text x="270" y="185" class="vertex-label">C</text>
+                  <text x="110" y="175" class="vertex-label">D</text>
+                  <text x="40" y="55" class="vertex-label">A<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="210" y="55" class="vertex-label">B<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="270" y="0" class="vertex-label">C<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="105" y="-5" class="vertex-label">D<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="130" y="260" class="value-label">6</text>
+                  <text x="240" y="225" class="value-label">8</text>
+                  <text x="40" y="155" class="value-label">10</text>
+                </svg>
+            </div>`,
+                    hint: `Використайте формули площі поверхні, об'єму та діагоналі прямокутного паралелепіпеда.`,
+                    leftItems: ["1) Площа повної поверхні", "2) Об'єм", "3) Діагональ паралелепіпеда"],
+                    rightItems: ["А) 376", "Б) 480", "В) 10&radic;<span class='sqrt-content'>2</span>", "Г) 100", "Д) 200"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "В" },
+                    rationale: "1 &rArr; А (S = 2 &middot; (6&middot;8 + 6&middot;10 + 8&middot;10) = 376);<br>2 &rArr; Б (V = 6 &middot; 8 &middot; 10 = 480);<br>3 &rArr; В (d = &radic;<span class='sqrt-content'>6&sup2; + 8&sup2; + 10&sup2;</span> = &radic;<span class='sqrt-content'>200</span> = 10&radic;<span class='sqrt-content'>2</span>)."
+                },
+                {
+                    id: 27, type: "matching",
+                    question: `Установіть відповідність між площами діагональних перерізів (1-3), які є квадратами у правильних чотирикутних призмах, та об'ємами цих призм (А-Д).`,
+                    hint: `Якщо діагональний переріз — квадрат, то діагональ основи дорівнює висоті призми.`,
+                    leftItems: ["1) 4 см&sup2;", "2) 100 см&sup2;", "3) 144 см&sup2;"],
+                    rightItems: ["А) 4 см&sup3;", "Б) 500 см&sup3;", "В) 864 см&sup3;", "Г) 100 см&sup3;", "Д) 288 см&sup3;"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "В" },
+                    rationale: "Площа перерізу S = h&sup2;, звідки висота h. Площа основи = a&sup2; = <span class='frac'><span class='frac-num'>d&sup2;</span><span class='frac-den'>2</span></span> = <span class='frac'><span class='frac-num'>h&sup2;</span><span class='frac-den'>2</span></span>.<br>1 &rArr; А (V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>2</span></span> &middot; 2 = 4);<br>2 &rArr; Б (V = <span class='frac'><span class='frac-num'>100</span><span class='frac-den'>2</span></span> &middot; 10 = 500);<br>3 &rArr; В (V = <span class='frac'><span class='frac-num'>144</span><span class='frac-den'>2</span></span> &middot; 12 = 864)."
+                },
+                {
+                    id: 28, type: "matching",
+                    question: `Установіть відповідність між сторонами основи та діагоналями (1-3) бічних граней правильних трикутних призм та площами їх бічних поверхонь (А-Д).`,
+                    hint: `За теоремою Піфагора знайдіть висоту, а потім площу бічної поверхні S<sub>біч</sub> = 3 &middot; a &middot; h.`,
+                    leftItems: ["1) 5 см, 13 см", "2) 8 см, 10 см", "3) 7 см, 25 см"],
+                    rightItems: ["А) 144 см&sup2;", "Б) 180 см&sup2;", "В) 504 см&sup2;", "Г) 240 см&sup2;", "Д) 300 см&sup2;"],
+                    correctAnswers: { 0: "Б", 1: "А", 2: "В" },
+                    rationale: "1 &rArr; Б (h = &radic;<span class='sqrt-content'>13&sup2; - 5&sup2;</span> = 12, S<sub>біч</sub> = 3 &middot; 5 &middot; 12 = 180);<br>2 &rArr; А (h = &radic;<span class='sqrt-content'>10&sup2; - 8&sup2;</span> = 6, S<sub>біч</sub> = 3 &middot; 8 &middot; 6 = 144);<br>3 &rArr; В (h = &radic;<span class='sqrt-content'>25&sup2; - 7&sup2;</span> = 24, S<sub>біч</sub> = 3 &middot; 7 &middot; 24 = 504)."
+                },
+                {
+                    id: 29, type: "short",
+                    question: `Відро вміщує 15 л води. Скільки відер води знадобиться, щоб заповнити акваріум, що має форму прямокутного паралелепіпеда з вимірами 50 см, 60 см і 40 см?<br>(У відповідь пишемо лише число)`,
+                    hint: `Знайдіть об'єм акваріума в см&sup3; та переведіть у літри (1 л = 1000 см&sup3;).`,
+                    correctAnswer: "8",
+                    rationale: `Правильно: V = 50 &middot; 60 &middot; 40 = 120000 см&sup3; = 120 л. Кількість відер = 120 : 15 = 8.`
+                },
+                {
+                    id: 30, type: "short",
+                    question: `Дерев'яний брусок має форму прямокутного паралелепіпеда з вимірами 20 см, 30 см, 50 см. Скільки лаку потрібно (у грамах) для того, щоб один раз покрити ним усю поверхню цього бруска, якщо на 1 м&sup2; витрачається 200 г лаку?<br>(У відповідь пишемо лише число)`,
+                    hint: `Знайдіть площу повної поверхні в см&sup2;, переведіть у м&sup2; (1 м&sup2; = 10000 см&sup2;) та помножте на витрати лаку.`,
+                    correctAnswer: "124",
+                    rationale: `Правильно: S<sub>повн</sub> = 2 &middot; (20&middot;30 + 20&middot;50 + 30&middot;50) = 6200 см&sup2; = 0.62 м&sup2;. Маса лаку = 0.62 &middot; 200 = 124 г.`
+                }
+            ],
+            // ================== ВАРІАНТ 3 ==================
+            [
+                {
+                    id: 31, type: "single",
+                    question: `Визначте кількість граней восьмикутної призми.`,
+                    hint: `Восьмикутна призма має дві основи і вісім бічних граней.`,
+                    options: [
+                        { label: "А", text: "6", isCorrect: false },
+                        { label: "Б", text: "8", isCorrect: false },
+                        { label: "В", text: "10", isCorrect: true, rationale: `Правильно: 2 основи + 8 бічних граней = 10.` },
+                        { label: "Г", text: "16", isCorrect: false },
+                        { label: "Д", text: "24", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 32, type: "single",
+                    question: `Знайдіть довжину ребра куба, площа повної поверхні якого дорівнює 150 см&sup2;.`,
+                    hint: `Площа повної поверхні куба обчислюється за формулою S = 6a&sup2;.`,
+                    options: [
+                        { label: "А", text: "3 см", isCorrect: false },
+                        { label: "Б", text: "4 см", isCorrect: false },
+                        { label: "В", text: "5 см", isCorrect: true, rationale: `Правильно: 6a&sup2; = 150 &rArr; a&sup2; = 25 &rArr; a = 5 см.` },
+                        { label: "Г", text: "6 см", isCorrect: false },
+                        { label: "Д", text: "10 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 33, type: "single",
+                    question: `Знайдіть довжину діагоналі прямокутного паралелепіпеда, виміри якого дорівнюють 3 см, 4 см і 12 см.`,
+                    hint: `Використайте формулу d = &radic;<span class='sqrt-content'>a&sup2; + b&sup2; + c&sup2;</span>.`,
+                    options: [
+                        { label: "А", text: "13 см", isCorrect: true, rationale: `Правильно: d = &radic;<span class='sqrt-content'>3&sup2; + 4&sup2; + 12&sup2;</span> = &radic;<span class='sqrt-content'>169</span> = 13 см.` },
+                        { label: "Б", text: "15 см", isCorrect: false },
+                        { label: "В", text: "17 см", isCorrect: false },
+                        { label: "Г", text: "19 см", isCorrect: false },
+                        { label: "Д", text: "25 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 34, type: "single",
+                    question: `Знайдіть площу повної поверхні куба, діагональ якого дорівнює 4&radic;<span class='sqrt-content'>3</span> см.`,
+                    hint: `Діагональ куба d = a&radic;<span class='sqrt-content'>3</span>, де a — його ребро.`,
+                    options: [
+                        { label: "А", text: "48 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "64 см&sup2;", isCorrect: false },
+                        { label: "В", text: "80 см&sup2;", isCorrect: false },
+                        { label: "Г", text: "96 см&sup2;", isCorrect: true, rationale: `Правильно: d = 4&radic;<span class='sqrt-content'>3</span> &rArr; a = 4. S = 6a&sup2; = 6 &middot; 16 = 96 см&sup2;.` },
+                        { label: "Д", text: "144 см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 35, type: "single",
+                    question: `Сума довжин усіх ребер куба дорівнює 120 см. Визначте довжину одного ребра цього куба.`,
+                    hint: `Скільки всього ребер має куб?`,
+                    options: [
+                        { label: "А", text: "8 см", isCorrect: false },
+                        { label: "Б", text: "10 см", isCorrect: true, rationale: `Правильно: 12a = 120 &rArr; a = 10 см.` },
+                        { label: "В", text: "12 см", isCorrect: false },
+                        { label: "Г", text: "15 см", isCorrect: false },
+                        { label: "Д", text: "20 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 36, type: "single",
+                    question: `Знайдіть площу бічної поверхні правильної шестикутної призми, сторона основи якої дорівнює 2 см, а висота призми 8 см.`,
+                    hint: `Площа бічної поверхні прямої призми дорівнює добутку периметра основи на висоту.`,
+                    options: [
+                        { label: "А", text: "48 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "72 см&sup2;", isCorrect: false },
+                        { label: "В", text: "96 см&sup2;", isCorrect: true, rationale: `Правильно: S<sub>біч</sub> = 6 &middot; a &middot; h = 6 &middot; 2 &middot; 8 = 96 см&sup2;.` },
+                        { label: "Г", text: "112 см&sup2;", isCorrect: false },
+                        { label: "Д", text: "144 см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 37, type: "single",
+                    question: `Сторона основи правильної чотирикутної призми дорівнює 5 см, а периметр її бічної грані 26 см. Знайдіть площу бічної поверхні цієї призми.`,
+                    hint: `Спочатку знайдіть висоту призми з периметра бічної грані.`,
+                    options: [
+                        { label: "А", text: "120 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "140 см&sup2;", isCorrect: false },
+                        { label: "В", text: "160 см&sup2;", isCorrect: true, rationale: `Правильно: 2(a+h)=26 &rArr; 5+h=13 &rArr; h=8. S<sub>біч</sub> = 4 &middot; a &middot; h = 4 &middot; 5 &middot; 8 = 160 см&sup2;.` },
+                        { label: "Г", text: "180 см&sup2;", isCorrect: false },
+                        { label: "Д", text: "200 см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 38, type: "single",
+                    question: `Сума довжин усіх бічних ребер прямокутного паралелепіпеда дорівнює 60 см. Визначте довжину його висоти.`,
+                    hint: `Скільки бічних ребер має прямокутний паралелепіпед?`,
+                    options: [
+                        { label: "А", text: "10 см", isCorrect: false },
+                        { label: "Б", text: "12 см", isCorrect: false },
+                        { label: "В", text: "15 см", isCorrect: true, rationale: `Правильно: 4h = 60 &rArr; h = 15 см.` },
+                        { label: "Г", text: "20 см", isCorrect: false },
+                        { label: "Д", text: "30 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 39, type: "single",
+                    question: `Основою прямої трикутної призми є прямокутний трикутник з катетами 9 см і 12 см. Визначте площу бічної поверхні цієї призми, якщо її висота дорівнює 10 см.`,
+                    hint: `Знайдіть гіпотенузу основи, а потім обчисліть периметр основи.`,
+                    options: [
+                        { label: "А", text: "270 см&sup2;", isCorrect: false },
+                        { label: "Б", text: "300 см&sup2;", isCorrect: false },
+                        { label: "В", text: "330 см&sup2;", isCorrect: false },
+                        { label: "Г", text: "360 см&sup2;", isCorrect: true, rationale: `Правильно: c = &radic;<span class='sqrt-content'>9&sup2; + 12&sup2;</span> = 15. P = 9 + 12 + 15 = 36. S<sub>біч</sub> = P &middot; h = 36 &middot; 10 = 360 см&sup2;.` },
+                        { label: "Д", text: "400 см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 40, type: "single",
+                    question: `На рисунку зображено розгортку прямокутного паралелепіпеда. Використовуючи зазначені розміри (4 см, 6 см, 8 см), обчисліть об'єм цього паралелепіпеда.<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 320" width="350">
+                  <defs>
+                    <style>
+                      .outline { fill: #ffffff; stroke: #000000; stroke-width: 2.5; stroke-linejoin: round; }
+                      .fold-line { fill: none; stroke: #000000; stroke-width: 2.5; stroke-linejoin: round; }
+                      .dim-line { stroke: #000000; stroke-width: 0.8; }
+                      .dim-text { font-family: 'Times New Roman', Times, serif; font-weight: bold; font-size: 16px; fill: #000000; }
+                    </style>
+                  </defs>
+                  <rect x="0" y="0" width="350" height="320" fill="#ffffff" />
+                  <path d="M 140 100 L 170 100 L 170 70 L 210 70 L 210 100 L 280 100 L 280 220 L 210 220 L 210 250 L 170 250 L 170 220 L 140 220 Z" class="outline" />
+                  <path d="M 170 100 L 170 220 M 170 100 L 210 100 M 170 220 L 210 220 M 210 100 L 210 220 M 240 100 L 240 220" class="fold-line" />
+                  <line x1="140" y1="100" x2="110" y2="100" class="dim-line" />
+                  <line x1="140" y1="220" x2="110" y2="220" class="dim-line" />
+                  <line x1="120" y1="100" x2="120" y2="220" class="dim-line" />
+                  <polyline points="117,106 120,100 123,106" class="dim-line" fill="none" />
+                  <polyline points="117,214 120,220 123,214" class="dim-line" fill="none" />
+                  <text x="105" y="165" class="dim-text" text-anchor="end">8 см</text>
+                  <line x1="170" y1="70" x2="170" y2="40" class="dim-line" />
+                  <line x1="210" y1="70" x2="210" y2="40" class="dim-line" />
+                  <line x1="170" y1="50" x2="210" y2="50" class="dim-line" />
+                  <polyline points="176,47 170,50 176,53" class="dim-line" fill="none" />
+                  <polyline points="204,47 210,50 204,53" class="dim-line" fill="none" />
+                  <text x="190" y="35" class="dim-text" text-anchor="middle">6 см</text>
+                  <line x1="140" y1="220" x2="140" y2="250" class="dim-line" />
+                  <line x1="170" y1="220" x2="170" y2="250" class="dim-line" />
+                  <line x1="140" y1="240" x2="170" y2="240" class="dim-line" />
+                  <polyline points="146,237 140,240 146,243" class="dim-line" fill="none" />
+                  <polyline points="164,237 170,240 164,243" class="dim-line" fill="none" />
+                  <text x="155" y="265" class="dim-text" text-anchor="middle">4 см</text>
+                </svg>
+            </div>`,
+                    hint: `Об'єм прямокутного паралелепіпеда дорівнює добутку трьох його вимірів.`,
+                    options: [
+                        { label: "А", text: "192 см&sup3;", isCorrect: true, rationale: `Правильно: Виміри: 4, 6, 8. V = 4 &middot; 6 &middot; 8 = 192 см&sup3;.` },
+                        { label: "Б", text: "144 см&sup3;", isCorrect: false },
+                        { label: "В", text: "180 см&sup3;", isCorrect: false },
+                        { label: "Г", text: "216 см&sup3;", isCorrect: false },
+                        { label: "Д", text: "240 см&sup3;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 41, type: "matching",
+                    question: `На малюнку зображено прямокутний паралелепіпед ABCDA&#8321;B&#8321;C&#8321;D&#8321;, сторони основи якого AB=5, AD=12, а висота AA&#8321;=10. Установіть відповідність між геометричною величиною (1-3) та її числовим значенням (А-Д).<br><div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -30 320 310" width="320">
+                  <defs>
+                    <style>
+                      .main-line { stroke: #000000; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                      .dashed-line { stroke: #000000; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 6, 6; fill: none; }
+                      .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 18px; font-style: italic; fill: #000000; }
+                      .value-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #000000; }
+                      .point { fill: #000000; }
+                    </style>
+                  </defs>
+                  <rect x="0" y="-30" width="320" height="310" fill="#ffffff" />
+                  <line x1="260" y1="180" x2="130" y2="180" class="dashed-line" />
+                  <line x1="130" y1="180" x2="70" y2="240" class="dashed-line" />
+                  <line x1="130" y1="180" x2="130" y2="0" class="dashed-line" />
+                  <line x1="70" y1="240" x2="200" y2="240" class="main-line" />
+                  <line x1="200" y1="240" x2="260" y2="180" class="main-line" />
+                  <line x1="70" y1="240" x2="70" y2="60" class="main-line" />
+                  <line x1="200" y1="240" x2="200" y2="60" class="main-line" />
+                  <line x1="260" y1="180" x2="260" y2="0" class="main-line" />
+                  <line x1="70" y1="60" x2="200" y2="60" class="main-line" />
+                  <line x1="200" y1="60" x2="260" y2="0" class="main-line" />
+                  <line x1="260" y1="0" x2="130" y2="0" class="main-line" />
+                  <line x1="130" y1="0" x2="70" y2="60" class="main-line" />
+                  <circle cx="70" cy="240" r="3" class="point" />
+                  <circle cx="200" cy="240" r="3" class="point" />
+                  <circle cx="260" cy="180" r="3" class="point" />
+                  <circle cx="130" cy="180" r="3" class="point" />
+                  <circle cx="70" cy="60" r="3" class="point" />
+                  <circle cx="200" cy="60" r="3" class="point" />
+                  <circle cx="260" cy="0" r="3" class="point" />
+                  <circle cx="130" cy="0" r="3" class="point" />
+                  <text x="45" y="250" class="vertex-label">A</text>
+                  <text x="210" y="250" class="vertex-label">B</text>
+                  <text x="270" y="185" class="vertex-label">C</text>
+                  <text x="110" y="175" class="vertex-label">D</text>
+                  <text x="40" y="55" class="vertex-label">A<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="210" y="55" class="vertex-label">B<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="270" y="0" class="vertex-label">C<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="105" y="-5" class="vertex-label">D<tspan baseline-shift="sub" font-size="12">1</tspan></text>
+                  <text x="130" y="260" class="value-label">5</text>
+                  <text x="240" y="225" class="value-label">12</text>
+                  <text x="40" y="155" class="value-label">10</text>
+                </svg>
+            </div>`,
+                    hint: `Використайте формули площі поверхні, об'єму та діагоналі прямокутного паралелепіпеда.`,
+                    leftItems: ["1) Площа повної поверхні", "2) Об'єм", "3) Діагональ паралелепіпеда"],
+                    rightItems: ["А) 460", "Б) 600", "В) &radic;<span class='sqrt-content'>269</span>", "Г) 300", "Д) 500"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "В" },
+                    rationale: "1 &rArr; А (S = 2 &middot; (5&middot;12 + 5&middot;10 + 12&middot;10) = 460);<br>2 &rArr; Б (V = 5 &middot; 12 &middot; 10 = 600);<br>3 &rArr; В (d = &radic;<span class='sqrt-content'>5&sup2; + 12&sup2; + 10&sup2;</span> = &radic;<span class='sqrt-content'>269</span>)."
+                },
+                {
+                    id: 42, type: "matching",
+                    question: `Установіть відповідність між площами діагональних перерізів (1-3), які є квадратами у правильних чотирикутних призмах, та об'ємами цих призм (А-Д).`,
+                    hint: `Якщо діагональний переріз — квадрат, то діагональ основи дорівнює висоті призми.`,
+                    leftItems: ["1) 400 см&sup2;", "2) 196 см&sup2;", "3) 256 см&sup2;"],
+                    rightItems: ["А) 4000 см&sup3;", "Б) 1372 см&sup3;", "В) 2048 см&sup3;", "Г) 1000 см&sup3;", "Д) 800 см&sup3;"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "В" },
+                    rationale: "Площа перерізу S = h&sup2;, звідки висота h. Площа основи = a&sup2; = <span class='frac'><span class='frac-num'>d&sup2;</span><span class='frac-den'>2</span></span> = <span class='frac'><span class='frac-num'>h&sup2;</span><span class='frac-den'>2</span></span>.<br>1 &rArr; А (V = <span class='frac'><span class='frac-num'>400</span><span class='frac-den'>2</span></span> &middot; 20 = 4000);<br>2 &rArr; Б (V = <span class='frac'><span class='frac-num'>196</span><span class='frac-den'>2</span></span> &middot; 14 = 1372);<br>3 &rArr; В (V = <span class='frac'><span class='frac-num'>256</span><span class='frac-den'>2</span></span> &middot; 16 = 2048)."
+                },
+                {
+                    id: 43, type: "matching",
+                    question: `Установіть відповідність між сторонами основи та діагоналями (1-3) бічних граней правильних трикутних призм та площами їх бічних поверхонь (А-Д).`,
+                    hint: `За теоремою Піфагора знайдіть висоту, а потім площу бічної поверхні S<sub>біч</sub> = 3 &middot; a &middot; h.`,
+                    leftItems: ["1) 6 см, 10 см", "2) 9 см, 15 см", "3) 12 см, 20 см"],
+                    rightItems: ["А) 144 см&sup2;", "Б) 324 см&sup2;", "В) 576 см&sup2;", "Г) 288 см&sup2;", "Д) 400 см&sup2;"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "В" },
+                    rationale: "1 &rArr; А (h = &radic;<span class='sqrt-content'>10&sup2; - 6&sup2;</span> = 8, S<sub>біч</sub> = 3 &middot; 6 &middot; 8 = 144);<br>2 &rArr; Б (h = &radic;<span class='sqrt-content'>15&sup2; - 9&sup2;</span> = 12, S<sub>біч</sub> = 3 &middot; 9 &middot; 12 = 324);<br>3 &rArr; В (h = &radic;<span class='sqrt-content'>20&sup2; - 12&sup2;</span> = 16, S<sub>біч</sub> = 3 &middot; 12 &middot; 16 = 576)."
+                },
+                {
+                    id: 44, type: "short",
+                    question: `Відро вміщує 10 л води. Скільки відер води знадобиться, щоб заповнити акваріум, що має форму прямокутного паралелепіпеда з вимірами 25 см, 40 см і 80 см?<br>(У відповідь пишемо лише число)`,
+                    hint: `Знайдіть об'єм акваріума в см&sup3; та переведіть у літри (1 л = 1000 см&sup3;).`,
+                    correctAnswer: "8",
+                    rationale: `Правильно: V = 25 &middot; 40 &middot; 80 = 80000 см&sup3; = 80 л. Кількість відер = 80 : 10 = 8.`
+                },
+                {
+                    id: 45, type: "short",
+                    question: `Дерев'яний брусок має форму прямокутного паралелепіпеда з вимірами 50 см, 40 см, 10 см. Скільки лаку потрібно (у грамах) для того, щоб один раз покрити ним усю поверхню цього бруска, якщо на 1 м&sup2; витрачається 150 г лаку?<br>(У відповідь пишемо лише число)`,
+                    hint: `Знайдіть площу повної поверхні в см&sup2;, переведіть у м&sup2; (1 м&sup2; = 10000 см&sup2;) та помножте на витрати лаку.`,
+                    correctAnswer: "87",
+                    rationale: `Правильно: S<sub>повн</sub> = 2 &middot; (50&middot;40 + 50&middot;10 + 40&middot;10) = 5800 см&sup2; = 0.58 м&sup2;. Маса лаку = 0.58 &middot; 150 = 87 г.`
+                }
+            ]
+        ];
+
+        let currentPoolIndex = 0;
+        let currentQuestions = [];
+        let userAnswers = {};
+        let totalSeconds = 900;
+        let timerInterval = null;
+        let elapsedSeconds = 0;
+
+        const startScreen = document.getElementById('start-screen');
+        const testContent = document.getElementById('test-content');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const stickyTimerBar = document.getElementById('sticky-timer-bar');
+        const timerDisplay = document.getElementById('timer-display');
+        const resultsScreen = document.getElementById('results-screen');
+        const variantIndicator = document.getElementById('variant-indicator');
+        
+        const startBtn = document.getElementById('start-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const restartBtn = document.getElementById('restart-btn');
+
+        const resScoreVal = document.getElementById('res-score-val');
+        const resTimeVal = document.getElementById('res-time-val');
+        const resPctVal = document.getElementById('res-pct-val');
+        const analysisText = document.getElementById('analysis-text');
+        const reviewWrapper = document.getElementById('review-wrapper');
+
+        function startQuiz() {
+            currentQuestions = allQuizPools[currentPoolIndex];
+            variantIndicator.textContent = `НМТ Експрес-Контроль (Варіант ${currentPoolIndex + 1})`;
+
+            startScreen.style.display = 'none';
+            testContent.style.display = 'block';
+            stickyTimerBar.style.display = 'flex';
+            resultsScreen.style.display = 'none';
+
+            userAnswers = {};
+            elapsedSeconds = 0;
+            totalSeconds = 900;
+
+            renderAllQuestions();
+            startTimer();
+        }
+
+        function toggleHint(id) {
+            const hintBox = document.getElementById(`hint-${id}`);
+            if (hintBox.style.display === 'block') {
+                hintBox.style.display = 'none';
+            } else {
+                hintBox.style.display = 'block';
+            }
+        }
+
+        function renderAllQuestions() {
+            questionsWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'single-q-card';
+                card.id = `q-card-${q.id}`;
+
+                let html = `
+                    <div class="q-number-header">ЗАВДАННЯ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    html += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        html += `
+                            <button class="option-btn" onclick="selectSingleOption(${q.id}, ${oIdx}, this)">
+                                <span class="opt-label">${opt.label}</span>
+                                <span>${opt.text}</span>
+                            </button>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'matching') {
+                    html += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        html += `
+                            <div class="matching-row">
+                                <span class="matching-label">${item}</span>
+                                <select class="matching-select" onchange="selectMatchingOption(${q.id}, ${lIdx}, this.value)">
+                                    <option value="">-- Оберіть --</option>
+                                    ${q.rightItems.map(r => `<option value="${r[0]}">${r}</option>`).join('')}
+                                </select>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'short') {
+                    html += `
+                        <div style="margin-top: 10px;">
+                            <input type="text" class="short-input" placeholder="Введіть число..." oninput="selectShortAnswer(${q.id}, this.value)" />
+                        </div>
+                    `;
+                }
+
+                if (q.hint) {
+                    html += `
+                        <div style="margin-top: 15px;">
+                            <button class="hint-btn" onclick="toggleHint(${q.id})">💡 Показати підказку</button>
+                            <div id="hint-${q.id}" class="hint-box">${q.hint}</div>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = html;
+                questionsWrapper.appendChild(card);
+            });
+        }
+
+        function selectSingleOption(qId, optionIndex, btn) {
+            userAnswers[qId] = optionIndex;
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        function selectMatchingOption(qId, rowIdx, val) {
+            if (!userAnswers[qId]) userAnswers[qId] = {};
+            userAnswers[qId][rowIdx] = val;
+        }
+
+        function selectShortAnswer(qId, val) {
+            userAnswers[qId] = val.trim().replace(',', '.');
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                elapsedSeconds++;
+                updateTimerDisplay();
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Час вичерпано! Тест буде автоматично завершено.");
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            stickyTimerBar.style.display = 'none';
+            testContent.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            let totalPoints = 0;
+            let maxPoints = 15;
+
+            reviewWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                let isCorrect = false;
+
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'single-q-card';
+
+                let reviewHtml = `
+                    <div class="q-number-header">ЗАВДАННЯ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    const selectedIdx = userAnswers[q.id];
+                    reviewHtml += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        let btnClass = 'option-btn disabled';
+                        if (opt.isCorrect) btnClass += ' correct';
+                        if (selectedIdx === oIdx && !opt.isCorrect) btnClass += ' wrong';
+
+                        reviewHtml += `
+                            <div class="${btnClass}">
+                                <span class="opt-label">${opt.label}</span>
+                                <span>${opt.text}</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (selectedIdx !== undefined && q.options[selectedIdx].isCorrect) {
+                        isCorrect = true;
+                    }
+
+                    const correctOpt = q.options.find(o => o.isCorrect);
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            <em>${correctOpt.rationale}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'matching') {
+                    const uMatch = userAnswers[q.id] || {};
+                    let matchCorrectCount = 0;
+
+                    reviewHtml += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        const correctVal = q.correctAnswers[lIdx];
+                        const userVal = uMatch[lIdx] || 'не обрано';
+                        const isRowCorrect = userVal === correctVal;
+                        if (isRowCorrect) matchCorrectCount++;
+
+                        reviewHtml += `
+                            <div class="matching-row" style="border-color: ${isRowCorrect ? '#34A853' : '#EA4335'};">
+                                <span class="matching-label">${item}</span>
+                                <span>Ваша відповідь: <strong>${userVal}</strong> (Правильно: <strong>${correctVal}</strong>)</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (matchCorrectCount === 3) {
+                        isCorrect = true;
+                    }
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>Правильних співвідношень: ${matchCorrectCount} з 3.</strong><br>
+                            <em>${q.rationale}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'short') {
+                    const uVal = userAnswers[q.id] || '';
+                    isCorrect = (uVal === q.correctAnswer);
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            Ваша відповідь: <strong>${uVal || 'не вказано'}</strong>. Правильна відповідь: <strong>${q.correctAnswer}</strong>.<br>
+                            <em>Пояснення: ${q.rationale}</em>
+                        </div>
+                    `;
+                }
+
+                if (isCorrect) totalPoints += 1;
+
+                reviewCard.innerHTML = reviewHtml;
+                reviewWrapper.appendChild(reviewCard);
+            });
+
+            const elapsedMin = Math.floor(elapsedSeconds / 60);
+            const elapsedSec = elapsedSeconds % 60;
+            const pct = Math.round((totalPoints / maxPoints) * 100);
+
+            resScoreVal.textContent = `${totalPoints} з ${maxPoints}`;
+            resTimeVal.textContent = `${elapsedMin.toString().padStart(2, '0')}:${elapsedSec.toString().padStart(2, '0')}`;
+            resPctVal.textContent = `${pct}%`;
+
+            if (pct >= 85) {
+                analysisText.innerHTML = `<strong>Відмінний результат!</strong> Ви чудово володієте темою просторової геометрії.`;
+            } else if (pct >= 65) {
+                analysisText.innerHTML = `<strong>Хороший результат!</strong> Ви добре орієнтуєтеся в просторі, але зверніть увагу на точність обчислень та властивості фігур.`;
+            } else if (pct >= 40) {
+                analysisText.innerHTML = `<strong>Задовільно.</strong> Є базові знання, але варто більше потренуватися у розв'язуванні стереометричних задач.`;
+            } else {
+                analysisText.innerHTML = `<strong>Потребує повторення.</strong> Виникли труднощі при виконанні завдань. Рекомендується повторити теоретичний матеріал з теми «Багатогранники. Призма».`;
+            }
+
+            currentPoolIndex = (currentPoolIndex + 1) % allQuizPools.length;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prepareNextAttempt() {
+            startScreen.style.display = 'block';
+            resultsScreen.style.display = 'none';
+            testContent.style.display = 'none';
+            stickyTimerBar.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', prepareNextAttempt);
+    </script>
+</body>
+</html>

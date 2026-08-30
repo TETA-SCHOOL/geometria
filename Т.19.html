@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Експрес-тест | TETA School</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+        }
+
+        /* Header Layout */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        /* Start Screen */
+        .start-screen {
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .start-screen h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--primary);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Progress Bar & Timer */
+        .progress-container {
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 5px;
+        }
+
+        /* Question Box */
+        .question-box {
+            display: none;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 15px 0;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #a0aec0;
+        }
+
+        .diagram-container svg {
+            max-width: 50%;
+            height: auto;
+        }
+
+        /* Hint section */
+        .hint-container {
+            margin-bottom: 15px;
+        }
+
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: underline;
+        }
+
+        .hint-btn:hover {
+            color: var(--accent-red);
+        }
+
+        .hint-box {
+            background-color: #FFFBEB;
+            border: 1px solid #FCD34D;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 0.92rem;
+            color: #92400E;
+            margin-top: 8px;
+            display: none;
+            line-height: 1.4;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 1.05rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            transform: none;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .opt-label {
+            background: #0E9F6E;
+            color: #FFF;
+        }
+
+        .option-btn.wrong .opt-label {
+            background: var(--accent-red);
+            color: #FFF;
+        }
+
+        /* Feedback Box */
+        .feedback-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct {
+            background-color: #E6F4EA;
+            border: 1px solid #34A853;
+            color: #137333;
+        }
+
+        .feedback-box.wrong {
+            background-color: #FCE8E6;
+            border: 1px solid #EA4335;
+            color: #C5221F;
+        }
+
+        /* Action Buttons */
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .btn-primary:disabled {
+            background-color: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .actions-center {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .score-badge {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            box-shadow: 0 8px 20px rgba(0, 83, 134, 0.25);
+        }
+
+        .score-badge .score-num {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .score-badge .score-total {
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 1;
+        }
+
+        .results-message {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .results-desc {
+            font-size: 1.05rem;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Math Typography Support HTML Native */
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 4px;
+        }
+        .frac .frac-num {
+            border-bottom: 1px solid var(--dark-text);
+            padding: 0 4px;
+            font-size: 0.95em;
+            line-height: 1.2;
+        }
+        .frac .frac-den {
+            padding: 0 4px;
+            font-size: 0.95em;
+            line-height: 1.2;
+        }
+        .sqrt-content {
+            border-top: 1px solid var(--dark-text);
+            padding-top: 1px;
+            margin-left: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 25px 18px; }
+            .question-text { font-size: 1.1rem; }
+            .option-btn { padding: 12px 15px; font-size: 0.95rem; }
+            .diagram-container svg { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header with TETA School SVG Logo -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #7d1111;
+      }
+    </style>
+  </defs>
+  <g id="_Шар_1-2" data-name="Шар 1">
+    <g>
+      <g>
+        <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+        <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+        <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+        <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+      </g>
+      <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.37-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+    </g>
+  </g>
+</svg>
+            </div>
+            <div class="test-title">Експрес-тест</div>
+            <div class="test-subtitle">Тема 19. Відстані у просторі. ТТП. Кути у просторі.</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Експрес-тест <br> Тема 19. Відстані у просторі. ТТП. Кути у просторі. <br></h1>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість запитань:</strong> 10</li>
+                    <li><strong>Час проходження:</strong> 10 хвилин</li>
+                    <li><strong>Рівень складності:</strong> легкий/середній</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Progress Area -->
+        <div id="progress-container" class="progress-container">
+            <div class="progress-header">
+                <span id="question-number">Питання 1 з 10</span>
+                <div class="timer-badge">
+                    <span>⏱️</span>
+                    <span id="timer-display">10:00</span>
+                </div>
+                <span id="score-live">Бали: 0</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Question Area -->
+        <div id="question-box" class="question-box">
+            <div id="question-text" class="question-text"></div>
+
+            <div class="hint-container">
+                <button type="button" class="hint-btn" id="hint-toggle-btn">💡 Підказка</button>
+                <div id="hint-box" class="hint-box"></div>
+            </div>
+
+            <div id="options-list" class="options-list"></div>
+            <div id="feedback-box" class="feedback-box"></div>
+            
+            <div class="actions-center">
+                <button id="next-btn" class="btn-primary" disabled>Наступне запитання</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <div id="results-message" class="results-message">Чудова робота!</div>
+            
+            <div class="score-badge">
+                <span id="final-score" class="score-num">0/10</span>
+                <span class="score-total">правильних</span>
+            </div>
+
+            <p id="results-desc" class="results-desc">Ви успішно пройшли експрес-тестування. Готові до нових математичних викликів!</p>
+
+            <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти ще раз</button>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        const rawQuizData = [
+            // ВАРІАНТ 1
+            [
+                {
+                    question: `1. З точки K до площини &alpha; проведено перпендикуляр KL і похилу KM. Знайдіть довжину проекції похилої KM на цю площину, якщо KM = 13 см, KL = 5 см.`,
+                    hint: `Застосуйте теорему Піфагора до прямокутного трикутника, утвореного перпендикуляром, похилою та її проекцією.`,
+                    options: [
+                        {label: "А", text: `12 см`, isCorrect: true, rationale: `Правильно! За теоремою Піфагора: &radic;<span class='sqrt-content'>13&sup2; - 5&sup2;</span> = &radic;<span class='sqrt-content'>169 - 25</span> = &radic;<span class='sqrt-content'>144</span> = 12 см.`},
+                        {label: "Б", text: `8 см`, isCorrect: false, rationale: `Це різниця довжин похилої та перпендикуляра.`},
+                        {label: "В", text: `18 см`, isCorrect: false, rationale: `Це сума довжин похилої та перпендикуляра.`},
+                        {label: "Г", text: `144 см`, isCorrect: false, rationale: `Ви забули добути квадратний корінь.`}
+                    ]
+                },
+                {
+                    question: `2. Дві прямі у просторі називають перпендикулярними, якщо кут між ними дорівнює:`,
+                    hint: `Згадайте означення перпендикулярних прямих.`,
+                    options: [
+                        {label: "А", text: `0&deg;`, isCorrect: false, rationale: `Це паралельні або прямі, що збігаються.`},
+                        {label: "Б", text: `45&deg;`, isCorrect: false, rationale: `Це невірно.`},
+                        {label: "В", text: `90&deg;`, isCorrect: true, rationale: `Правильно! Перпендикулярні прямі утворюють кут 90&deg;.`},
+                        {label: "Г", text: `180&deg;`, isCorrect: false, rationale: `Це невірно.`}
+                    ]
+                },
+                {
+                    question: `3. Пряма називається перпендикулярною до площини, якщо вона перпендикулярна до:`,
+                    hint: `Згадайте означення прямої, перпендикулярної до площини.`,
+                    options: [
+                        {label: "А", text: `будь-якої прямої, яка лежить у цій площині`, isCorrect: true, rationale: `Правильно! Це класичне означення перпендикулярності прямої та площини.`},
+                        {label: "Б", text: `однієї прямої, що лежить у цій площині`, isCorrect: false, rationale: `Цього недостатньо для перпендикулярності до всієї площини.`},
+                        {label: "В", text: `двох паралельних прямих у цій площині`, isCorrect: false, rationale: `Цього також недостатньо.`},
+                        {label: "Г", text: `тільки до прямих, які перетинають її основу`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `4. На рисунку зображено куб. Знайдіть градусну міру кута між прямими AB<sub>1</sub> і CC<sub>1</sub>.
+                    <div class="diagram-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 230 200" width="100%">
+                            <defs>
+                                <style>
+                                    .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                                    .dashed-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 5, 5; fill: none; }
+                                    .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }
+                                    .subscript { font-size: 9px; font-style: normal; }
+                                    .point { fill: #000000; }
+                                </style>
+                            </defs>
+                            <rect x="10" y="10" width="230" height="200" fill="#ffffff" />
+                            <line x1="50" y1="170" x2="90" y2="130" class="dashed-line" />
+                            <line x1="90" y1="130" x2="190" y2="130" class="dashed-line" />
+                            <line x1="90" y1="130" x2="90" y2="30" class="dashed-line" />  
+                            <line x1="50" y1="170" x2="150" y2="170" class="main-line" />
+                            <line x1="150" y1="170" x2="190" y2="130" class="main-line" /> 
+                            <line x1="50" y1="170" x2="50" y2="70" class="main-line" />   
+                            <line x1="150" y1="170" x2="150" y2="70" class="main-line" /> 
+                            <line x1="190" y1="130" x2="190" y2="30" class="main-line" /> 
+                            <line x1="50" y1="70" x2="150" y2="70" class="main-line" />   
+                            <line x1="150" y1="70" x2="190" y2="30" class="main-line" />   
+                            <line x1="190" y1="30" x2="90" y2="30" class="main-line" />   
+                            <line x1="90" y1="30" x2="50" y2="70" class="main-line" />   
+                            <circle cx="50" cy="170" r="2.5" class="point" />
+                            <circle cx="150" cy="170" r="2.5" class="point" />
+                            <circle cx="190" cy="130" r="2.5" class="point" />
+                            <circle cx="90" cy="130" r="2.5" class="point" />
+                            <circle cx="50" cy="70" r="2.5" class="point" />
+                            <circle cx="150" cy="70" r="2.5" class="point" />
+                            <circle cx="190" cy="30" r="2.5" class="point" />
+                            <circle cx="90" cy="30" r="2.5" class="point" />
+                            <text x="35" y="180" class="vertex-label">A</text>
+                            <text x="155" y="180" class="vertex-label">B</text>
+                            <text x="195" y="135" class="vertex-label">C</text>
+                            <text x="73" y="130" class="vertex-label">D</text>
+                            <text x="35" y="65" class="vertex-label">A<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="135" y="62" class="vertex-label">B<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="195" y="25" class="vertex-label">C<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="73" y="25" class="vertex-label">D<tspan dy="2" class="subscript">1</tspan></text>
+                        </svg>
+                    </div>`,
+                    hint: `Пряма CC<sub>1</sub> паралельна прямій BB<sub>1</sub>. Знайдіть кут між прямими AB<sub>1</sub> та BB<sub>1</sub> у грані ABB<sub>1</sub>A<sub>1</sub>.`,
+                    options: [
+                        {label: "А", text: `30&deg;`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Б", text: `45&deg;`, isCorrect: true, rationale: `Правильно! Оскільки грані куба є квадратами, діагональ AB<sub>1</sub> утворює з ребром BB<sub>1</sub> кут 45&deg;.`},
+                        {label: "В", text: `60&deg;`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Г", text: `90&deg;`, isCorrect: false, rationale: `Діагональ квадрата не перпендикулярна його стороні.`}
+                    ]
+                },
+                {
+                    question: `5. Відстанню від точки до площини називають:`,
+                    hint: `Відстань – це найкоротший шлях.`,
+                    options: [
+                        {label: "А", text: `довжину будь-якої похилої`, isCorrect: false, rationale: `Похила завжди довша за перпендикуляр.`},
+                        {label: "Б", text: `довжину найбільшої похилої`, isCorrect: false, rationale: `Найбільшої похилої не існує.`},
+                        {label: "В", text: `довжину перпендикуляра, опущеного з цієї точки на площину`, isCorrect: true, rationale: `Правильно! Це базове означення відстані від точки до площини.`},
+                        {label: "Г", text: `відстань до найближчої точки на площині`, isCorrect: false, rationale: `Технічно це те саме, але математично коректним формулюванням є саме довжина перпендикуляра.`}
+                    ]
+                },
+                {
+                    question: `6. З точки до площини проведено перпендикуляр довжиною 5 см і похилу, проекція якої дорівнює 12 см. Знайдіть довжину цієї похилої.`,
+                    hint: `Розгляньте прямокутний трикутник з катетами 5 і 12 та знайдіть гіпотенузу.`,
+                    options: [
+                        {label: "А", text: `13 см`, isCorrect: true, rationale: `Правильно! За теоремою Піфагора: &radic;<span class='sqrt-content'>5&sup2; + 12&sup2;</span> = &radic;<span class='sqrt-content'>25 + 144</span> = &radic;<span class='sqrt-content'>169</span> = 13 см.`},
+                        {label: "Б", text: `11 см`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "В", text: `17 см`, isCorrect: false, rationale: `Це сума довжин катетів.`},
+                        {label: "Г", text: `169 см`, isCorrect: false, rationale: `Ви забули добути квадратний корінь.`}
+                    ]
+                },
+                {
+                    question: `7. Якщо пряма, проведена в площині через основу похилої, перпендикулярна до проекції похилої, то вона перпендикулярна і до самої похилої. Як називається ця теорема?`,
+                    hint: `Ця теорема пов'язує три відрізки: перпендикуляр, похилу та її проекцію.`,
+                    options: [
+                        {label: "А", text: `Теорема Піфагора`, isCorrect: false, rationale: `Теорема Піфагора пов'язує сторони прямокутного трикутника.`},
+                        {label: "Б", text: `Теорема про три перпендикуляри`, isCorrect: true, rationale: `Правильно! Це пряме формулювання теореми про три перпендикуляри (ТТП).`},
+                        {label: "В", text: `Ознака перпендикулярності прямої і площини`, isCorrect: false, rationale: `Ця ознака говорить про перпендикулярність прямої до двох прямих у площині.`},
+                        {label: "Г", text: `Теорема Фалеса`, isCorrect: false, rationale: `Теорема Фалеса стосується пропорційних відрізків.`}
+                    ]
+                },
+                {
+                    question: `8. На рисунку зображено куб. Укажіть проекцію діагоналі BD<sub>1</sub> на площину основи (ABC).
+                    <div class="diagram-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 230 200" width="100%">
+                            <defs>
+                                <style>
+                                    .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                                    .dashed-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 5, 5; fill: none; }
+                                    .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }
+                                    .subscript { font-size: 9px; font-style: normal; }
+                                    .point { fill: #000000; }
+                                </style>
+                            </defs>
+                            <rect x="10" y="10" width="230" height="200" fill="#ffffff" />
+                            <line x1="50" y1="170" x2="90" y2="130" class="dashed-line" />
+                            <line x1="90" y1="130" x2="190" y2="130" class="dashed-line" />
+                            <line x1="90" y1="130" x2="90" y2="30" class="dashed-line" />  
+                            <line x1="50" y1="170" x2="150" y2="170" class="main-line" />
+                            <line x1="150" y1="170" x2="190" y2="130" class="main-line" /> 
+                            <line x1="50" y1="170" x2="50" y2="70" class="main-line" />   
+                            <line x1="150" y1="170" x2="150" y2="70" class="main-line" /> 
+                            <line x1="190" y1="130" x2="190" y2="30" class="main-line" /> 
+                            <line x1="50" y1="70" x2="150" y2="70" class="main-line" />   
+                            <line x1="150" y1="70" x2="190" y2="30" class="main-line" />   
+                            <line x1="190" y1="30" x2="90" y2="30" class="main-line" />   
+                            <line x1="90" y1="30" x2="50" y2="70" class="main-line" />   
+                            <circle cx="50" cy="170" r="2.5" class="point" />
+                            <circle cx="150" cy="170" r="2.5" class="point" />
+                            <circle cx="190" cy="130" r="2.5" class="point" />
+                            <circle cx="90" cy="130" r="2.5" class="point" />
+                            <circle cx="50" cy="70" r="2.5" class="point" />
+                            <circle cx="150" cy="70" r="2.5" class="point" />
+                            <circle cx="190" cy="30" r="2.5" class="point" />
+                            <circle cx="90" cy="30" r="2.5" class="point" />
+                            <text x="35" y="180" class="vertex-label">A</text>
+                            <text x="155" y="180" class="vertex-label">B</text>
+                            <text x="195" y="135" class="vertex-label">C</text>
+                            <text x="73" y="130" class="vertex-label">D</text>
+                            <text x="35" y="65" class="vertex-label">A<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="135" y="62" class="vertex-label">B<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="195" y="25" class="vertex-label">C<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="73" y="25" class="vertex-label">D<tspan dy="2" class="subscript">1</tspan></text>
+                        </svg>
+                    </div>`,
+                    hint: `Опустіть перпендикуляр з точки D<sub>1</sub> на площину (ABC). З'єднайте точку B з основою цього перпендикуляра.`,
+                    options: [
+                        {label: "А", text: `AB`, isCorrect: false, rationale: `Це невірно.`},
+                        {label: "Б", text: `BC`, isCorrect: false, rationale: `Це невірно.`},
+                        {label: "В", text: `BD`, isCorrect: true, rationale: `Правильно! Перпендикуляр з D<sub>1</sub> на площину основи потрапляє в точку D. Отже, відрізок BD є проекцією BD<sub>1</sub>.`},
+                        {label: "Г", text: `AD<sub>1</sub>`, isCorrect: false, rationale: `Цей відрізок не лежить у площині основи.`}
+                    ]
+                },
+                {
+                    question: `9. На рисунку зображено трикутну піраміду SABC. Якщо бічна грань SAB перпендикулярна до площини основи, то висота піраміди лежить у площині:
+                    <div class="diagram-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 260 220" width="100%">
+                            <defs>
+                                <style>
+                                    .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                                    .dashed-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 5, 5; fill: none; }
+                                    .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }
+                                    .point { fill: #000000; }
+                                </style>
+                            </defs>
+                            <rect x="10" y="10" width="260" height="220" fill="#ffffff" />
+                            <line x1="40" y1="180" x2="240" y2="150" class="dashed-line" /> 
+                            <line x1="40" y1="180" x2="160" y2="210" class="main-line" />  
+                            <line x1="160" y1="210" x2="240" y2="150" class="main-line" />  
+                            <line x1="120" y1="30" x2="40" y2="180" class="main-line" />   
+                            <line x1="120" y1="30" x2="160" y2="210" class="main-line" />  
+                            <line x1="120" y1="30" x2="240" y2="150" class="main-line" />  
+                            <circle cx="120" cy="30" r="2.5" class="point" />
+                            <circle cx="40" cy="180" r="2.5" class="point" />
+                            <circle cx="160" cy="210" r="2.5" class="point" />
+                            <circle cx="240" cy="150" r="2.5" class="point" />
+                            <text x="115" y="20" class="vertex-label">S</text>
+                            <text x="25" y="185" class="vertex-label">A</text>
+                            <text x="160" y="228" class="vertex-label">B</text>
+                            <text x="248" y="152" class="vertex-label">C</text>
+                        </svg>
+                    </div>`,
+                    hint: `Висота піраміди — це перпендикуляр до основи. Якщо грань перпендикулярна до основи, то перпендикуляр лежить у ній.`,
+                    options: [
+                        {label: "А", text: `(ABC)`, isCorrect: false, rationale: `Це площина основи.`},
+                        {label: "Б", text: `(SBC)`, isCorrect: false, rationale: `Ця площина не обов'язково перпендикулярна до основи.`},
+                        {label: "В", text: `(SAC)`, isCorrect: false, rationale: `Ця площина не обов'язково перпендикулярна до основи.`},
+                        {label: "Г", text: `(SAB)`, isCorrect: true, rationale: `Правильно! Оскільки грань (SAB) перпендикулярна до основи, висота піраміди (перпендикуляр) лежить саме в цій грані.`}
+                    ]
+                },
+                {
+                    question: `10. З однієї точки до площини проведено дві похилі: 10 см і 15 см. Яка з них має більшу проекцію на цю площину?`,
+                    hint: `Згадайте властивість похилих та їхніх проекцій: більшій похилій відповідає...`,
+                    options: [
+                        {label: "А", text: `Похила довжиною 10 см`, isCorrect: false, rationale: `Більшій похилій відповідає більша проекція.`},
+                        {label: "Б", text: `Похила довжиною 15 см`, isCorrect: true, rationale: `Правильно! З однієї точки більшій похилій завжди відповідає більша проекція.`},
+                        {label: "В", text: `Їхні проекції рівні`, isCorrect: false, rationale: `Це було б вірно лише для похилих однакової довжини.`},
+                        {label: "Г", text: `Визначити неможливо`, isCorrect: false, rationale: `Властивість дозволяє дати точну відповідь.`}
+                    ]
+                }
+            ],
+            // ВАРІАНТ 2
+            [
+                {
+                    question: `1. З точки P до площини проведено перпендикуляр довжиною 8 см і похилу, проекція якої дорівнює 6 см. Знайдіть довжину цієї похилої.`,
+                    hint: `Утворіть прямокутний трикутник та скористайтеся теоремою Піфагора.`,
+                    options: [
+                        {label: "А", text: `10 см`, isCorrect: true, rationale: `Правильно! За теоремою Піфагора: &radic;<span class='sqrt-content'>8&sup2; + 6&sup2;</span> = &radic;<span class='sqrt-content'>64 + 36</span> = &radic;<span class='sqrt-content'>100</span> = 10 см.`},
+                        {label: "Б", text: `14 см`, isCorrect: false, rationale: `Це сума довжин катетів.`},
+                        {label: "В", text: `2 см`, isCorrect: false, rationale: `Це різниця довжин катетів.`},
+                        {label: "Г", text: `100 см`, isCorrect: false, rationale: `Ви забули добути квадратний корінь.`}
+                    ]
+                },
+                {
+                    question: `2. Якщо дві прямі, що перетинаються, паралельні відповідно двом перпендикулярним прямим, то вони:`,
+                    hint: `Кут між прямими зберігається при паралельному перенесенні.`,
+                    options: [
+                        {label: "А", text: `паралельні`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Б", text: `мимобіжні`, isCorrect: false, rationale: `Вони перетинаються за умовою.`},
+                        {label: "В", text: `перпендикулярні`, isCorrect: true, rationale: `Правильно! Кут між прямими зберігається, отже вони також перпендикулярні.`},
+                        {label: "Г", text: `збігаються`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `3. На рисунку зображено куб. Визначте кут між прямими A<sub>1</sub>D<sub>1</sub> і DC<sub>1</sub>.
+                    <div class="diagram-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 230 200" width="100%">
+                            <defs>
+                                <style>
+                                    .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                                    .dashed-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 5, 5; fill: none; }
+                                    .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }
+                                    .subscript { font-size: 9px; font-style: normal; }
+                                    .point { fill: #000000; }
+                                </style>
+                            </defs>
+                            <rect x="10" y="10" width="230" height="200" fill="#ffffff" />
+                            <line x1="50" y1="170" x2="90" y2="130" class="dashed-line" />
+                            <line x1="90" y1="130" x2="190" y2="130" class="dashed-line" />
+                            <line x1="90" y1="130" x2="90" y2="30" class="dashed-line" />  
+                            <line x1="50" y1="170" x2="150" y2="170" class="main-line" />
+                            <line x1="150" y1="170" x2="190" y2="130" class="main-line" /> 
+                            <line x1="50" y1="170" x2="50" y2="70" class="main-line" />   
+                            <line x1="150" y1="170" x2="150" y2="70" class="main-line" /> 
+                            <line x1="190" y1="130" x2="190" y2="30" class="main-line" /> 
+                            <line x1="50" y1="70" x2="150" y2="70" class="main-line" />   
+                            <line x1="150" y1="70" x2="190" y2="30" class="main-line" />   
+                            <line x1="190" y1="30" x2="90" y2="30" class="main-line" />   
+                            <line x1="90" y1="30" x2="50" y2="70" class="main-line" />   
+                            <circle cx="50" cy="170" r="2.5" class="point" />
+                            <circle cx="150" cy="170" r="2.5" class="point" />
+                            <circle cx="190" cy="130" r="2.5" class="point" />
+                            <circle cx="90" cy="130" r="2.5" class="point" />
+                            <circle cx="50" cy="70" r="2.5" class="point" />
+                            <circle cx="150" cy="70" r="2.5" class="point" />
+                            <circle cx="190" cy="30" r="2.5" class="point" />
+                            <circle cx="90" cy="30" r="2.5" class="point" />
+                            <text x="35" y="180" class="vertex-label">A</text>
+                            <text x="155" y="180" class="vertex-label">B</text>
+                            <text x="195" y="135" class="vertex-label">C</text>
+                            <text x="73" y="130" class="vertex-label">D</text>
+                            <text x="35" y="65" class="vertex-label">A<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="135" y="62" class="vertex-label">B<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="195" y="25" class="vertex-label">C<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="73" y="25" class="vertex-label">D<tspan dy="2" class="subscript">1</tspan></text>
+                        </svg>
+                    </div>`,
+                    hint: `Пряма A<sub>1</sub>D<sub>1</sub> паралельна AD. Знайдіть кут між AD та DC<sub>1</sub>, врахувавши, що AD перпендикулярна до площини бічної грані.`,
+                    options: [
+                        {label: "А", text: `30&deg;`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Б", text: `45&deg;`, isCorrect: false, rationale: `Діагональ DC<sub>1</sub> утворює 45&deg; з ребром DC, а не з AD.`},
+                        {label: "В", text: `60&deg;`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Г", text: `90&deg;`, isCorrect: true, rationale: `Правильно! Оскільки AD перпендикулярна до всієї грані (DCC<sub>1</sub>), вона перпендикулярна і до будь-якої прямої в ній, включаючи DC<sub>1</sub>.`}
+                    ]
+                },
+                {
+                    question: `4. Якщо пряма перпендикулярна до двох прямих, що перетинаються і лежать у площині, то вона:`,
+                    hint: `Згадайте ознаку перпендикулярності прямої та площини.`,
+                    options: [
+                        {label: "А", text: `паралельна цій площині`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Б", text: `лежить у цій площині`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "В", text: `перпендикулярна до цієї площини`, isCorrect: true, rationale: `Правильно! Це пряме формулювання ознаки перпендикулярності прямої та площини.`},
+                        {label: "Г", text: `мимобіжна з цією площиною`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `5. Кут між прямою та площиною — це кут між похилою та її:`,
+                    hint: `Означення кута між прямою і площиною базується на понятті проектування.`,
+                    options: [
+                        {label: "А", text: `перпендикуляром`, isCorrect: false, rationale: `Цей кут доповнює шуканий до 90&deg;.`},
+                        {label: "Б", text: `довільною прямою в площині`, isCorrect: false, rationale: `Кут має бути найменшим з усіх можливих.`},
+                        {label: "В", text: `ортогональною проекцією на площину`, isCorrect: true, rationale: `Правильно! За означенням, кут між похилою та площиною — це кут між похилою та її проекцією на цю площину.`},
+                        {label: "Г", text: `паралельною прямою`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `6. Дві площини, що перетинаються, називаються перпендикулярними, якщо кут між ними дорівнює:`,
+                    hint: `Згадайте означення перпендикулярних площин.`,
+                    options: [
+                        {label: "А", text: `0&deg;`, isCorrect: false, rationale: `Це паралельні площини.`},
+                        {label: "Б", text: `45&deg;`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "В", text: `90&deg;`, isCorrect: true, rationale: `Правильно! Перпендикулярні площини утворюють прямий кут.`},
+                        {label: "Г", text: `180&deg;`, isCorrect: false, rationale: `Це невірно.`}
+                    ]
+                },
+                {
+                    question: `7. Довжини перпендикуляра та похилої, проведених з точки до площини, дорівнюють 2 см і 6 см відповідно. Знайдіть довжину проекції цієї похилої.`,
+                    hint: `Використайте теорему Піфагора: квадрат проекції дорівнює різниці квадратів похилої та перпендикуляра.`,
+                    options: [
+                        {label: "А", text: `4&radic;<span class='sqrt-content'>2</span> см`, isCorrect: true, rationale: `Правильно! &radic;<span class='sqrt-content'>6&sup2; - 2&sup2;</span> = &radic;<span class='sqrt-content'>36 - 4</span> = &radic;<span class='sqrt-content'>32</span> = 4&radic;<span class='sqrt-content'>2</span> см.`},
+                        {label: "Б", text: `2&radic;<span class='sqrt-content'>10</span> см`, isCorrect: false, rationale: `Це гіпотенуза, якби 2 і 6 були катетами.`},
+                        {label: "В", text: `4 см`, isCorrect: false, rationale: `Це різниця довжин відрізків.`},
+                        {label: "Г", text: `10 см`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `8. На рисунку зображено куб з ребром a. Відстань між прямими AA<sub>1</sub> і CC<sub>1</sub> дорівнює:
+                    <div class="diagram-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 230 200" width="100%">
+                            <defs>
+                                <style>
+                                    .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                                    .dashed-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 5, 5; fill: none; }
+                                    .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }
+                                    .subscript { font-size: 9px; font-style: normal; }
+                                    .point { fill: #000000; }
+                                </style>
+                            </defs>
+                            <rect x="10" y="10" width="230" height="200" fill="#ffffff" />
+                            <line x1="50" y1="170" x2="90" y2="130" class="dashed-line" />
+                            <line x1="90" y1="130" x2="190" y2="130" class="dashed-line" />
+                            <line x1="90" y1="130" x2="90" y2="30" class="dashed-line" />  
+                            <line x1="50" y1="170" x2="150" y2="170" class="main-line" />
+                            <line x1="150" y1="170" x2="190" y2="130" class="main-line" /> 
+                            <line x1="50" y1="170" x2="50" y2="70" class="main-line" />   
+                            <line x1="150" y1="170" x2="150" y2="70" class="main-line" /> 
+                            <line x1="190" y1="130" x2="190" y2="30" class="main-line" /> 
+                            <line x1="50" y1="70" x2="150" y2="70" class="main-line" />   
+                            <line x1="150" y1="70" x2="190" y2="30" class="main-line" />   
+                            <line x1="190" y1="30" x2="90" y2="30" class="main-line" />   
+                            <line x1="90" y1="30" x2="50" y2="70" class="main-line" />   
+                            <circle cx="50" cy="170" r="2.5" class="point" />
+                            <circle cx="150" cy="170" r="2.5" class="point" />
+                            <circle cx="190" cy="130" r="2.5" class="point" />
+                            <circle cx="90" cy="130" r="2.5" class="point" />
+                            <circle cx="50" cy="70" r="2.5" class="point" />
+                            <circle cx="150" cy="70" r="2.5" class="point" />
+                            <circle cx="190" cy="30" r="2.5" class="point" />
+                            <circle cx="90" cy="30" r="2.5" class="point" />
+                            <text x="35" y="180" class="vertex-label">A</text>
+                            <text x="155" y="180" class="vertex-label">B</text>
+                            <text x="195" y="135" class="vertex-label">C</text>
+                            <text x="73" y="130" class="vertex-label">D</text>
+                            <text x="35" y="65" class="vertex-label">A<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="135" y="62" class="vertex-label">B<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="195" y="25" class="vertex-label">C<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="73" y="25" class="vertex-label">D<tspan dy="2" class="subscript">1</tspan></text>
+                        </svg>
+                    </div>`,
+                    hint: `Відстань між двома паралельними прямими в кубі вимірюється по діагоналі відповідної грані.`,
+                    options: [
+                        {label: "А", text: `a`, isCorrect: false, rationale: `Це довжина ребра куба.`},
+                        {label: "Б", text: `a&radic;<span class='sqrt-content'>2</span>`, isCorrect: true, rationale: `Правильно! Прямі паралельні, відстань між ними дорівнює діагоналі основи AC, яка дорівнює a&radic;<span class='sqrt-content'>2</span>.`},
+                        {label: "В", text: `a&radic;<span class='sqrt-content'>3</span>`, isCorrect: false, rationale: `Це довжина просторової діагоналі куба.`},
+                        {label: "Г", text: `2a`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `9. Якщо точка рівновіддалена від усіх вершин багатокутника, то основа перпендикуляра з цієї точки є центром:`,
+                    hint: `Центр якого кола лежить на однаковій відстані від усіх вершин?`,
+                    options: [
+                        {label: "А", text: `вписаного кола`, isCorrect: false, rationale: `Це центр для точки, рівновіддаленої від сторін.`},
+                        {label: "Б", text: `описаного кола`, isCorrect: true, rationale: `Правильно! Оскільки всі похилі рівні, їхні проекції рівні. Точка, рівновіддалена від усіх вершин, є центром описаного кола.`},
+                        {label: "В", text: `перетину бісектрис`, isCorrect: false, rationale: `Це центр вписаного кола.`},
+                        {label: "Г", text: `довільною точкою`, isCorrect: false, rationale: `Вона має чітке геометричне місце.`}
+                    ]
+                },
+                {
+                    question: `10. Площа фігури дорівнює 20 см&sup2;, а площа її ортогональної проекції — 10 см&sup2;. Косинус кута між їхніми площинами дорівнює:`,
+                    hint: `Використайте формулу площі ортогональної проекції: S<sub>пр</sub> = S &middot; cos&phi;.`,
+                    options: [
+                        {label: "А", text: `<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>`, isCorrect: true, rationale: `Правильно! cos&phi; = <span class='frac'><span class='frac-num'>S<sub>пр</sub></span><span class='frac-den'>S</span></span> = <span class='frac'><span class='frac-num'>10</span><span class='frac-den'>20</span></span> = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>.`},
+                        {label: "Б", text: `2`, isCorrect: false, rationale: `Косинус не може бути більшим за 1.`},
+                        {label: "В", text: `1`, isCorrect: false, rationale: `Це для паралельних площин.`},
+                        {label: "Г", text: `0`, isCorrect: false, rationale: `Це для перпендикулярних площин.`}
+                    ]
+                }
+            ],
+            // ВАРІАНТ 3
+            [
+                {
+                    question: `1. Похила утворює з площиною кут 45&deg;, а її проекція дорівнює 5 см. Знайдіть довжину перпендикуляра.`,
+                    hint: `Прямокутний трикутник з кутом 45&deg; є рівнобедреним.`,
+                    options: [
+                        {label: "А", text: `5 см`, isCorrect: true, rationale: `Правильно! У прямокутному трикутнику з кутом 45&deg; катети (перпендикуляр та проекція) рівні. Тому перпендикуляр дорівнює 5 см.`},
+                        {label: "Б", text: `10 см`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "В", text: `5&radic;<span class='sqrt-content'>2</span> см`, isCorrect: false, rationale: `Це довжина самої похилої (гіпотенузи).`},
+                        {label: "Г", text: `2.5 см`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `2. Якщо дві прямі перпендикулярні до однієї площини, то вони:`,
+                    hint: `Уявіть дві ніжки стола, які перпендикулярні до підлоги.`,
+                    options: [
+                        {label: "А", text: `перетинаються`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Б", text: `перпендикулярні`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "В", text: `паралельні`, isCorrect: true, rationale: `Правильно! Дві прямі, перпендикулярні до однієї площини, завжди паралельні між собою.`},
+                        {label: "Г", text: `мимобіжні`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `3. Якщо одна з двох паралельних прямих перпендикулярна до площини, то й друга пряма:`,
+                    hint: `Властивість паралельних прямих відносно площини.`,
+                    options: [
+                        {label: "А", text: `паралельна цій площині`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Б", text: `лежить у цій площині`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "В", text: `перпендикулярна до цієї площини`, isCorrect: true, rationale: `Правильно! За теоремою про паралельні прямі, обидві вони перетинають площину під прямим кутом.`},
+                        {label: "Г", text: `утворює з нею кут 45&deg;`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `4. Якщо площина проходить через пряму, перпендикулярну до другої площини, то ці площини:`,
+                    hint: `Ознака перпендикулярності площин.`,
+                    options: [
+                        {label: "А", text: `паралельні`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Б", text: `перпендикулярні`, isCorrect: true, rationale: `Правильно! Це базове формулювання ознаки перпендикулярності двох площин.`},
+                        {label: "В", text: `збігаються`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Г", text: `мимобіжні`, isCorrect: false, rationale: `Площини не бувають мимобіжними.`}
+                    ]
+                },
+                {
+                    question: `5. На рисунку зображено куб. Градусна міра кута між прямими AB і A<sub>1</sub>B<sub>1</sub> дорівнює:
+                    <div class="diagram-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 230 200" width="100%">
+                            <defs>
+                                <style>
+                                    .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                                    .dashed-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 5, 5; fill: none; }
+                                    .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }
+                                    .subscript { font-size: 9px; font-style: normal; }
+                                    .point { fill: #000000; }
+                                </style>
+                            </defs>
+                            <rect x="10" y="10" width="230" height="200" fill="#ffffff" />
+                            <line x1="50" y1="170" x2="90" y2="130" class="dashed-line" />
+                            <line x1="90" y1="130" x2="190" y2="130" class="dashed-line" />
+                            <line x1="90" y1="130" x2="90" y2="30" class="dashed-line" />  
+                            <line x1="50" y1="170" x2="150" y2="170" class="main-line" />
+                            <line x1="150" y1="170" x2="190" y2="130" class="main-line" /> 
+                            <line x1="50" y1="170" x2="50" y2="70" class="main-line" />   
+                            <line x1="150" y1="170" x2="150" y2="70" class="main-line" /> 
+                            <line x1="190" y1="130" x2="190" y2="30" class="main-line" /> 
+                            <line x1="50" y1="70" x2="150" y2="70" class="main-line" />   
+                            <line x1="150" y1="70" x2="190" y2="30" class="main-line" />   
+                            <line x1="190" y1="30" x2="90" y2="30" class="main-line" />   
+                            <line x1="90" y1="30" x2="50" y2="70" class="main-line" />   
+                            <circle cx="50" cy="170" r="2.5" class="point" />
+                            <circle cx="150" cy="170" r="2.5" class="point" />
+                            <circle cx="190" cy="130" r="2.5" class="point" />
+                            <circle cx="90" cy="130" r="2.5" class="point" />
+                            <circle cx="50" cy="70" r="2.5" class="point" />
+                            <circle cx="150" cy="70" r="2.5" class="point" />
+                            <circle cx="190" cy="30" r="2.5" class="point" />
+                            <circle cx="90" cy="30" r="2.5" class="point" />
+                            <text x="35" y="180" class="vertex-label">A</text>
+                            <text x="155" y="180" class="vertex-label">B</text>
+                            <text x="195" y="135" class="vertex-label">C</text>
+                            <text x="73" y="130" class="vertex-label">D</text>
+                            <text x="35" y="65" class="vertex-label">A<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="135" y="62" class="vertex-label">B<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="195" y="25" class="vertex-label">C<tspan dy="2" class="subscript">1</tspan></text>
+                            <text x="73" y="25" class="vertex-label">D<tspan dy="2" class="subscript">1</tspan></text>
+                        </svg>
+                    </div>`,
+                    hint: `Ці прямі паралельні.`,
+                    options: [
+                        {label: "А", text: `0&deg;`, isCorrect: true, rationale: `Правильно! Оскільки прямі AB і A<sub>1</sub>B<sub>1</sub> паралельні, кут між ними дорівнює 0&deg;.`},
+                        {label: "Б", text: `45&deg;`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "В", text: `60&deg;`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Г", text: `90&deg;`, isCorrect: false, rationale: `Це був би кут між прямими, що перетинаються (чи мимобіжними під прямим кутом).`}
+                    ]
+                },
+                {
+                    question: `6. Відстань між паралельними площинами вимірюється довжиною їхнього:`,
+                    hint: `Шукаємо найкоротший відрізок, що сполучає ці площини.`,
+                    options: [
+                        {label: "А", text: `найбільшого відрізка`, isCorrect: false, rationale: `Найбільшого відрізка не існує.`},
+                        {label: "Б", text: `найменшої похилої`, isCorrect: false, rationale: `Похила не є найменшою відстанню.`},
+                        {label: "В", text: `спільного перпендикуляра`, isCorrect: true, rationale: `Правильно! Найкоротша відстань між площинами — це довжина спільного перпендикуляра.`},
+                        {label: "Г", text: `будь-якої прямої, що їх перетинає`, isCorrect: false, rationale: `Пряма нескінченна, а похилі відрізки будуть довшими за перпендикуляр.`}
+                    ]
+                },
+                {
+                    question: `7. Якщо точка рівновіддалена від усіх сторін багатокутника, то основа перпендикуляра з цієї точки є центром:`,
+                    hint: `Центр якого кола лежить на однаковій відстані від усіх сторін?`,
+                    options: [
+                        {label: "А", text: `описаного кола`, isCorrect: false, rationale: `Це стосується точки, рівновіддаленої від вершин.`},
+                        {label: "Б", text: `вписаного кола`, isCorrect: true, rationale: `Правильно! Точка, рівновіддалена від сторін, є проекцією на центр вписаного кола.`},
+                        {label: "В", text: `перетину висот`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Г", text: `серединою найбільшої сторони`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `8. Кут між прямими, що перетинаються, береться не більшим за:`,
+                    hint: `За означенням кут між прямими — це гострий або прямий кут.`,
+                    options: [
+                        {label: "А", text: `45&deg;`, isCorrect: false, rationale: `Кут може бути, наприклад, 60&deg; або 90&deg;.`},
+                        {label: "Б", text: `90&deg;`, isCorrect: true, rationale: `Правильно! За означенням кут між прямими є найменшим з утворених кутів, тобто &le; 90&deg;.`},
+                        {label: "В", text: `180&deg;`, isCorrect: false, rationale: `Це забагато.`},
+                        {label: "Г", text: `360&deg;`, isCorrect: false, rationale: `Це невірно.`}
+                    ]
+                },
+                {
+                    question: `9. На рисунку зображено трикутну піраміду SABC. Якщо всі бічні ребра рівні (SA = SB = SC), то основа висоти піраміди — це центр:
+                    <div class="diagram-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 260 220" width="100%">
+                            <defs>
+                                <style>
+                                    .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                                    .dashed-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 5, 5; fill: none; }
+                                    .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }
+                                    .point { fill: #000000; }
+                                </style>
+                            </defs>
+                            <rect x="10" y="10" width="260" height="220" fill="#ffffff" />
+                            <line x1="40" y1="180" x2="240" y2="150" class="dashed-line" /> 
+                            <line x1="40" y1="180" x2="160" y2="210" class="main-line" />  
+                            <line x1="160" y1="210" x2="240" y2="150" class="main-line" />  
+                            <line x1="120" y1="30" x2="40" y2="180" class="main-line" />   
+                            <line x1="120" y1="30" x2="160" y2="210" class="main-line" />  
+                            <line x1="120" y1="30" x2="240" y2="150" class="main-line" />  
+                            <circle cx="120" cy="30" r="2.5" class="point" />
+                            <circle cx="40" cy="180" r="2.5" class="point" />
+                            <circle cx="160" cy="210" r="2.5" class="point" />
+                            <circle cx="240" cy="150" r="2.5" class="point" />
+                            <text x="115" y="20" class="vertex-label">S</text>
+                            <text x="25" y="185" class="vertex-label">A</text>
+                            <text x="160" y="228" class="vertex-label">B</text>
+                            <text x="248" y="152" class="vertex-label">C</text>
+                        </svg>
+                    </div>`,
+                    hint: `Якщо бічні ребра рівні, то їхні проекції також рівні, отже основа висоти рівновіддалена від вершин основи.`,
+                    options: [
+                        {label: "А", text: `описаного кола &Delta;ABC`, isCorrect: true, rationale: `Правильно! Оскільки всі бічні ребра (похилі) рівні, рівні й їхні проекції. Точка, рівновіддалена від вершин трикутника, є центром описаного кола.`},
+                        {label: "Б", text: `вписаного кола &Delta;ABC`, isCorrect: false, rationale: `Це було б так, якби були рівні не бічні ребра, а двогранні кути при основі.`},
+                        {label: "В", text: `будь-яка точка на AB`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Г", text: `вершина C`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `10. Площа ортогональної проекції фігури обчислюється за формулою:`,
+                    hint: `Формула зв'язує площу фігури, площу проекції та косинус кута між площинами.`,
+                    options: [
+                        {label: "А", text: `S<sub>пр</sub> = S &middot; sin&phi;`, isCorrect: false, rationale: `Використовується косинус, а не синус.`},
+                        {label: "Б", text: `S<sub>пр</sub> = S &middot; cos&phi;`, isCorrect: true, rationale: `Правильно! Це класична теорема про площу ортогональної проекції.`},
+                        {label: "В", text: `S<sub>пр</sub> = S &middot; tg&phi;`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Г", text: `S<sub>пр</sub> = <span class='frac'><span class='frac-num'>S</span><span class='frac-den'>cos&phi;</span></span>`, isCorrect: false, rationale: `Так ми б знайшли площу самої фігури через проекцію.`}
+                    ]
+                }
+            ]
+        ];
+
+        let poolCounter = 0;
+        let currentPoolQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOptionIndex = null;
+        
+        let timerInterval = null;
+        let totalSeconds = 600; // 10 minutes
+
+        const startScreen = document.getElementById('start-screen');
+        const questionBox = document.getElementById('question-box');
+        const resultsScreen = document.getElementById('results-screen');
+        const progressContainer = document.getElementById('progress-container');
+        
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        const questionText = document.getElementById('question-text');
+        const optionsList = document.getElementById('options-list');
+        const feedbackBox = document.getElementById('feedback-box');
+        
+        const questionNumber = document.getElementById('question-number');
+        const scoreLive = document.getElementById('score-live');
+        const progressFill = document.getElementById('progress-fill');
+        const timerDisplay = document.getElementById('timer-display');
+        const finalScore = document.getElementById('final-score');
+        const resultsMessage = document.getElementById('results-message');
+        const resultsDesc = document.getElementById('results-desc');
+
+        const hintToggleBtn = document.getElementById('hint-toggle-btn');
+        const hintBox = document.getElementById('hint-box');
+
+        function startTimer() {
+            totalSeconds = 600;
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                updateTimerDisplay();
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function initQuiz() {
+            const activePoolIndex = poolCounter % rawQuizData.length;
+            currentPoolQuestions = rawQuizData[activePoolIndex];
+            poolCounter++;
+
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            startScreen.style.display = 'none';
+            resultsScreen.style.display = 'none';
+            questionBox.style.display = 'block';
+            progressContainer.style.display = 'block';
+
+            scoreLive.textContent = `Бали: ${score}`;
+            startTimer();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = currentPoolQuestions[currentQuestionIndex];
+            selectedOptionIndex = null;
+            
+            questionNumber.textContent = `Питання ${currentQuestionIndex + 1} з 10`;
+            progressFill.style.width = `${((currentQuestionIndex) / 10) * 100}%`;
+            
+            questionText.innerHTML = currentQ.question;
+
+            // Setup Hint
+            if (currentQ.hint) {
+                hintBox.innerHTML = currentQ.hint;
+                hintBox.style.display = 'none';
+                hintToggleBtn.style.display = 'inline-block';
+                hintToggleBtn.textContent = '💡 Підказка';
+            } else {
+                hintToggleBtn.style.display = 'none';
+                hintBox.style.display = 'none';
+            }
+
+            optionsList.innerHTML = '';
+            feedbackBox.style.display = 'none';
+            nextBtn.disabled = true;
+            nextBtn.textContent = (currentQuestionIndex === 9) ? "Завершити тест" : "Наступне запитання";
+
+            currentQ.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="opt-label">${opt.label}</span><span>${opt.text}</span>`;
+                btn.addEventListener('click', () => selectOption(idx));
+                optionsList.appendChild(btn);
+            });
+        }
+
+        hintToggleBtn.addEventListener('click', () => {
+            if (hintBox.style.display === 'block') {
+                hintBox.style.display = 'none';
+                hintToggleBtn.textContent = '💡 Підказка';
+            } else {
+                hintBox.style.display = 'block';
+                hintToggleBtn.textContent = 'Приховати підказку';
+            }
+        });
+
+        function selectOption(index) {
+            if (selectedOptionIndex !== null) return;
+            
+            selectedOptionIndex = index;
+            const currentQ = currentPoolQuestions[currentQuestionIndex];
+            const optionBtns = optionsList.querySelectorAll('.option-btn');
+            const chosenOption = currentQ.options[index];
+            const correctIndex = currentQ.options.findIndex(o => o.isCorrect);
+
+            optionBtns.forEach(btn => btn.disabled = true);
+
+            if (chosenOption.isCorrect) {
+                score++;
+                scoreLive.textContent = `Бали: ${score}`;
+                optionBtns[index].classList.add('correct');
+                feedbackBox.className = 'feedback-box correct';
+                feedbackBox.innerHTML = `<strong>✓</strong> <span>${chosenOption.rationale}</span>`;
+            } else {
+                optionBtns[index].classList.add('wrong');
+                if (correctIndex !== -1) {
+                    optionBtns[correctIndex].classList.add('correct');
+                }
+                feedbackBox.className = 'feedback-box wrong';
+                feedbackBox.innerHTML = `<strong>✗</strong> <span>${chosenOption.rationale}</span>`;
+            }
+
+            feedbackBox.style.display = 'block';
+            nextBtn.disabled = false;
+        }
+
+        function handleNext() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < 10) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            questionBox.style.display = 'none';
+            progressContainer.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            finalScore.innerHTML = `${score}/10`;
+
+            if (score >= 9) {
+                resultsMessage.textContent = "Чудовий результат!";
+                resultsDesc.textContent = "Ви успішно пройшли експрес-тестування. Готові до нових математичних викликів!";
+            } else if (score >= 7) {
+                resultsMessage.textContent = "Добре впоралися!";
+                resultsDesc.textContent = "Ви непогано впоралися з тестуванням, але є над чим попрацювати!";
+            } else if (score >= 5) {
+                resultsMessage.textContent = "Непогано, але варто повторити теорію!";
+                resultsDesc.textContent = "Варто ще раз переглянути матеріали теми та закріпити навички.";
+            } else {
+                resultsMessage.textContent = "Потрібно ще попрацювати над темою!";
+                resultsDesc.textContent = "Рекомендуємо повторити теоретичний матеріал і спробувати пройти тест знову.";
+            }
+        }
+
+        if (startBtn) startBtn.addEventListener('click', initQuiz);
+        if (nextBtn) nextBtn.addEventListener('click', handleNext);
+        if (restartBtn) restartBtn.addEventListener('click', initQuiz);
+    </script>
+</body>
+</html>

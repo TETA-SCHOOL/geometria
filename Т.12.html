@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Експрес-тест | TETA School</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+        }
+
+        /* Header Layout */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        /* Start Screen */
+        .start-screen {
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .start-screen h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--primary);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Progress Bar & Timer */
+        .progress-container {
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 5px;
+        }
+
+        /* Question Box */
+        .question-box {
+            display: none;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 15px 0;
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #a0aec0;
+        }
+
+        .diagram-container svg {
+            max-width: 50%;
+            height: auto;
+        }
+
+        /* Hint section */
+        .hint-container {
+            margin-bottom: 15px;
+        }
+
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: underline;
+        }
+
+        .hint-btn:hover {
+            color: var(--accent-red);
+        }
+
+        .hint-box {
+            background-color: #FFFBEB;
+            border: 1px solid #FCD34D;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 0.92rem;
+            color: #92400E;
+            margin-top: 8px;
+            display: none;
+            line-height: 1.4;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 1.05rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+            transform: translateY(-2px);
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            transform: none;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .opt-label {
+            background: #0E9F6E;
+            color: #FFF;
+        }
+
+        .option-btn.wrong .opt-label {
+            background: var(--accent-red);
+            color: #FFF;
+        }
+
+        /* Feedback Box */
+        .feedback-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct {
+            background-color: #E6F4EA;
+            border: 1px solid #34A853;
+            color: #137333;
+        }
+
+        .feedback-box.wrong {
+            background-color: #FCE8E6;
+            border: 1px solid #EA4335;
+            color: #C5221F;
+        }
+
+        /* Action Buttons */
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .btn-primary:disabled {
+            background-color: #CBD5E1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .actions-center {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .score-badge {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            box-shadow: 0 8px 20px rgba(0, 83, 134, 0.25);
+        }
+
+        .score-badge .score-num {
+            font-size: 2.8rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .score-badge .score-total {
+            font-size: 1rem;
+            font-weight: 500;
+            opacity: 1;
+        }
+
+        .results-message {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .results-desc {
+            font-size: 1.05rem;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        /* Math Typography Support HTML Native */
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 4px;
+        }
+        .frac .frac-num {
+            border-bottom: 1px solid var(--dark-text);
+            padding: 0 4px;
+            font-size: 0.95em;
+            line-height: 1.2;
+        }
+        .frac .frac-den {
+            padding: 0 4px;
+            font-size: 0.95em;
+            line-height: 1.2;
+        }
+        .sqrt-content {
+            border-top: 1px solid var(--dark-text);
+            padding-top: 1px;
+            margin-left: 2px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 25px 18px; }
+            .question-text { font-size: 1.1rem; }
+            .option-btn { padding: 12px 15px; font-size: 0.95rem; }
+            .diagram-container svg { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header with TETA School SVG Logo -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #7d1111;
+      }
+    </style>
+  </defs>
+  <g id="_Шар_1-2" data-name="Шар 1">
+    <g>
+      <g>
+        <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+        <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+        <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+        <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+      </g>
+      <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.37-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+    </g>
+  </g>
+</svg>
+            </div>
+            <div class="test-title">Експрес-тест</div>
+            <div class="test-subtitle">Тема. Теорема косинусів та синусів</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Експрес-тест <br> Тема. Теорема косинусів та синусів <br></h1>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість запитань:</strong> 10</li>
+                    <li><strong>Час проходження:</strong> 10 хвилин</li>
+                    <li><strong>Рівень складності:</strong> легкий/середній</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Progress Area -->
+        <div id="progress-container" class="progress-container">
+            <div class="progress-header">
+                <span id="question-number">Питання 1 з 10</span>
+                <div class="timer-badge">
+                    <span>⏱️</span>
+                    <span id="timer-display">10:00</span>
+                </div>
+                <span id="score-live">Бали: 0</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Question Area -->
+        <div id="question-box" class="question-box">
+            <div id="question-text" class="question-text"></div>
+
+            <div class="hint-container">
+                <button type="button" class="hint-btn" id="hint-toggle-btn">💡 Підказка</button>
+                <div id="hint-box" class="hint-box"></div>
+            </div>
+
+            <div id="options-list" class="options-list"></div>
+            <div id="feedback-box" class="feedback-box"></div>
+            
+            <div class="actions-center">
+                <button id="next-btn" class="btn-primary" disabled>Наступне запитання</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <div id="results-message" class="results-message">Чудова робота!</div>
+            
+            <div class="score-badge">
+                <span id="final-score" class="score-num">0/10</span>
+                <span class="score-total">правильних</span>
+            </div>
+
+            <p id="results-desc" class="results-desc">Ви успішно пройшли експрес-тестування. Готові до нових математичних викликів!</p>
+
+            <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти ще раз</button>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        const rawQuizData = [
+            // ВАРІАНТ 1
+            [
+                {
+                    question: `1. Згідно з теоремою синусів, відношення сторони трикутника до синуса протилежного кута дорівнює:`,
+                    hint: `Пригадайте наслідок з теореми синусів щодо кола, описаного навколо трикутника.`,
+                    options: [
+                        {label: "А", text: `Радіусу вписаного кола`, isCorrect: false, rationale: `Неправильно. Теорема синусів не пов'язана із вписаним колом.`},
+                        {label: "Б", text: `Діаметру описаного кола (2R)`, isCorrect: true, rationale: `Правильно! За наслідком з теореми синусів відношення дорівнює 2R.`},
+                        {label: "В", text: `Півпериметру`, isCorrect: false, rationale: `Це не відповідає жодній тригонометричній тотожності.`},
+                        {label: "Г", text: `Стороні, помноженій на косинус кута`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `2. Визначте вид трикутника, якщо його сторони дорівнюють 4 см, 5 см і 6 см.`,
+                    hint: `Порівняйте квадрат найбільшої сторони із сумою квадратів двох інших сторін (наслідок з теореми косинусів).`,
+                    options: [
+                        {label: "А", text: `Прямокутний`, isCorrect: false, rationale: `Сума квадратів катетів не дорівнює квадрату гіпотенузи (36 &ne; 16 + 25).`},
+                        {label: "Б", text: `Гострокутний`, isCorrect: true, rationale: `Правильно! Оскільки 6<sup>2</sup> < 4<sup>2</sup> + 5<sup>2</sup> (36 < 41), трикутник є гострокутним.`},
+                        {label: "В", text: `Тупокутний`, isCorrect: false, rationale: `Квадрат найбільшої сторони має бути більшим за суму квадратів двох інших.`},
+                        {label: "Г", text: `Неможливо визначити`, isCorrect: false, rationale: `Сторони задано повністю, вид визначити можна.`}
+                    ]
+                },
+                {
+                    question: `3. Дві сторони трикутника дорівнюють 3 см і 8 см, а кут між ними &mdash; 60&deg;. Знайдіть третю сторону трикутника.
+                    <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="20 100 260 135" width="100%">
+                      <defs>
+                        <style>
+                          .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                          .arc { stroke: #000000; stroke-width: 1; fill: none; }
+                          .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 18px; font-style: italic; fill: #000000; }
+                          .value-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: bold; fill: #000000; }
+                          .angle-text { font-family: Arial, sans-serif; font-size: 14px; fill: #000000; }
+                          .point { fill: #000000; }
+                        </style>
+                      </defs>
+                      <path d="M 80 200 A 30 30 0 0 0 65 174" class="arc" />
+                      <text x="82" y="190" class="angle-text">60°</text>
+                      <line x1="50" y1="200" x2="250" y2="200" class="main-line" />
+                      <line x1="50" y1="200" x2="87.5" y2="135" class="main-line" />
+                      <line x1="87.5" y1="135" x2="250" y2="200" class="main-line" />
+                      <circle cx="50" cy="200" r="2.5" class="point" />
+                      <circle cx="250" cy="200" r="2.5" class="point" />
+                      <circle cx="87.5" cy="135" r="2.5" class="point" />
+                      <text x="25" y="210" class="vertex-label">C</text>
+                      <text x="260" y="210" class="vertex-label">A</text>
+                      <text x="75" y="120" class="vertex-label">B</text>
+                      <text x="145" y="225" class="value-label">8</text>
+                      <text x="45" y="160" class="value-label">3</text>
+                    </svg></div>`,
+                    hint: `Застосуйте теорему косинусів для знаходження невідомої сторони за двома сторонами та кутом між ними.`,
+                    options: [
+                        {label: "А", text: `5 см`, isCorrect: false, rationale: `Невірний розрахунок.`},
+                        {label: "Б", text: `6 см`, isCorrect: false, rationale: `Невірний розрахунок.`},
+                        {label: "В", text: `7 см`, isCorrect: true, rationale: `Правильно! За теоремою косинусів c<sup>2</sup> = 3<sup>2</sup> + 8<sup>2</sup> - 2 &middot; 3 &middot; 8 &middot; cos 60&deg; = 9 + 64 - 24 = 49 &rArr; c = 7 см.`},
+                        {label: "Г", text: `&radic;<span class='sqrt-content'>73</span> см`, isCorrect: false, rationale: `Ви додали косинус замість віднімання.`}
+                    ]
+                },
+                {
+                    question: `4. Обчисліть радіус кола, описаного навколо трикутника, якщо один із його кутів дорівнює 30&deg;, а протилежна йому сторона &mdash; 10 см.`,
+                    hint: `Використайте узагальнену теорему синусів: відношення сторони до синуса протилежного кута дорівнює двом радіусам.`,
+                    options: [
+                        {label: "А", text: `5 см`, isCorrect: false, rationale: `Ви забули про подвоєння радіуса у формулі.`},
+                        {label: "Б", text: `10 см`, isCorrect: true, rationale: `Правильно! 2R = <span class='frac'><span class='frac-num'>10</span><span class='frac-den'>sin 30&deg;</span></span> = <span class='frac'><span class='frac-num'>10</span><span class='frac-den'>0.5</span></span> = 20 &rArr; R = 10 см.`},
+                        {label: "В", text: `20 см`, isCorrect: false, rationale: `Це діаметр кола.`},
+                        {label: "Г", text: `10&radic;<span class='sqrt-content'>3</span> см`, isCorrect: false, rationale: `Невірний розрахунок.`}
+                    ]
+                },
+                {
+                    question: `5. Гострий кут паралелограма дорівнює 60&deg;, а його сторони &mdash; 3 см і 5 см. Обчисліть довжину меншої діагоналі паралелограма.
+                    <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="20 70 310 170" width="100%">
+                      <defs>
+                        <style>
+                          .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                          .arc { stroke: #000000; stroke-width: 1; fill: none; }
+                          .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 18px; font-style: italic; fill: #000000; }
+                          .value-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: #000000; }
+                          .angle-text { font-family: Arial, sans-serif; font-size: 14px; fill: #000000; }
+                          .point { fill: #000000; }
+                        </style>
+                      </defs>
+                      <path d="M 75 200 A 25 25 0 0 0 62.5 178.4" class="arc" />
+                      <text x="80" y="193" class="angle-text">60°</text>
+                      <line x1="50" y1="200" x2="250" y2="200" class="main-line" />
+                      <line x1="50" y1="200" x2="110" y2="96" class="main-line" />
+                      <line x1="110" y1="96" x2="310" y2="96" class="main-line" />
+                      <line x1="250" y1="200" x2="310" y2="96" class="main-line" />
+                      <line x1="110" y1="96" x2="250" y2="200" class="main-line" />
+                      <circle cx="50" cy="200" r="2.5" class="point" />
+                      <circle cx="110" cy="96" r="2.5" class="point" />
+                      <circle cx="310" cy="96" r="2.5" class="point" />
+                      <circle cx="250" cy="200" r="2.5" class="point" />
+                      <text x="30" y="215" class="vertex-label">A</text>
+                      <text x="95" y="85" class="vertex-label">B</text>
+                      <text x="315" y="85" class="vertex-label">C</text>
+                      <text x="255" y="215" class="vertex-label">D</text>
+                      <text x="65" y="145" class="value-label">3</text>
+                      <text x="145" y="225" class="value-label">5</text>
+                      <text x="185" y="140" class="value-label">?</text>
+                    </svg></div>`,
+                    hint: `Менша діагональ лежить навпроти гострого кута. Розгляньте трикутник, утворений двома сторонами та меншою діагоналлю, і застосуйте теорему косинусів.`,
+                    options: [
+                        {label: "А", text: `4 см`, isCorrect: false, rationale: `Невірний розрахунок.`},
+                        {label: "Б", text: `&radic;<span class='sqrt-content'>34</span> см`, isCorrect: false, rationale: `Це довжина, якщо кут був би 90&deg; (теорема Піфагора).`},
+                        {label: "В", text: `&radic;<span class='sqrt-content'>19</span> см`, isCorrect: true, rationale: `Правильно! d<sup>2</sup> = 3<sup>2</sup> + 5<sup>2</sup> - 2 &middot; 3 &middot; 5 &middot; cos 60&deg; = 9 + 25 - 15 = 19.`},
+                        {label: "Г", text: `7 см`, isCorrect: false, rationale: `Це більша діагональ (якщо брати кут 120&deg;).`}
+                    ]
+                },
+                {
+                    question: `6. У трикутнику ABC: &ang;A = 45&deg;, &ang;B = 60&deg;, BC = 4&radic;<span class='sqrt-content'>2</span> см. Знайдіть AC.`,
+                    hint: `Застосуйте теорему синусів, склавши пропорцію для сторін BC, AC та протилежних до них кутів.`,
+                    options: [
+                        {label: "А", text: `4&radic;<span class='sqrt-content'>2</span> см`, isCorrect: false, rationale: `Невірний розрахунок.`},
+                        {label: "Б", text: `4&radic;<span class='sqrt-content'>3</span> см`, isCorrect: true, rationale: `Правильно! <span class='frac'><span class='frac-num'>AC</span><span class='frac-den'>sin 60&deg;</span></span> = <span class='frac'><span class='frac-num'>4&radic;<span class='sqrt-content'>2</span></span><span class='frac-den'>sin 45&deg;</span></span> &rArr; AC = 4&radic;<span class='sqrt-content'>3</span> см.`},
+                        {label: "В", text: `8 см`, isCorrect: false, rationale: `Помилка в обчисленні пропорції.`},
+                        {label: "Г", text: `8&radic;<span class='sqrt-content'>3</span> см`, isCorrect: false, rationale: `Невірний розрахунок.`}
+                    ]
+                },
+                {
+                    question: `7. Для будь-якого гострого кута &alpha; правильним є твердження:`,
+                    hint: `Пригадайте формули зведення для тригонометричних функцій суміжних кутів. Косинус тупого кута є від'ємним.`,
+                    options: [
+                        {label: "А", text: `cos(180&deg; - &alpha;) = -cos &alpha;`, isCorrect: true, rationale: `Правильно! Це базова тригонометрична формула зведення.`},
+                        {label: "Б", text: `sin(180&deg; - &alpha;) = -sin &alpha;`, isCorrect: false, rationale: `Синуси суміжних кутів рівні між собою.`},
+                        {label: "В", text: `cos(180&deg; - &alpha;) = cos &alpha;`, isCorrect: false, rationale: `Косинус тупого кута (якщо &alpha; - гострий) є від'ємним.`},
+                        {label: "Г", text: `tg(180&deg; - &alpha;) = tg &alpha;`, isCorrect: false, rationale: `Тангенс тупого кута є від'ємним.`}
+                    ]
+                },
+                {
+                    question: `8. Сума квадратів діагоналей паралелограма дорівнює:`,
+                    hint: `Пригадайте властивість діагоналей паралелограма, що випливає з теореми косинусів (d<sub>1</sub><sup>2</sup> + d<sub>2</sub><sup>2</sup> = ...).`,
+                    options: [
+                        {label: "А", text: `Сумі квадратів двох його суміжних сторін`, isCorrect: false, rationale: `Не вистачає множника 2.`},
+                        {label: "Б", text: `Добутку його сторін`, isCorrect: false, rationale: `Це не відповідає жодній властивості.`},
+                        {label: "В", text: `Сумі квадратів усіх його сторін`, isCorrect: true, rationale: `Правильно! d<sub>1</sub><sup>2</sup> + d<sub>2</sub><sup>2</sup> = 2(a<sup>2</sup> + b<sup>2</sup>).`},
+                        {label: "Г", text: `Квадрату його найбільшої сторони`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `9. Сторони трикутника дорівнюють 3 см, 5 см і 7 см. Знайдіть найбільший кут трикутника.`,
+                    hint: `Найбільший кут лежить навпроти найбільшої сторони. Знайдіть його косинус за допомогою теореми косинусів.`,
+                    options: [
+                        {label: "А", text: `90&deg;`, isCorrect: false, rationale: `Це не єгипетський трикутник (49 &ne; 9 + 25).`},
+                        {label: "Б", text: `60&deg;`, isCorrect: false, rationale: `Косинус кута виходить від'ємним, отже кут тупий.`},
+                        {label: "В", text: `120&deg;`, isCorrect: true, rationale: `Правильно! cos &gamma; = <span class='frac'><span class='frac-num'>3<sup>2</sup> + 5<sup>2</sup> - 7<sup>2</sup></span><span class='frac-den'>2 &middot; 3 &middot; 5</span></span> = <span class='frac'><span class='frac-num'>-15</span><span class='frac-den'>30</span></span> = -0.5. Отже, кут 120&deg;.`},
+                        {label: "Г", text: `150&deg;`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `10. У трикутнику ABC: &ang;A = 30&deg; і &ang;B = 45&deg;. Знайдіть відношення <span class='frac'><span class='frac-num'>BC</span><span class='frac-den'>AC</span></span>.
+                    <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="10 30 290 145" width="100%">
+                      <defs>
+                        <style>
+                          .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                          .arc { stroke: #000000; stroke-width: 1; fill: none; }
+                          .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 18px; font-style: italic; fill: #000000; }
+                          .angle-text { font-family: Arial, sans-serif; font-size: 14px; fill: #000000; }
+                          .point { fill: #000000; }
+                        </style>
+                      </defs>
+                      <path d="M 70 150 A 40 40 0 0 0 64.6 130" class="arc" />
+                      <text x="75" y="142" class="angle-text">30°</text>
+                      <path d="M 258.8 128.8 A 30 30 0 0 0 250 150" class="arc" />
+                      <path d="M 255.25 125.25 A 35 35 0 0 0 245 150" class="arc" />
+                      <text x="215" y="138" class="angle-text">45°</text>
+                      <line x1="30" y1="150" x2="280" y2="150" class="main-line" />
+                      <line x1="30" y1="150" x2="188.5" y2="58.5" class="main-line" />
+                      <line x1="280" y1="150" x2="188.5" y2="58.5" class="main-line" />
+                      <circle cx="30" cy="150" r="2.5" class="point" />
+                      <circle cx="280" cy="150" r="2.5" class="point" />
+                      <circle cx="188.5" cy="58.5" r="2.5" class="point" />
+                      <text x="15" y="160" class="vertex-label">A</text>
+                      <text x="290" y="160" class="vertex-label">B</text>
+                      <text x="180" y="45" class="vertex-label">C</text>
+                    </svg></div>`,
+                    hint: `Згідно з теоремою синусів, відношення сторін дорівнює відношенню синусів протилежних кутів.`,
+                    options: [
+                        {label: "А", text: `&radic;<span class='sqrt-content'>2</span>`, isCorrect: false, rationale: `Невірний розрахунок.`},
+                        {label: "Б", text: `<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>2</span></span><span class='frac-den'>2</span></span>`, isCorrect: true, rationale: `Правильно! <span class='frac'><span class='frac-num'>BC</span><span class='frac-den'>AC</span></span> = <span class='frac'><span class='frac-num'>sin 30&deg;</span><span class='frac-den'>sin 45&deg;</span></span> = <span class='frac'><span class='frac-num'>0.5</span><span class='frac-den'><span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>2</span></span><span class='frac-den'>2</span></span></span></span> = <span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>2</span></span><span class='frac-den'>2</span></span>.`},
+                        {label: "В", text: `<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: `Це лише синус 30 градусів.`},
+                        {label: "Г", text: `&radic;<span class='sqrt-content'>3</span>`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                }
+            ],
+            // ВАРІАНТ 2
+            [
+                {
+                    question: `1. За теоремою косинусів, квадрат сторони a трикутника обчислюється за формулою:`,
+                    hint: `Пригадайте точне формулювання теореми косинусів (узагальненої теореми Піфагора).`,
+                    options: [
+                        {label: "А", text: `a<sup>2</sup> = b<sup>2</sup> + c<sup>2</sup> - 2bc cos A`, isCorrect: true, rationale: `Правильно! Це точне формулювання теореми косинусів.`},
+                        {label: "Б", text: `a<sup>2</sup> = b<sup>2</sup> + c<sup>2</sup> + 2bc cos A`, isCorrect: false, rationale: `Перед добутком сторін має стояти знак мінус.`},
+                        {label: "В", text: `a<sup>2</sup> = b<sup>2</sup> + c<sup>2</sup> - bc cos A`, isCorrect: false, rationale: `Не вистачає множника 2.`},
+                        {label: "Г", text: `a<sup>2</sup> = b<sup>2</sup> + c<sup>2</sup> - 2bc sin A`, isCorrect: false, rationale: `У формулі має бути косинус, а не синус.`}
+                    ]
+                },
+                {
+                    question: `2. Визначте вид трикутника, якщо його сторони дорівнюють 6 см, 8 см і 10 см.`,
+                    hint: `Перевірте виконання теореми Піфагора або порівняйте квадрат найбільшої сторони з сумою квадратів двох інших.`,
+                    options: [
+                        {label: "А", text: `Прямокутний`, isCorrect: true, rationale: `Правильно! Оскільки 10<sup>2</sup> = 6<sup>2</sup> + 8<sup>2</sup> (100 = 36 + 64), цей трикутник є прямокутним.`},
+                        {label: "Б", text: `Гострокутний`, isCorrect: false, rationale: `Для гострокутного квадрат найбільшої сторони має бути меншим.`},
+                        {label: "В", text: `Тупокутний`, isCorrect: false, rationale: `Для тупокутного квадрат найбільшої сторони має бути більшим.`},
+                        {label: "Г", text: `Рівнобедрений`, isCorrect: false, rationale: `Всі сторони мають різну довжину.`}
+                    ]
+                },
+                {
+                    question: `3. Дві сторони трикутника дорівнюють 5 см і 7 см, а кут між ними &mdash; 120&deg;. Знайдіть третю сторону.
+                    <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="40 50 250 140" width="100%">
+                      <defs>
+                        <style>
+                          .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                          .arc { stroke: #000000; stroke-width: 1; fill: none; }
+                          .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 18px; font-style: italic; fill: #000000; }
+                          .value-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: #000000; }
+                          .angle-text { font-family: Arial, sans-serif; font-size: 14px; fill: #000000; }
+                          .point { fill: #000000; }
+                        </style>
+                      </defs>
+                      <path d="M 130 160 A 10 10 0 0 0 115 151.34" class="arc" />
+                      <text x="127" y="153" class="angle-text">120°</text>
+                      <line x1="120" y1="160" x2="260" y2="160" class="main-line" />
+                      <line x1="120" y1="160" x2="70" y2="73.4" class="main-line" />
+                      <line x1="260" y1="160" x2="70" y2="73.4" class="main-line" />
+                      <circle cx="120" cy="160" r="2.5" class="point" />
+                      <circle cx="260" cy="160" r="2.5" class="point" />
+                      <circle cx="70" cy="73.4" r="2.5" class="point" />
+                      <text x="115" y="180" class="vertex-label">C</text>
+                      <text x="270" y="165" class="vertex-label">A</text>
+                      <text x="55" y="65" class="vertex-label">B</text>
+                      <text x="185" y="180" class="value-label">7</text>
+                      <text x="75" y="125" class="value-label">5</text>
+                    </svg></div>`,
+                    hint: `Використайте теорему косинусів. Пам'ятайте, що косинус тупого кута є від'ємним.`,
+                    options: [
+                        {label: "А", text: `&radic;<span class='sqrt-content'>39</span> см`, isCorrect: false, rationale: `Ви відняли добуток сторін (не врахували, що косинус 120&deg; від'ємний).`},
+                        {label: "Б", text: `&radic;<span class='sqrt-content'>74</span> см`, isCorrect: false, rationale: `Ви застосували теорему Піфагора (кут 90&deg;).`},
+                        {label: "В", text: `&radic;<span class='sqrt-content'>109</span> см`, isCorrect: true, rationale: `Правильно! c<sup>2</sup> = 5<sup>2</sup> + 7<sup>2</sup> - 2 &middot; 5 &middot; 7 &middot; (-0.5) = 25 + 49 + 35 = 109.`},
+                        {label: "Г", text: `12 см`, isCorrect: false, rationale: `Сума двох сторін не може дорівнювати третій.`}
+                    ]
+                },
+                {
+                    question: `4. Радіус кола, описаного навколо трикутника, обчислюється за формулою:`,
+                    hint: `Це наслідок з теореми синусів. Відношення сторони до синуса протилежного кута дорівнює 2R. Виразіть звідси R.`,
+                    options: [
+                        {label: "А", text: `R = <span class='frac'><span class='frac-num'>a</span><span class='frac-den'>sin A</span></span>`, isCorrect: false, rationale: `Це формула для діаметра кола (2R).`},
+                        {label: "Б", text: `R = a sin A`, isCorrect: false, rationale: `Формула хибна.`},
+                        {label: "В", text: `R = <span class='frac'><span class='frac-num'>a</span><span class='frac-den'>2 sin A</span></span>`, isCorrect: true, rationale: `Правильно! Оскільки <span class='frac'><span class='frac-num'>a</span><span class='frac-den'>sin A</span></span> = 2R, то R = <span class='frac'><span class='frac-num'>a</span><span class='frac-den'>2 sin A</span></span>.`},
+                        {label: "Г", text: `R = <span class='frac'><span class='frac-num'>2a</span><span class='frac-den'>sin A</span></span>`, isCorrect: false, rationale: `Множник 2 має бути у знаменнику.`}
+                    ]
+                },
+                {
+                    question: `5. У паралелограмі ABCD діагональ BD утворює зі сторонами AB і AD кути 60&deg; і 45&deg; відповідно. Знайдіть довжину сторони BC, якщо AB = 2 см.
+                    <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="20 50 230 180" width="100%">
+                      <defs>
+                        <style>
+                          .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                          .arc { stroke: #000000; stroke-width: 1; fill: none; }
+                          .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 18px; font-style: italic; fill: #000000; }
+                          .value-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: #000000; }
+                          .angle-text { font-family: Arial, sans-serif; font-size: 14px; fill: #000000; }
+                          .point { fill: #000000; }
+                        </style>
+                      </defs>
+                      <path d="M 98.7 101.7 A 25 25 0 0 1 74.6 108.2" class="arc" />
+                      <text x="85" y="125" class="angle-text">60°</text>
+                      <path d="M 172 200 A 25 25 0 0 1 179.3 182.3" class="arc" />
+                      <path d="M 167 200 A 30 30 0 0 1 175.8 178.8" class="arc" />
+                      <text x="142" y="195" class="angle-text">45°</text>
+                      <line x1="50" y1="200" x2="81" y2="84" class="main-line" />
+                      <line x1="81" y1="84" x2="228" y2="84" class="main-line" />
+                      <line x1="228" y1="84" x2="197" y2="200" class="main-line" />
+                      <line x1="197" y1="200" x2="50" y2="200" class="main-line" />
+                      <line x1="81" y1="84" x2="197" y2="200" class="main-line" />
+                      <circle cx="50" cy="200" r="2.5" class="point" />
+                      <circle cx="81" cy="84" r="2.5" class="point" />
+                      <circle cx="228" cy="84" r="2.5" class="point" />
+                      <circle cx="197" cy="200" r="2.5" class="point" />
+                      <text x="35" y="215" class="vertex-label">A</text>
+                      <text x="65" y="75" class="vertex-label">B</text>
+                      <text x="235" y="75" class="vertex-label">C</text>
+                      <text x="205" y="215" class="vertex-label">D</text>
+                      <text x="45" y="145" class="value-label">2</text>
+                      <text x="154" y="75" class="value-label">?</text>
+                    </svg></div>`,
+                    hint: `Знайдіть кути трикутника ABD і використайте теорему синусів для знаходження AD. Пам'ятайте, що протилежні сторони паралелограма рівні (AD = BC).`,
+                    options: [
+                        {label: "А", text: `2&radic;<span class='sqrt-content'>2</span> см`, isCorrect: false, rationale: `Невірний розрахунок.`},
+                        {label: "Б", text: `&radic;<span class='sqrt-content'>6</span> см`, isCorrect: true, rationale: `Правильно! За теоремою синусів для &Delta;ABD: <span class='frac'><span class='frac-num'>AD</span><span class='frac-den'>sin 60&deg;</span></span> = <span class='frac'><span class='frac-num'>AB</span><span class='frac-den'>sin 45&deg;</span></span> &rArr; AD = BC = &radic;<span class='sqrt-content'>6</span> см.`},
+                        {label: "В", text: `3 см`, isCorrect: false, rationale: `Помилка в обчисленні.`},
+                        {label: "Г", text: `<span class='frac'><span class='frac-num'>2&radic;<span class='sqrt-content'>6</span></span><span class='frac-den'>3</span></span> см`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `6. У трикутнику ABC: &ang;A = 30&deg;, &ang;B = 135&deg;, BC = 4 см. Знайдіть AC.`,
+                    hint: `Застосуйте теорему синусів. Пригадайте формулу зведення для sin(135&deg;).`,
+                    options: [
+                        {label: "А", text: `2&radic;<span class='sqrt-content'>2</span> см`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Б", text: `4&radic;<span class='sqrt-content'>3</span> см`, isCorrect: false, rationale: `Ви використали sin(60&deg;) замість sin(135&deg;).`},
+                        {label: "В", text: `4&radic;<span class='sqrt-content'>2</span> см`, isCorrect: true, rationale: `Правильно! <span class='frac'><span class='frac-num'>AC</span><span class='frac-den'>sin 135&deg;</span></span> = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>sin 30&deg;</span></span>. Оскільки sin 135&deg; = <span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>2</span></span><span class='frac-den'>2</span></span>, AC = 4&radic;<span class='sqrt-content'>2</span> см.`},
+                        {label: "Г", text: `8 см`, isCorrect: false, rationale: `Помилка в розрахунку пропорції.`}
+                    ]
+                },
+                {
+                    question: `7. Чому дорівнює sin(180&deg; - &alpha;), якщо &alpha; &mdash; гострий кут?`,
+                    hint: `Синуси суміжних кутів рівні.`,
+                    options: [
+                        {label: "А", text: `-sin &alpha;`, isCorrect: false, rationale: `Синус тупого кута є додатним числом.`},
+                        {label: "Б", text: `sin &alpha;`, isCorrect: true, rationale: `Правильно! sin(180&deg; - &alpha;) = sin &alpha;.`},
+                        {label: "В", text: `cos &alpha;`, isCorrect: false, rationale: `Тут працює формула зведення для 180 градусів, функція не змінюється.`},
+                        {label: "Г", text: `-cos &alpha;`, isCorrect: false, rationale: `Це формула для косинуса.`}
+                    ]
+                },
+                {
+                    question: `8. Сторони трикутника дорівнюють 7 см, 8 см і 13 см. Знайдіть найбільший кут цього трикутника.`,
+                    hint: `Найбільший кут лежить навпроти найбільшої сторони. Застосуйте теорему косинусів, щоб знайти його косинус.`,
+                    options: [
+                        {label: "А", text: `90&deg;`, isCorrect: false, rationale: `Квадрат гіпотенузи не дорівнює сумі квадратів катетів.`},
+                        {label: "Б", text: `60&deg;`, isCorrect: false, rationale: `Кут має бути тупим.`},
+                        {label: "В", text: `120&deg;`, isCorrect: true, rationale: `Правильно! cos &gamma; = <span class='frac'><span class='frac-num'>7<sup>2</sup> + 8<sup>2</sup> - 13<sup>2</sup></span><span class='frac-den'>2 &middot; 7 &middot; 8</span></span> = -0.5. Відповідно кут 120&deg;.`},
+                        {label: "Г", text: `150&deg;`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `9. У трикутнику ABC: &ang;A = 60&deg;, &ang;C = 45&deg;. Знайдіть відношення <span class='frac'><span class='frac-num'>BC</span><span class='frac-den'>AB</span></span>.
+                    <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="20 10 210 160" width="100%">
+                      <defs>
+                        <style>
+                          .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                          .arc { stroke: #000000; stroke-width: 1; fill: none; }
+                          .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 18px; font-style: italic; fill: #000000; }
+                          .angle-text { font-family: Arial, sans-serif; font-size: 14px; fill: #000000; }
+                          .point { fill: #000000; }
+                        </style>
+                      </defs>
+                      <path d="M 75 140 A 25 25 0 0 0 62.5 118.3" class="arc" />
+                      <text x="80" y="132" class="angle-text">60°</text>
+                      <path d="M 183.1 122.3 A 25 25 0 0 0 175.7 140" class="arc" />
+                      <path d="M 179.5 118.8 A 30 30 0 0 0 170.7 140" class="arc" />
+                      <text x="145" y="132" class="angle-text">45°</text>
+                      <line x1="50" y1="140" x2="200.7" y2="140" class="main-line" />
+                      <line x1="50" y1="140" x2="107.7" y2="40" class="main-line" />
+                      <line x1="200.7" y1="140" x2="107.7" y2="40" class="main-line" />
+                      <circle cx="50" cy="140" r="2.5" class="point" />
+                      <circle cx="107.7" cy="40" r="2.5" class="point" />
+                      <circle cx="200.7" cy="140" r="2.5" class="point" />
+                      <text x="35" y="150" class="vertex-label">A</text>
+                      <text x="102" y="25" class="vertex-label">B</text>
+                      <text x="210" y="150" class="vertex-label">C</text>
+                    </svg></div>`,
+                    hint: `Запишіть теорему синусів для сторін BC і AB та виразіть їх відношення через синуси відповідних кутів.`,
+                    options: [
+                        {label: "А", text: `<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>6</span></span><span class='frac-den'>2</span></span>`, isCorrect: true, rationale: `Правильно! За теоремою синусів <span class='frac'><span class='frac-num'>BC</span><span class='frac-den'>AB</span></span> = <span class='frac'><span class='frac-num'>sin 60&deg;</span><span class='frac-den'>sin 45&deg;</span></span> = <span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>6</span></span><span class='frac-den'>2</span></span>.`},
+                        {label: "Б", text: `&radic;<span class='frac'><span class='frac-num'>2</span><span class='frac-den'>3</span></span>`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "В", text: `<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>2</span></span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: `Це значення лише для синуса 45&deg;.`},
+                        {label: "Г", text: `<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: `Невірний розрахунок.`}
+                    ]
+                },
+                {
+                    question: `10. Визначте вид трикутника, якщо його сторони дорівнюють 4 см, 6 см і 9 см.`,
+                    hint: `Спочатку перевірте нерівність трикутника (чи сума двох менших сторін більша за третю). Потім порівняйте квадрат найбільшої сторони із сумою квадратів двох інших.`,
+                    options: [
+                        {label: "А", text: `Прямокутний`, isCorrect: false, rationale: `Не виконується теорема Піфагора.`},
+                        {label: "Б", text: `Гострокутний`, isCorrect: false, rationale: `Квадрат більшої сторони перевищує суму двох інших.`},
+                        {label: "В", text: `Тупокутний`, isCorrect: true, rationale: `Правильно! 4 + 6 > 9, тому трикутник існує. 9<sup>2</sup> > 4<sup>2</sup> + 6<sup>2</sup> (81 > 16 + 36), отже він тупокутний.`},
+                        {label: "Г", text: `Такого трикутника не існує`, isCorrect: false, rationale: `Сума будь-яких двох сторін більша за третю, отже він існує.`}
+                    ]
+                }
+            ],
+            // ВАРІАНТ 3
+            [
+                {
+                    question: `1. Теорему синусів найчастіше застосовують, коли відомі:`,
+                    hint: `Теорема синусів пов'язує дві сторони та два протилежні до них кути.`,
+                    options: [
+                        {label: "А", text: `Три сторони трикутника`, isCorrect: false, rationale: `У такому випадку краще застосувати теорему косинусів.`},
+                        {label: "Б", text: `Сторона і два кути трикутника`, isCorrect: true, rationale: `Правильно! Це дозволяє знайти інші сторони за допомогою пропорції.`},
+                        {label: "В", text: `Дві сторони і кут між ними`, isCorrect: false, rationale: `Для цього застосовується теорема косинусів.`},
+                        {label: "Г", text: `Площа і периметр`, isCorrect: false, rationale: `Ці дані не дають можливості безпосередньо застосувати теорему синусів.`}
+                    ]
+                },
+                {
+                    question: `2. Визначте вид трикутника, якщо квадрат найбільшої сторони менший за суму квадратів двох інших сторін (c<sup>2</sup> < a<sup>2</sup> + b<sup>2</sup>).`,
+                    hint: `Пригадайте наслідок з теореми косинусів про визначення виду трикутника за його сторонами.`,
+                    options: [
+                        {label: "А", text: `Прямокутний`, isCorrect: false, rationale: `Для прямокутного має виконуватись рівність.`},
+                        {label: "Б", text: `Гострокутний`, isCorrect: true, rationale: `Правильно! За наслідком з теореми косинусів це ознака гострокутного трикутника.`},
+                        {label: "В", text: `Тупокутний`, isCorrect: false, rationale: `Для тупокутного квадрат найбільшої сторони має бути більшим.`},
+                        {label: "Г", text: `Визначити неможливо`, isCorrect: false, rationale: `Ця властивість однозначно визначає вид трикутника.`}
+                    ]
+                },
+                {
+                    question: `3. Дві сторони трикутника дорівнюють 2 см і 4&radic;<span class='sqrt-content'>2</span> см, а кут між ними &mdash; 45&deg;. Знайдіть третю сторону.
+                    <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="20 80 230 110" width="100%">
+                      <defs>
+                        <style>
+                          .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                          .arc { stroke: #000000; stroke-width: 1; fill: none; }
+                          .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }
+                          .value-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: #000000; }
+                          .angle-text { font-family: Arial, sans-serif; font-size: 14px; fill: #000000; }
+                          .point { fill: #000000; }
+                        </style>
+                      </defs>
+                      <path d="M 62 160 A 12 12 0 0 0 58.5 151.5" class="arc" />
+                      <text x="68" y="156" class="angle-text">45°</text>
+                      <line x1="50" y1="160" x2="220" y2="160" class="main-line" />
+                      <line x1="50" y1="160" x2="92" y2="118" class="main-line" />
+                      <line x1="220" y1="160" x2="92" y2="118" class="main-line" />
+                      <circle cx="50" cy="160" r="2.5" class="point" />
+                      <circle cx="220" cy="160" r="2.5" class="point" />
+                      <circle cx="92" cy="118" r="2.5" class="point" />
+                      <text x="37" y="166" class="vertex-label">C</text>
+                      <text x="228" y="166" class="vertex-label">A</text>
+                      <text x="88" y="110" class="vertex-label">B</text>
+                      <text x="125" y="178" class="value-label">4√2</text>
+                      <text x="55" y="135" class="value-label">2</text>
+                      <text x="160" y="130" class="value-label">?</text>
+                    </svg></div>`,
+                    hint: `Застосуйте теорему косинусів.`,
+                    options: [
+                        {label: "А", text: `4 см`, isCorrect: false, rationale: `Невірний розрахунок.`},
+                        {label: "Б", text: `2&radic;<span class='sqrt-content'>5</span> см`, isCorrect: true, rationale: `Правильно! c<sup>2</sup> = 2<sup>2</sup> + (4&radic;2)<sup>2</sup> - 2 &middot; 2 &middot; 4&radic;2 &middot; cos 45&deg; = 4 + 32 - 16 = 20 &rArr; c = 2&radic;<span class='sqrt-content'>5</span> см.`},
+                        {label: "В", text: `&radic;<span class='sqrt-content'>52</span> см`, isCorrect: false, rationale: `Ви додали косинус замість віднімання.`},
+                        {label: "Г", text: `5 см`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `4. Сторона трикутника дорівнює 12 см, а протилежний їй кут становить 60&deg;. Знайдіть радіус кола, описаного навколо трикутника.
+                    <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="60 50 180 190" width="100%">
+                      <defs>
+                        <style>
+                          .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                          .dashed-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 5, 5; fill: none; }
+                          .arc { stroke: #000000; stroke-width: 1; fill: none; }
+                          .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }
+                          .value-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: #000000; }
+                          .angle-text { font-family: Arial, sans-serif; font-size: 12px; fill: #000000; }
+                          .point { fill: #000000; }
+                        </style>
+                      </defs>
+                      <circle cx="150" cy="150" r="80" class="main-line" />
+                      <path d="M 142.5 83 A 15 15 0 0 0 157.5 83" class="arc" />
+                      <text x="150" y="97" class="angle-text" text-anchor="middle">60°</text>
+                      <line x1="80.7" y1="190" x2="219.3" y2="190" class="main-line" />
+                      <line x1="150" y1="70" x2="80.7" y2="190" class="main-line" />
+                      <line x1="150" y1="70" x2="219.3" y2="190" class="main-line" />
+                      <line x1="150" y1="150" x2="219.3" y2="190" class="dashed-line" />
+                      <circle cx="150" cy="70" r="2.5" class="point" />
+                      <circle cx="80.7" cy="190" r="2.5" class="point" />
+                      <circle cx="219.3" cy="190" r="2.5" class="point" />
+                      <circle cx="150" cy="150" r="2.5" class="point" />
+                      <text x="150" y="60" class="vertex-label" text-anchor="middle">C</text>
+                      <text x="70" y="195" class="vertex-label" text-anchor="end">A</text>
+                      <text x="230" y="195" class="vertex-label" text-anchor="start">B</text>
+                      <text x="140" y="145" class="vertex-label">O</text>
+                      <text x="150" y="210" class="value-label" text-anchor="middle">12</text>
+                      <text x="178" y="165" class="value-label">?</text>
+                    </svg></div>`,
+                    hint: `Використайте узагальнену теорему синусів, яка пов'язує сторону, синус протилежного кута і радіус описаного кола.`,
+                    options: [
+                        {label: "А", text: `4 см`, isCorrect: false, rationale: `Невірний розрахунок.`},
+                        {label: "Б", text: `4&radic;<span class='sqrt-content'>3</span> см`, isCorrect: true, rationale: `Правильно! R = <span class='frac'><span class='frac-num'>a</span><span class='frac-den'>2 sin 60&deg;</span></span> = <span class='frac'><span class='frac-num'>12</span><span class='frac-den'>&radic;3</span></span> = 4&radic;<span class='sqrt-content'>3</span> см.`},
+                        {label: "В", text: `6&radic;<span class='sqrt-content'>3</span> см`, isCorrect: false, rationale: `Ви забули про множник 2 у знаменнику.`},
+                        {label: "Г", text: `12 см`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `5. Сторони паралелограма дорівнюють 4 см і 6 см, а тупий кут &mdash; 120&deg;. Знайдіть більшу діагональ паралелограма.`,
+                    hint: `Більша діагональ лежить навпроти тупого кута. Розгляньте трикутник, утворений двома сторонами паралелограма та більшою діагоналлю, і застосуйте теорему косинусів.`,
+                    options: [
+                        {label: "А", text: `2&radic;<span class='sqrt-content'>7</span> см`, isCorrect: false, rationale: `Це довжина меншої діагоналі (проти кута 60&deg;).`},
+                        {label: "Б", text: `8 см`, isCorrect: false, rationale: `Невірний розрахунок.`},
+                        {label: "В", text: `2&radic;<span class='sqrt-content'>19</span> см`, isCorrect: true, rationale: `Правильно! За теоремою косинусів d<sup>2</sup> = 4<sup>2</sup> + 6<sup>2</sup> - 2 &middot; 4 &middot; 6 &middot; cos 120&deg; = 16 + 36 + 24 = 76 &rArr; d = 2&radic;<span class='sqrt-content'>19</span> см.`},
+                        {label: "Г", text: `10 см`, isCorrect: false, rationale: `Це не прямокутник.`}
+                    ]
+                },
+                {
+                    question: `6. У трикутнику ABC: &ang;A = 50&deg;, &ang;B = 70&deg;, AC = 2 см. Знайдіть BC за теоремою синусів.
+                    <div class="diagram-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="15 15 230 195" width="100%">
+                      <defs>
+                        <style>
+                          .main-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+                          .arc { stroke: #000000; stroke-width: 1; fill: none; }
+                          .vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }
+                          .value-label { font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: #000000; }
+                          .angle-text { font-family: Arial, sans-serif; font-size: 12px; fill: #000000; }
+                          .point { fill: #000000; }
+                        </style>
+                      </defs>
+                      <path d="M 55 190 A 15 15 0 0 0 49.6 178.5" class="arc" />
+                      <text x="60" y="184" class="angle-text">50°</text>
+                      <path d="M 209 190 A 15 15 0 0 1 218.9 175.9" class="arc" />
+                      <path d="M 205 190 A 19 19 0 0 1 217.6 172.1" class="arc" />
+                      <text x="182" y="184" class="angle-text">70°</text>
+                      <line x1="40" y1="190" x2="224" y2="190" class="main-line" />
+                      <line x1="40" y1="190" x2="168.6" y2="36.8" class="main-line" />
+                      <line x1="224" y1="190" x2="168.6" y2="36.8" class="main-line" />
+                      <circle cx="40" cy="190" r="2.5" class="point" />
+                      <circle cx="224" cy="190" r="2.5" class="point" />
+                      <circle cx="168.6" cy="36.8" r="2.5" class="point" />
+                      <text x="25" y="196" class="vertex-label">A</text>
+                      <text x="232" y="196" class="vertex-label">B</text>
+                      <text x="163" y="27" class="vertex-label">C</text>
+                      <text x="88" y="105" class="value-label">2</text>
+                      <text x="203" y="115" class="value-label">?</text>
+                    </svg></div>`,
+                    hint: `Складіть пропорцію за теоремою синусів і виразіть невідому сторону.`,
+                    options: [
+                        {label: "А", text: `<span class='frac'><span class='frac-num'>2 sin 70&deg;</span><span class='frac-den'>sin 50&deg;</span></span>`, isCorrect: false, rationale: `Ви переплутали синуси кутів при виведенні з пропорції.`},
+                        {label: "Б", text: `<span class='frac'><span class='frac-num'>2 sin 50&deg;</span><span class='frac-den'>sin 70&deg;</span></span>`, isCorrect: true, rationale: `Правильно! <span class='frac'><span class='frac-num'>BC</span><span class='frac-den'>sin 50&deg;</span></span> = <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>sin 70&deg;</span></span> &rArr; BC = <span class='frac'><span class='frac-num'>2 sin 50&deg;</span><span class='frac-den'>sin 70&deg;</span></span>.`},
+                        {label: "В", text: `<span class='frac'><span class='frac-num'>sin 50&deg;</span><span class='frac-den'>sin 70&deg;</span></span>`, isCorrect: false, rationale: `Забуто довжину сторони AC.`},
+                        {label: "Г", text: `2 sin 50&deg; sin 70&deg;`, isCorrect: false, rationale: `Теорема синусів будується на діленні, а не множенні.`}
+                    ]
+                },
+                {
+                    question: `7. Знайдіть значення виразу: sin 150&deg;.`,
+                    hint: `Використайте формулу зведення sin(180&deg; - &alpha;) = sin &alpha;.`,
+                    options: [
+                        {label: "А", text: `-<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: `Синус в другій чверті додатний.`},
+                        {label: "Б", text: `<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>`, isCorrect: true, rationale: `Правильно! sin 150&deg; = sin(180&deg; - 30&deg;) = sin 30&deg; = 0.5.`},
+                        {label: "В", text: `<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: `Це значення косинуса 30&deg; або синуса 60&deg;.`},
+                        {label: "Г", text: `-<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `8. Сторони трикутника дорівнюють 5 см, 5 см і 5&radic;<span class='sqrt-content'>3</span> см. Знайдіть найбільший кут трикутника.`,
+                    hint: `Найбільший кут лежить навпроти сторони 5&radic;3. Знайдіть його косинус за допомогою теореми косинусів.`,
+                    options: [
+                        {label: "А", text: `90&deg;`, isCorrect: false, rationale: `Не виконується теорема Піфагора.`},
+                        {label: "Б", text: `120&deg;`, isCorrect: true, rationale: `Правильно! cos &gamma; = <span class='frac'><span class='frac-num'>25 + 25 - 75</span><span class='frac-den'>2 &middot; 5 &middot; 5</span></span> = -0.5, що відповідає куту 120&deg;.`},
+                        {label: "В", text: `135&deg;`, isCorrect: false, rationale: `Косинус 135 градусів дорівнює -<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>2</span></span><span class='frac-den'>2</span></span>.`},
+                        {label: "Г", text: `150&deg;`, isCorrect: false, rationale: `Невірно.`}
+                    ]
+                },
+                {
+                    question: `9. У трикутнику ABC: &ang;B = 30&deg;, &ang;C = 90&deg;. Знайдіть відношення <span class='frac'><span class='frac-num'>AC</span><span class='frac-den'>AB</span></span>.`,
+                    hint: `Використайте властивість катета, що лежить навпроти кута 30&deg;, або означення синуса в прямокутному трикутнику.`,
+                    options: [
+                        {label: "А", text: `<span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span>`, isCorrect: true, rationale: `Правильно! Відношення протилежного катета (AC) до гіпотенузи (AB) — це синус кута B (30&deg;), який дорівнює 0.5.`},
+                        {label: "Б", text: `<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: `Це значення косинуса 30&deg;.`},
+                        {label: "В", text: `&radic;<span class='sqrt-content'>2</span>`, isCorrect: false, rationale: `Невірно.`},
+                        {label: "Г", text: `<span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>2</span></span><span class='frac-den'>2</span></span>`, isCorrect: false, rationale: `Це синус/косинус 45&deg;.`}
+                    ]
+                },
+                {
+                    question: `10. Визначте вид трикутника, якщо його сторони дорівнюють 7 см, 9 см і 11 см.`,
+                    hint: `Порівняйте квадрат найбільшої сторони (11) із сумою квадратів двох інших сторін.`,
+                    options: [
+                        {label: "А", text: `Прямокутний`, isCorrect: false, rationale: `Квадрат гіпотенузи не дорівнює сумі квадратів катетів.`},
+                        {label: "Б", text: `Гострокутний`, isCorrect: true, rationale: `Правильно! Оскільки 11<sup>2</sup> < 7<sup>2</sup> + 9<sup>2</sup> (121 < 130), то трикутник гострокутний.`},
+                        {label: "В", text: `Тупокутний`, isCorrect: false, rationale: `Квадрат найбільшої сторони має бути більшим за суму інших квадратів.`},
+                        {label: "Г", text: `Визначити неможливо`, isCorrect: false, rationale: `За трьома сторонами вид визначається однозначно.`}
+                    ]
+                }
+            ]
+        ];
+
+        let poolCounter = 0;
+        let currentPoolQuestions = [];
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOptionIndex = null;
+        
+        let timerInterval = null;
+        let totalSeconds = 600; // 10 minutes
+
+        const startScreen = document.getElementById('start-screen');
+        const questionBox = document.getElementById('question-box');
+        const resultsScreen = document.getElementById('results-screen');
+        const progressContainer = document.getElementById('progress-container');
+        
+        const startBtn = document.getElementById('start-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        
+        const questionText = document.getElementById('question-text');
+        const optionsList = document.getElementById('options-list');
+        const feedbackBox = document.getElementById('feedback-box');
+        
+        const questionNumber = document.getElementById('question-number');
+        const scoreLive = document.getElementById('score-live');
+        const progressFill = document.getElementById('progress-fill');
+        const timerDisplay = document.getElementById('timer-display');
+        const finalScore = document.getElementById('final-score');
+        const resultsMessage = document.getElementById('results-message');
+        const resultsDesc = document.getElementById('results-desc');
+
+        const hintToggleBtn = document.getElementById('hint-toggle-btn');
+        const hintBox = document.getElementById('hint-box');
+
+        function startTimer() {
+            totalSeconds = 600;
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                updateTimerDisplay();
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function initQuiz() {
+            const activePoolIndex = poolCounter % rawQuizData.length;
+            currentPoolQuestions = rawQuizData[activePoolIndex];
+            poolCounter++;
+
+            currentQuestionIndex = 0;
+            score = 0;
+            
+            startScreen.style.display = 'none';
+            resultsScreen.style.display = 'none';
+            questionBox.style.display = 'block';
+            progressContainer.style.display = 'block';
+
+            scoreLive.textContent = `Бали: ${score}`;
+            startTimer();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = currentPoolQuestions[currentQuestionIndex];
+            selectedOptionIndex = null;
+            
+            questionNumber.textContent = `Питання ${currentQuestionIndex + 1} з 10`;
+            progressFill.style.width = `${((currentQuestionIndex) / 10) * 100}%`;
+            
+            questionText.innerHTML = currentQ.question;
+
+            // Setup Hint
+            if (currentQ.hint) {
+                hintBox.innerHTML = currentQ.hint;
+                hintBox.style.display = 'none';
+                hintToggleBtn.style.display = 'inline-block';
+                hintToggleBtn.textContent = '💡 Підказка';
+            } else {
+                hintToggleBtn.style.display = 'none';
+                hintBox.style.display = 'none';
+            }
+
+            optionsList.innerHTML = '';
+            feedbackBox.style.display = 'none';
+            nextBtn.disabled = true;
+            nextBtn.textContent = (currentQuestionIndex === 9) ? "Завершити тест" : "Наступне запитання";
+
+            currentQ.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span class="opt-label">${opt.label}</span><span>${opt.text}</span>`;
+                btn.addEventListener('click', () => selectOption(idx));
+                optionsList.appendChild(btn);
+            });
+        }
+
+        hintToggleBtn.addEventListener('click', () => {
+            if (hintBox.style.display === 'block') {
+                hintBox.style.display = 'none';
+                hintToggleBtn.textContent = '💡 Підказка';
+            } else {
+                hintBox.style.display = 'block';
+                hintToggleBtn.textContent = 'Приховати підказку';
+            }
+        });
+
+        function selectOption(index) {
+            if (selectedOptionIndex !== null) return;
+            
+            selectedOptionIndex = index;
+            const currentQ = currentPoolQuestions[currentQuestionIndex];
+            const optionBtns = optionsList.querySelectorAll('.option-btn');
+            const chosenOption = currentQ.options[index];
+            const correctIndex = currentQ.options.findIndex(o => o.isCorrect);
+
+            optionBtns.forEach(btn => btn.disabled = true);
+
+            if (chosenOption.isCorrect) {
+                score++;
+                scoreLive.textContent = `Бали: ${score}`;
+                optionBtns[index].classList.add('correct');
+                feedbackBox.className = 'feedback-box correct';
+                feedbackBox.innerHTML = `<strong>✓</strong> <span>${chosenOption.rationale}</span>`;
+            } else {
+                optionBtns[index].classList.add('wrong');
+                if (correctIndex !== -1) {
+                    optionBtns[correctIndex].classList.add('correct');
+                }
+                feedbackBox.className = 'feedback-box wrong';
+                feedbackBox.innerHTML = `<strong>✗</strong> <span>${chosenOption.rationale}</span>`;
+            }
+
+            feedbackBox.style.display = 'block';
+            nextBtn.disabled = false;
+        }
+
+        function handleNext() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < 10) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            stopTimer();
+            questionBox.style.display = 'none';
+            progressContainer.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            finalScore.innerHTML = `${score}/10`;
+
+            if (score >= 9) {
+                resultsMessage.textContent = "Чудовий результат!";
+                resultsDesc.textContent = "Ви успішно пройшли експрес-тестування. Готові до нових математичних викликів!";
+            } else if (score >= 7) {
+                resultsMessage.textContent = "Добре впоралися!";
+                resultsDesc.textContent = "Ви непогано впоралися з тестуванням, але є над чим попрацювати!";
+            } else if (score >= 5) {
+                resultsMessage.textContent = "Непогано, але варто повторити теорію!";
+                resultsDesc.textContent = "Варто ще раз переглянути матеріали теми та закріпити навички.";
+            } else {
+                resultsMessage.textContent = "Потрібно ще попрацювати над темою!";
+                resultsDesc.textContent = "Рекомендуємо повторити теоретичний матеріал і спробувати пройти тест знову.";
+            }
+        }
+
+        if (startBtn) startBtn.addEventListener('click', initQuiz);
+        if (nextBtn) nextBtn.addEventListener('click', handleNext);
+        if (restartBtn) restartBtn.addEventListener('click', initQuiz);
+    </script>
+</body>
+</html>

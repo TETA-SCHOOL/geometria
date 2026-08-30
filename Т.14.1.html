@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест НМТ: Площа трикутника | TETA School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .sticky-timer-bar {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .start-screen h1 {
+            color: var(--accent-red);
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--accent-red);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 0.98rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        .questions-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .single-q-card {
+            background: #FDFEFE;
+            border: 2px solid var(--accent-red);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.05);
+            transition: var(--transition);
+        }
+
+        .single-q-card:hover {
+            box-shadow: 0 6px 16px rgba(125, 17, 17, 0.12);
+        }
+
+        .q-number-header {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .svg-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .svg-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.98rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: #E6FEFE;
+            font-weight: 600;
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.selected .opt-label {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-btn.correct .opt-label { background: #0E9F6E; color: #FFF; }
+        .option-btn.wrong .opt-label { background: var(--accent-red); color: #FFF; }
+
+        .matching-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .matching-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FCFD;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #E2E8F0;
+            gap: 10px;
+        }
+
+        .matching-label { font-weight: 600; font-size: 0.92rem; flex: 1; }
+
+        .matching-select {
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1.5px solid var(--secondary);
+            font-size: 0.9rem;
+            background: white;
+            color: var(--dark-text);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .short-input {
+            width: 100%;
+            max-width: 220px;
+            padding: 10px 14px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .short-input:focus { border-color: var(--primary); }
+
+        .feedback-box {
+            margin-top: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct { background-color: #E6F4EA; border: 1px solid #34A853; color: #137333; }
+        .feedback-box.wrong { background-color: #FCE8E6; border: 1px solid #EA4335; color: #C5221F; }
+
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .finish-btn-wrapper {
+            margin-top: 35px;
+            text-align: center;
+        }
+
+        .results-screen {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .results-screen h1.res-title,
+        .analysis-card h3.res-analysis-title,
+        .results-screen h2.res-review-title {
+            color: var(--accent-red) !important;
+            font-weight: 800;
+        }
+
+        .results-summary-card {
+            background: var(--light-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid var(--accent-red);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .res-stat-item {
+            text-align: center;
+        }
+
+        .res-stat-val {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-red);
+        }
+
+        .res-stat-lbl {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .analysis-card {
+            background: #FFF;
+            border: 2px solid var(--accent-red);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 0.2em;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .frac > span {
+            display: block;
+            padding: 0.1em;
+        }
+        .frac span.frac-den {
+            border-top: 1px solid #000;
+        }
+        
+        .sqrt-content {
+            border-top: 1px solid currentColor;
+            padding-top: 1px;
+            margin-left: 1px;
+        }
+
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 0;
+            display: inline-block;
+        }
+        .hint-btn:hover {
+            color: var(--accent-red);
+        }
+        .hint-box {
+            display: none;
+            background: #FFF9E6;
+            border-left: 4px solid #FFC107;
+            padding: 12px 15px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #4B5563;
+            border-radius: 6px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 20px 15px; }
+            .question-text { font-size: 1rem; }
+            .matching-row { flex-direction: column; align-items: flex-start; }
+            .matching-select { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo Header -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+                  <defs><style>.cls-1 { fill: #7d1111; }</style></defs>
+                  <g id="_Шар_1-2" data-name="Шар 1">
+                    <g>
+                      <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+                      <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+                      <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+                      <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+                    </g>
+                    <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.37-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+                  </g>
+                </svg>
+            </div>
+            <div class="test-title">Тест НМТ</div>
+            <div class="test-subtitle">Тема 14. Площа трикутника</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Перевірте свої знання з теми. Успіхів!</h1>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість завдань:</strong> 15</li>
+                    <li><strong>Час на виконання:</strong> 15 хвилин</li>
+                    <li><strong>Завдання 1–10:</strong> вибір однієї правильної відповіді (1 бал)</li>
+                    <li><strong>Завдання 11–13:</strong> встановлення відповідності (1 бал за повністю вірне співвідношення)</li>
+                    <li><strong>Завдання 14–15:</strong> коротка відповідь (1 бал)</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Timer Bar -->
+        <div id="sticky-timer-bar" class="sticky-timer-bar" style="display: none;">
+            <span style="font-weight: 700; color: var(--accent-red);">Виконайте всі завдання нижче:</span>
+            <div class="timer-badge">
+                <span>⏱️</span>
+                <span id="timer-display">15:00</span>
+            </div>
+        </div>
+
+        <!-- Questions List Screen -->
+        <div id="test-content" style="display: none;">
+            <div id="questions-wrapper" class="questions-wrapper"></div>
+            
+            <div class="finish-btn-wrapper">
+                <button id="finish-btn" class="btn-primary" style="min-width: 260px;">Завершити тест</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <h1 class="res-title" style="font-size: 1.8rem; margin-bottom: 10px;">Результати тестування</h1>
+            <p style="color: #666; font-size: 1rem;">Нижче наведено детальний аналіз вашої роботи.</p>
+
+            <div class="results-summary-card">
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-score-val">0 з 15</div>
+                    <div class="res-stat-lbl">Виконаних завдань</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-time-val">00:00</div>
+                    <div class="res-stat-lbl">Витрачений час</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-pct-val">0%</div>
+                    <div class="res-stat-lbl">Успішність</div>
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <h3 class="res-analysis-title" style="font-size: 1.15rem; margin-bottom: 10px;">Аналіз результату:</h3>
+                <p id="analysis-text">Завантаження аналізу...</p>
+            </div>
+
+            <h2 class="res-review-title" style="font-size: 1.3rem; margin: 30px 0 15px; text-align: left;">Розбір завдань:</h2>
+            <div id="review-wrapper" class="questions-wrapper"></div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти ще раз</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        const allQuizPools = [
+            // ================== ВАРІАНТ 1 ==================
+            [
+                { id: 1, type: "single", question: `Катети прямокутного трикутника дорівнюють 6 см і 8 см. Знайдіть його площу.`, hint: `Площа прямокутного трикутника обчислюється як половина добутку його катетів.`, options: [ { label: "А", text: "14 см&sup2;", isCorrect: false }, { label: "Б", text: "24 см&sup2;", isCorrect: true, rationale: `Правильно: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 6 &middot; 8 = 24 см&sup2;.` }, { label: "В", text: "48 см&sup2;", isCorrect: false }, { label: "Г", text: "10 см&sup2;", isCorrect: false } ] },
+                { id: 2, type: "single", question: `Площа трикутника дорівнює 30 см&sup2;, а одна з його сторін — 6 см. Знайдіть висоту трикутника, проведену до цієї сторони.`, hint: `Використайте формулу площі: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; a &middot; h.`, options: [ { label: "А", text: "5 см", isCorrect: false }, { label: "Б", text: "10 см", isCorrect: true, rationale: `Правильно: 30 = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 6 &middot; h &rArr; 3h = 30 &rArr; h = 10 см.` }, { label: "В", text: "15 см", isCorrect: false }, { label: "Г", text: "12 см", isCorrect: false } ] },
+                { id: 3, type: "single", question: `Знайдіть площу рівностороннього трикутника зі стороною 4 см.`, hint: `Площа рівностороннього трикутника обчислюється за формулою: S = <span class='frac'><span class='frac-num'>a&sup2;&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>4</span></span>.`, options: [ { label: "А", text: "2&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false }, { label: "Б", text: "4&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: true, rationale: `Правильно: S = <span class='frac'><span class='frac-num'>4&sup2; &middot; &radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>4</span></span> = <span class='frac'><span class='frac-num'>16&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>4</span></span> = 4&radic;<span class='sqrt-content'>3</span> см&sup2;.` }, { label: "В", text: "8&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false }, { label: "Г", text: "16&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false } ] },
+                { id: 4, type: "single", question: `Знайдіть площу трикутника, сторони якого дорівнюють 13 см, 14 см і 15 см.`, hint: `Для знаходження площі за трьома сторонами використайте формулу Герона: S = &radic;<span class='sqrt-content'>p(p-a)(p-b)(p-c)</span>, де p = <span class='frac'><span class='frac-num'>a+b+c</span><span class='frac-den'>2</span></span>.`, options: [ { label: "А", text: "84 см&sup2;", isCorrect: true, rationale: `Правильно: p = <span class='frac'><span class='frac-num'>13+14+15</span><span class='frac-den'>2</span></span> = 21. S = &radic;<span class='sqrt-content'>21 &middot; (21-13) &middot; (21-14) &middot; (21-15)</span> = &radic;<span class='sqrt-content'>21 &middot; 8 &middot; 7 &middot; 6</span> = 84 см&sup2;.` }, { label: "Б", text: "42 см&sup2;", isCorrect: false }, { label: "В", text: "96 см&sup2;", isCorrect: false }, { label: "Г", text: "72 см&sup2;", isCorrect: false } ] },
+                { id: 5, type: "single", question: `На папері у клітинку зображено трикутник АВС. Вважайте, що кожна клітинка є квадратом зі стороною завдовжки 1 см. Знайдіть площу трикутника АВС.<br><div class="svg-container"><svg width="240" height="150" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid1" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#bdc3c7" stroke-width="1"/></pattern></defs><rect width="240" height="150" fill="url(#grid1)" /><polygon points="60,120 180,120 120,30" fill="rgba(52, 152, 219, 0.4)" stroke="#2980b9" stroke-width="2"/><text x="50" y="135" font-size="14" font-weight="bold">A</text><text x="185" y="135" font-size="14" font-weight="bold">C</text><text x="115" y="22" font-size="14" font-weight="bold">B</text></svg></div>`, hint: `Знайдіть довжину основи трикутника і висоту, спираючись на кількість клітинок.`, options: [ { label: "А", text: "4 см&sup2;", isCorrect: false }, { label: "Б", text: "5 см&sup2;", isCorrect: false }, { label: "В", text: "6 см&sup2;", isCorrect: true, rationale: `Правильно: Основа AC дорівнює 4 клітинки, висота з вершини B дорівнює 3 клітинки. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 4 &middot; 3 = 6 см&sup2;.` }, { label: "Г", text: "8 см&sup2;", isCorrect: false } ] },
+                { id: 6, type: "single", question: `Відповідні сторони двох подібних трикутників відносяться як 2:1. У скільки разів відрізняються їхні площі?`, hint: `Відношення площ подібних трикутників дорівнює квадрату коефіцієнта подібності.`, options: [ { label: "А", text: "у 2 рази", isCorrect: false }, { label: "Б", text: "у 3 рази", isCorrect: false }, { label: "В", text: "у 4 рази", isCorrect: true, rationale: `Правильно: Площі подібних фігур відносяться як квадрат коефіцієнта подібності: 2&sup2; = 4.` }, { label: "Г", text: "у 8 разів", isCorrect: false } ] },
+                { id: 7, type: "single", question: `На малюнку зображено трикутник, дві сторони якого дорівнюють 6 см і 8 см, а кут між ними становить 30&deg;. Знайдіть площу цього трикутника.<br><div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 190" width="100%" style="max-width:280px;"><defs><style>.main-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }.aux-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }.vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }.value-label { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #000000; }.point { fill: #000000; }</style></defs><rect x="0" y="0" width="280" height="190" fill="#ffffff" /><polygon points="40,150 240,150 170,75" class="main-line" /><path d="M 85,150 A 45,45 0 0,0 79,127.5" class="aux-line" /><circle cx="40" cy="150" r="3" class="point" /><circle cx="240" cy="150" r="3" class="point" /><circle cx="170" cy="75" r="3" class="point" /><text x="25" y="155" class="vertex-label">A</text><text x="250" y="155" class="vertex-label">B</text><text x="170" y="65" text-anchor="middle" class="vertex-label">C</text><text x="140" y="168" text-anchor="middle" class="value-label">8 см</text><text x="100" y="105" text-anchor="middle" transform="rotate(-30, 100, 105)" dy="-8" class="value-label">6 см</text><text x="95" y="145" class="value-label">30&deg;</text></svg></div>`, hint: `Використайте формулу: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; a &middot; b &middot; sin(&alpha;).`, options: [ { label: "А", text: "24 см&sup2;", isCorrect: false }, { label: "Б", text: "12 см&sup2;", isCorrect: true, rationale: `Правильно: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 6 &middot; 8 &middot; sin(30&deg;) = 24 &middot; 0.5 = 12 см&sup2;.` }, { label: "В", text: "12&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false }, { label: "Г", text: "24&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false } ] },
+                { id: 8, type: "single", question: `У трикутнику ABC проведено медіану AM. Площа трикутника ABC дорівнює 40 см&sup2;. Знайдіть площу трикутника ABM.<br><div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 200" width="100%" style="max-width:280px;"><defs><style>.main-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }.aux-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }.vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }.point { fill: #000000; }</style></defs><rect x="0" y="0" width="280" height="200" fill="#ffffff" /><polygon points="100,40 40,160 240,160" class="main-line" /><line x1="100" y1="40" x2="140" y2="160" class="main-line" /><line x1="90" y1="155" x2="90" y2="165" class="aux-line" /><line x1="190" y1="155" x2="190" y2="165" class="aux-line" /><circle cx="100" cy="40" r="3" class="point" /><circle cx="40" cy="160" r="3" class="point" /><circle cx="240" cy="160" r="3" class="point" /><circle cx="140" cy="160" r="3" class="point" /><text x="95" y="30" class="vertex-label">A</text><text x="25" y="165" class="vertex-label">B</text><text x="250" y="165" class="vertex-label">C</text><text x="140" y="180" text-anchor="middle" class="vertex-label">M</text></svg></div>`, hint: `Медіана розбиває трикутник на два рівновеликі (однакові за площею) трикутники.`, options: [ { label: "А", text: "10 см&sup2;", isCorrect: false }, { label: "Б", text: "20 см&sup2;", isCorrect: true, rationale: `Правильно: Медіана ділить трикутник на два трикутники з рівними площами. Площа ABM = <span class='frac'><span class='frac-num'>40</span><span class='frac-den'>2</span></span> = 20 см&sup2;.` }, { label: "В", text: "30 см&sup2;", isCorrect: false }, { label: "Г", text: "40 см&sup2;", isCorrect: false } ] },
+                { id: 9, type: "single", question: `Гіпотенуза прямокутного трикутника дорівнює 13 см, а один із катетів — 5 см. Знайдіть площу цього трикутника.`, hint: `Знайдіть другий катет за теоремою Піфагора, а потім обчисліть площу.`, options: [ { label: "А", text: "30 см&sup2;", isCorrect: true, rationale: `Правильно: Інший катет дорівнює &radic;<span class='sqrt-content'>13&sup2; - 5&sup2;</span> = 12 см. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 5 &middot; 12 = 30 см&sup2;.` }, { label: "Б", text: "60 см&sup2;", isCorrect: false }, { label: "В", text: "65 см&sup2;", isCorrect: false }, { label: "Г", text: "15 см&sup2;", isCorrect: false } ] },
+                { id: 10, type: "single", question: `Точка M — середина сторони квадрата ABCD. Сторона квадрата дорівнює 4 см. Знайдіть площу зафарбованого трикутника ABM.<br><div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 210" width="100%" style="max-width:200px;"><defs><style>.main-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }.shaded { fill: #e6e6e6; stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }.aux-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }.vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }.value-label { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #000000; }.point { fill: #000000; }</style></defs><rect x="0" y="0" width="200" height="210" fill="#ffffff" /><polygon points="40,160 160,160 100,40" class="shaded" /><polygon points="40,160 160,160 160,40 40,40" class="main-line" /><line x1="70" y1="35" x2="70" y2="45" class="aux-line" /><line x1="130" y1="35" x2="130" y2="45" class="aux-line" /><circle cx="40" cy="160" r="3" class="point" /><circle cx="160" cy="160" r="3" class="point" /><circle cx="160" cy="40" r="3" class="point" /><circle cx="40" cy="40" r="3" class="point" /><circle cx="100" cy="40" r="3" class="point" /><text x="20" y="170" class="vertex-label">A</text><text x="170" y="170" class="vertex-label">B</text><text x="170" y="35" class="vertex-label">C</text><text x="20" y="35" class="vertex-label">D</text><text x="100" y="28" text-anchor="middle" class="vertex-label">M</text><text x="100" y="185" text-anchor="middle" class="value-label">4 см</text></svg></div>`, hint: `У зафарбованому трикутнику основа є стороною квадрата, а висота дорівнює іншій стороні.`, options: [ { label: "А", text: "16 см&sup2;", isCorrect: false }, { label: "Б", text: "8 см&sup2;", isCorrect: true, rationale: `Правильно: Основа трикутника AB = 4 см. Висота, опущена з M на AB, дорівнює стороні квадрата (4 см). S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 4 &middot; 4 = 8 см&sup2;.` }, { label: "В", text: "4 см&sup2;", isCorrect: false }, { label: "Г", text: "2 см&sup2;", isCorrect: false } ] },
+                { id: 11, type: "matching", question: `Установіть відповідність між довжинами катетів прямокутного трикутника (1-3) та його площею (А-Д).`, hint: `Площа прямокутного трикутника дорівнює півдобутку його катетів.`, leftItems: ["1) 4 см і 5 см", "2) 6 см і 7 см", "3) 2 см і 9 см"], rightItems: ["А) 9 см&sup2;", "Б) 10 см&sup2;", "В) 15 см&sup2;", "Г) 18 см&sup2;", "Д) 21 см&sup2;"], correctAnswers: { 0: "Б", 1: "Д", 2: "А" }, rationale: `1 &rArr; Б (S = <span class='frac'><span class='frac-num'>4 &middot; 5</span><span class='frac-den'>2</span></span> = 10); <br> 2 &rArr; Д (S = <span class='frac'><span class='frac-num'>6 &middot; 7</span><span class='frac-den'>2</span></span> = 21); <br> 3 &rArr; А (S = <span class='frac'><span class='frac-num'>2 &middot; 9</span><span class='frac-den'>2</span></span> = 9).` },
+                { id: 12, type: "matching", question: `Установіть відповідність між коефіцієнтом подібності двох трикутників k (1-3) і відношенням їхніх площ (А-Д).`, hint: `Відношення площ подібних трикутників дорівнює квадрату коефіцієнта подібності.`, leftItems: ["1) k = 3", "2) k = 4", "3) k = 5"], rightItems: ["А) 9", "Б) 16", "В) 20", "Г) 25", "Д) 36"], correctAnswers: { 0: "А", 1: "Б", 2: "Г" }, rationale: `1 &rArr; А (3&sup2; = 9); <br> 2 &rArr; Б (4&sup2; = 16); <br> 3 &rArr; Г (5&sup2; = 25).` },
+                { id: 13, type: "matching", question: `Установіть відповідність між стороною a та проведеною до неї висотою h (1-3) та площею трикутника (А-Д).`, hint: `Площа обчислюється за формулою S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; a &middot; h.`, leftItems: ["1) a = 10 см, h = 4 см", "2) a = 8 см, h = 7 см", "3) a = 12 см, h = 5 см"], rightItems: ["А) 20 см&sup2;", "Б) 24 см&sup2;", "В) 28 см&sup2;", "Г) 30 см&sup2;", "Д) 40 см&sup2;"], correctAnswers: { 0: "А", 1: "В", 2: "Г" }, rationale: `1 &rArr; А (S = <span class='frac'><span class='frac-num'>10 &middot; 4</span><span class='frac-den'>2</span></span> = 20); <br> 2 &rArr; В (S = <span class='frac'><span class='frac-num'>8 &middot; 7</span><span class='frac-den'>2</span></span> = 28); <br> 3 &rArr; Г (S = <span class='frac'><span class='frac-num'>12 &middot; 5</span><span class='frac-den'>2</span></span> = 30).` },
+                { id: 14, type: "short", question: `Площа прямокутного трикутника дорівнює 24 см&sup2;, а один з його катетів — 6 см. Обчисліть довжину гіпотенузи (у см).`, hint: `Знайдіть другий катет через площу, а потім використайте теорему Піфагора.`, correctAnswer: "10", rationale: `Другий катет b = <span class='frac'><span class='frac-num'>2 &middot; 24</span><span class='frac-den'>6</span></span> = 8 см. Гіпотенуза = &radic;<span class='sqrt-content'>6&sup2; + 8&sup2;</span> = 10 см.` },
+                { id: 15, type: "short", question: `Периметр рівнобедреного трикутника дорівнює 36 см, а його основа — 10 см. Знайдіть площу цього трикутника (у см&sup2;).`, hint: `Знайдіть бічну сторону, потім висоту до основи.`, correctAnswer: "60", rationale: `Бічна сторона = <span class='frac'><span class='frac-num'>36 - 10</span><span class='frac-den'>2</span></span> = 13 см. Висота h = &radic;<span class='sqrt-content'>13&sup2; - 5&sup2;</span> = 12 см. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 10 &middot; 12 = 60 см&sup2;.` }
+            ],
+            // ================== ВАРІАНТ 2 ==================
+            [
+                { id: 16, type: "single", question: `Катети прямокутного трикутника дорівнюють 5 см і 12 см. Знайдіть його площу.`, hint: `Площа прямокутного трикутника обчислюється як половина добутку його катетів.`, options: [ { label: "А", text: "60 см&sup2;", isCorrect: false }, { label: "Б", text: "30 см&sup2;", isCorrect: true, rationale: `Правильно: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 5 &middot; 12 = 30 см&sup2;.` }, { label: "В", text: "17 см&sup2;", isCorrect: false }, { label: "Г", text: "15 см&sup2;", isCorrect: false } ] },
+                { id: 17, type: "single", question: `Площа трикутника дорівнює 42 см&sup2;, а одна з його сторін — 7 см. Знайдіть висоту трикутника, проведену до цієї сторони.`, hint: `Використайте формулу площі: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; a &middot; h.`, options: [ { label: "А", text: "6 см", isCorrect: false }, { label: "Б", text: "12 см", isCorrect: true, rationale: `Правильно: 42 = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 7 &middot; h &rArr; h = <span class='frac'><span class='frac-num'>84</span><span class='frac-den'>7</span></span> = 12 см.` }, { label: "В", text: "14 см", isCorrect: false }, { label: "Г", text: "21 см", isCorrect: false } ] },
+                { id: 18, type: "single", question: `Знайдіть площу рівностороннього трикутника зі стороною 6 см.`, hint: `Площа рівностороннього трикутника обчислюється за формулою: S = <span class='frac'><span class='frac-num'>a&sup2;&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>4</span></span>.`, options: [ { label: "А", text: "9&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: true, rationale: `Правильно: S = <span class='frac'><span class='frac-num'>6&sup2; &middot; &radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>4</span></span> = <span class='frac'><span class='frac-num'>36&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>4</span></span> = 9&radic;<span class='sqrt-content'>3</span> см&sup2;.` }, { label: "Б", text: "6&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false }, { label: "В", text: "18&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false }, { label: "Г", text: "36&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false } ] },
+                { id: 19, type: "single", question: `Знайдіть площу рівнобедреного трикутника, сторони якого дорівнюють 5 см, 5 см і 6 см.`, hint: `Знайдіть висоту до основи за допомогою теореми Піфагора.`, options: [ { label: "А", text: "16 см&sup2;", isCorrect: false }, { label: "Б", text: "12 см&sup2;", isCorrect: true, rationale: `Правильно: Висота h = &radic;<span class='sqrt-content'>5&sup2; - 3&sup2;</span> = 4 см. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 6 &middot; 4 = 12 см&sup2;.` }, { label: "В", text: "24 см&sup2;", isCorrect: false }, { label: "Г", text: "10 см&sup2;", isCorrect: false } ] },
+                { id: 20, type: "single", question: `На папері у клітинку зображено трикутник АВС. Вважайте, що кожна клітинка є квадратом зі стороною завдовжки 1 см. Знайдіть площу трикутника АВС.<br><div class="svg-container"><svg width="240" height="150" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid2" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#bdc3c7" stroke-width="1"/></pattern></defs><rect width="240" height="150" fill="url(#grid2)" /><polygon points="30,150 180,150 90,30" fill="rgba(52, 152, 219, 0.4)" stroke="#2980b9" stroke-width="2"/><text x="20" y="165" font-size="14" font-weight="bold">A</text><text x="185" y="165" font-size="14" font-weight="bold">C</text><text x="85" y="22" font-size="14" font-weight="bold">B</text></svg></div>`, hint: `Знайдіть довжину основи трикутника і висоту, спираючись на кількість клітинок.`, options: [ { label: "А", text: "8 см&sup2;", isCorrect: false }, { label: "Б", text: "10 см&sup2;", isCorrect: true, rationale: `Правильно: Основа AC дорівнює 5 клітинок, висота 4 клітинки. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 5 &middot; 4 = 10 см&sup2;.` }, { label: "В", text: "12 см&sup2;", isCorrect: false }, { label: "Г", text: "20 см&sup2;", isCorrect: false } ] },
+                { id: 21, type: "single", question: `Відповідні сторони двох подібних трикутників відносяться як 3:1. У скільки разів відрізняються їхні площі?`, hint: `Відношення площ подібних трикутників дорівнює квадрату коефіцієнта подібності.`, options: [ { label: "А", text: "у 3 рази", isCorrect: false }, { label: "Б", text: "у 6 разів", isCorrect: false }, { label: "В", text: "у 9 разів", isCorrect: true, rationale: `Правильно: Площі відносяться як квадрат коефіцієнта подібності: 3&sup2; = 9.` }, { label: "Г", text: "у 27 разів", isCorrect: false } ] },
+                { id: 22, type: "single", question: `На малюнку зображено трикутник, дві сторони якого дорівнюють 10 см і 12 см, а кут між ними становить 30&deg;. Знайдіть площу цього трикутника.<br><div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 190" width="100%" style="max-width:280px;"><defs><style>.main-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }.aux-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }.vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }.value-label { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #000000; }.point { fill: #000000; }</style></defs><rect x="0" y="0" width="280" height="190" fill="#ffffff" /><polygon points="40,150 240,150 170,75" class="main-line" /><path d="M 85,150 A 45,45 0 0,0 79,127.5" class="aux-line" /><circle cx="40" cy="150" r="3" class="point" /><circle cx="240" cy="150" r="3" class="point" /><circle cx="170" cy="75" r="3" class="point" /><text x="25" y="155" class="vertex-label">A</text><text x="250" y="155" class="vertex-label">B</text><text x="170" y="65" text-anchor="middle" class="vertex-label">C</text><text x="140" y="168" text-anchor="middle" class="value-label">12 см</text><text x="100" y="105" text-anchor="middle" transform="rotate(-30, 100, 105)" dy="-8" class="value-label">10 см</text><text x="95" y="145" class="value-label">30&deg;</text></svg></div>`, hint: `Використайте формулу: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; a &middot; b &middot; sin(&alpha;).`, options: [ { label: "А", text: "30 см&sup2;", isCorrect: true, rationale: `Правильно: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 10 &middot; 12 &middot; sin(30&deg;) = 60 &middot; 0.5 = 30 см&sup2;.` }, { label: "Б", text: "60 см&sup2;", isCorrect: false }, { label: "В", text: "30&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false }, { label: "Г", text: "120 см&sup2;", isCorrect: false } ] },
+                { id: 23, type: "single", question: `У трикутнику ABC проведено медіану AM. Площа трикутника ABC дорівнює 50 см&sup2;. Знайдіть площу трикутника ABM.<br><div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 200" width="100%" style="max-width:280px;"><defs><style>.main-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }.aux-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }.vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }.point { fill: #000000; }</style></defs><rect x="0" y="0" width="280" height="200" fill="#ffffff" /><polygon points="100,40 40,160 240,160" class="main-line" /><line x1="100" y1="40" x2="140" y2="160" class="main-line" /><line x1="90" y1="155" x2="90" y2="165" class="aux-line" /><line x1="190" y1="155" x2="190" y2="165" class="aux-line" /><circle cx="100" cy="40" r="3" class="point" /><circle cx="40" cy="160" r="3" class="point" /><circle cx="240" cy="160" r="3" class="point" /><circle cx="140" cy="160" r="3" class="point" /><text x="95" y="30" class="vertex-label">A</text><text x="25" y="165" class="vertex-label">B</text><text x="250" y="165" class="vertex-label">C</text><text x="140" y="180" text-anchor="middle" class="vertex-label">M</text></svg></div>`, hint: `Медіана розбиває трикутник на два рівновеликі трикутники.`, options: [ { label: "А", text: "15 см&sup2;", isCorrect: false }, { label: "Б", text: "20 см&sup2;", isCorrect: false }, { label: "В", text: "25 см&sup2;", isCorrect: true, rationale: `Правильно: Площа ABM = <span class='frac'><span class='frac-num'>S(ABC)</span><span class='frac-den'>2</span></span> = <span class='frac'><span class='frac-num'>50</span><span class='frac-den'>2</span></span> = 25 см&sup2;.` }, { label: "Г", text: "50 см&sup2;", isCorrect: false } ] },
+                { id: 24, type: "single", question: `Гіпотенуза прямокутного трикутника дорівнює 17 см, а один із катетів — 8 см. Знайдіть площу цього трикутника.`, hint: `Знайдіть другий катет за теоремою Піфагора, а потім обчисліть площу.`, options: [ { label: "А", text: "120 см&sup2;", isCorrect: false }, { label: "Б", text: "60 см&sup2;", isCorrect: true, rationale: `Правильно: Інший катет дорівнює &radic;<span class='sqrt-content'>17&sup2; - 8&sup2;</span> = 15 см. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 8 &middot; 15 = 60 см&sup2;.` }, { label: "В", text: "68 см&sup2;", isCorrect: false }, { label: "Г", text: "30 см&sup2;", isCorrect: false } ] },
+                { id: 25, type: "single", question: `Точка M — середина сторони квадрата ABCD. Сторона квадрата дорівнює 6 см. Знайдіть площу зафарбованого трикутника ABM.<br><div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 210" width="100%" style="max-width:200px;"><defs><style>.main-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }.shaded { fill: #e6e6e6; stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }.aux-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }.vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }.value-label { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #000000; }.point { fill: #000000; }</style></defs><rect x="0" y="0" width="200" height="210" fill="#ffffff" /><polygon points="40,160 160,160 100,40" class="shaded" /><polygon points="40,160 160,160 160,40 40,40" class="main-line" /><line x1="70" y1="35" x2="70" y2="45" class="aux-line" /><line x1="130" y1="35" x2="130" y2="45" class="aux-line" /><circle cx="40" cy="160" r="3" class="point" /><circle cx="160" cy="160" r="3" class="point" /><circle cx="160" cy="40" r="3" class="point" /><circle cx="40" cy="40" r="3" class="point" /><circle cx="100" cy="40" r="3" class="point" /><text x="20" y="170" class="vertex-label">A</text><text x="170" y="170" class="vertex-label">B</text><text x="170" y="35" class="vertex-label">C</text><text x="20" y="35" class="vertex-label">D</text><text x="100" y="28" text-anchor="middle" class="vertex-label">M</text><text x="100" y="185" text-anchor="middle" class="value-label">6 см</text></svg></div>`, hint: `У зафарбованому трикутнику основа є стороною квадрата, а висота дорівнює іншій стороні.`, options: [ { label: "А", text: "36 см&sup2;", isCorrect: false }, { label: "Б", text: "18 см&sup2;", isCorrect: true, rationale: `Правильно: Основа трикутника AB = 6 см. Висота дорівнює стороні квадрата (6 см). S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 6 &middot; 6 = 18 см&sup2;.` }, { label: "В", text: "12 см&sup2;", isCorrect: false }, { label: "Г", text: "9 см&sup2;", isCorrect: false } ] },
+                { id: 26, type: "matching", question: `Установіть відповідність між довжинами катетів прямокутного трикутника (1-3) та його площею (А-Д).`, hint: `Площа прямокутного трикутника дорівнює півдобутку його катетів.`, leftItems: ["1) 3 см і 8 см", "2) 4 см і 7 см", "3) 5 см і 6 см"], rightItems: ["А) 12 см&sup2;", "Б) 14 см&sup2;", "В) 15 см&sup2;", "Г) 20 см&sup2;", "Д) 24 см&sup2;"], correctAnswers: { 0: "А", 1: "Б", 2: "В" }, rationale: `1 &rArr; А (S = <span class='frac'><span class='frac-num'>3 &middot; 8</span><span class='frac-den'>2</span></span> = 12); <br> 2 &rArr; Б (S = <span class='frac'><span class='frac-num'>4 &middot; 7</span><span class='frac-den'>2</span></span> = 14); <br> 3 &rArr; В (S = <span class='frac'><span class='frac-num'>5 &middot; 6</span><span class='frac-den'>2</span></span> = 15).` },
+                { id: 27, type: "matching", question: `Установіть відповідність між коефіцієнтом подібності двох трикутників k (1-3) і відношенням їхніх площ (А-Д).`, hint: `Відношення площ подібних трикутників дорівнює квадрату коефіцієнта подібності.`, leftItems: ["1) k = 6", "2) k = 7", "3) k = 8"], rightItems: ["А) 36", "Б) 42", "В) 49", "Г) 56", "Д) 64"], correctAnswers: { 0: "А", 1: "В", 2: "Д" }, rationale: `1 &rArr; А (6&sup2; = 36); <br> 2 &rArr; В (7&sup2; = 49); <br> 3 &rArr; Д (8&sup2; = 64).` },
+                { id: 28, type: "matching", question: `Установіть відповідність між стороною a та проведеною до неї висотою h (1-3) та площею трикутника (А-Д).`, hint: `Площа обчислюється за формулою S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; a &middot; h.`, leftItems: ["1) a = 6 см, h = 8 см", "2) a = 10 см, h = 9 см", "3) a = 14 см, h = 5 см"], rightItems: ["А) 24 см&sup2;", "Б) 35 см&sup2;", "В) 45 см&sup2;", "Г) 48 см&sup2;", "Д) 50 см&sup2;"], correctAnswers: { 0: "А", 1: "В", 2: "Б" }, rationale: `1 &rArr; А (S = <span class='frac'><span class='frac-num'>6 &middot; 8</span><span class='frac-den'>2</span></span> = 24); <br> 2 &rArr; В (S = <span class='frac'><span class='frac-num'>10 &middot; 9</span><span class='frac-den'>2</span></span> = 45); <br> 3 &rArr; Б (S = <span class='frac'><span class='frac-num'>14 &middot; 5</span><span class='frac-den'>2</span></span> = 35).` },
+                { id: 29, type: "short", question: `Площа прямокутного трикутника дорівнює 30 см&sup2;, а один з його катетів — 5 см. Обчисліть довжину гіпотенузи (у см).`, hint: `Знайдіть другий катет через площу, а потім використайте теорему Піфагора.`, correctAnswer: "13", rationale: `Другий катет b = <span class='frac'><span class='frac-num'>2 &middot; 30</span><span class='frac-den'>5</span></span> = 12 см. Гіпотенуза c = &radic;<span class='sqrt-content'>5&sup2; + 12&sup2;</span> = 13 см.` },
+                { id: 30, type: "short", question: `Периметр рівнобедреного трикутника дорівнює 32 см, а його основа — 12 см. Знайдіть площу цього трикутника (у см&sup2;).`, hint: `Знайдіть бічну сторону, потім висоту до основи.`, correctAnswer: "48", rationale: `Бічна сторона = <span class='frac'><span class='frac-num'>32 - 12</span><span class='frac-den'>2</span></span> = 10 см. Висота h = &radic;<span class='sqrt-content'>10&sup2; - 6&sup2;</span> = 8 см. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 12 &middot; 8 = 48 см&sup2;.` }
+            ],
+            // ================== ВАРІАНТ 3 ==================
+            [
+                { id: 31, type: "single", question: `Катети прямокутного трикутника дорівнюють 9 см і 12 см. Знайдіть його площу.`, hint: `Площа прямокутного трикутника обчислюється як половина добутку його катетів.`, options: [ { label: "А", text: "21 см&sup2;", isCorrect: false }, { label: "Б", text: "54 см&sup2;", isCorrect: true, rationale: `Правильно: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 9 &middot; 12 = 54 см&sup2;.` }, { label: "В", text: "108 см&sup2;", isCorrect: false }, { label: "Г", text: "45 см&sup2;", isCorrect: false } ] },
+                { id: 32, type: "single", question: `Площа трикутника дорівнює 54 см&sup2;, а одна з його сторін — 9 см. Знайдіть висоту трикутника, проведену до цієї сторони.`, hint: `Використайте формулу площі: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; a &middot; h.`, options: [ { label: "А", text: "6 см", isCorrect: false }, { label: "Б", text: "9 см", isCorrect: false }, { label: "В", text: "12 см", isCorrect: true, rationale: `Правильно: 54 = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 9 &middot; h &rArr; h = <span class='frac'><span class='frac-num'>108</span><span class='frac-den'>9</span></span> = 12 см.` }, { label: "Г", text: "18 см", isCorrect: false } ] },
+                { id: 33, type: "single", question: `Знайдіть площу рівностороннього трикутника зі стороною 8 см.`, hint: `Площа рівностороннього трикутника обчислюється за формулою: S = <span class='frac'><span class='frac-num'>a&sup2;&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>4</span></span>.`, options: [ { label: "А", text: "16&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: true, rationale: `Правильно: S = <span class='frac'><span class='frac-num'>8&sup2; &middot; &radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>4</span></span> = <span class='frac'><span class='frac-num'>64&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>4</span></span> = 16&radic;<span class='sqrt-content'>3</span> см&sup2;.` }, { label: "Б", text: "8&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false }, { label: "В", text: "32&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false }, { label: "Г", text: "64&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false } ] },
+                { id: 34, type: "single", question: `Знайдіть площу рівнобедреного трикутника, сторони якого дорівнюють 10 см, 10 см і 12 см.`, hint: `Знайдіть висоту до основи за допомогою теореми Піфагора.`, options: [ { label: "А", text: "24 см&sup2;", isCorrect: false }, { label: "Б", text: "48 см&sup2;", isCorrect: true, rationale: `Правильно: Висота h = &radic;<span class='sqrt-content'>10&sup2; - 6&sup2;</span> = 8 см. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 12 &middot; 8 = 48 см&sup2;.` }, { label: "В", text: "60 см&sup2;", isCorrect: false }, { label: "Г", text: "96 см&sup2;", isCorrect: false } ] },
+                { id: 35, type: "single", question: `На папері у клітинку зображено трикутник АВС. Вважайте, що кожна клітинка є квадратом зі стороною завдовжки 1 см. Знайдіть площу трикутника АВС.<br><div class="svg-container"><svg width="240" height="150" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid3" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="#bdc3c7" stroke-width="1"/></pattern></defs><rect width="240" height="150" fill="url(#grid3)" /><polygon points="30,150 210,150 120,30" fill="rgba(52, 152, 219, 0.4)" stroke="#2980b9" stroke-width="2"/><text x="20" y="165" font-size="14" font-weight="bold">A</text><text x="215" y="165" font-size="14" font-weight="bold">C</text><text x="115" y="22" font-size="14" font-weight="bold">B</text></svg></div>`, hint: `Знайдіть довжину основи трикутника і висоту, спираючись на кількість клітинок.`, options: [ { label: "А", text: "6 см&sup2;", isCorrect: false }, { label: "Б", text: "9 см&sup2;", isCorrect: false }, { label: "В", text: "12 см&sup2;", isCorrect: true, rationale: `Правильно: Основа AC дорівнює 6 клітинок, висота 4 клітинки. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 6 &middot; 4 = 12 см&sup2;.` }, { label: "Г", text: "18 см&sup2;", isCorrect: false } ] },
+                { id: 36, type: "single", question: `Відповідні сторони двох подібних трикутників відносяться як 4:1. У скільки разів відрізняються їхні площі?`, hint: `Відношення площ подібних трикутників дорівнює квадрату коефіцієнта подібності.`, options: [ { label: "А", text: "у 4 рази", isCorrect: false }, { label: "Б", text: "у 8 разів", isCorrect: false }, { label: "В", text: "у 12 разів", isCorrect: false }, { label: "Г", text: "у 16 разів", isCorrect: true, rationale: `Правильно: Площі відносяться як квадрат коефіцієнта подібності: 4&sup2; = 16.` } ] },
+                { id: 37, type: "single", question: `На малюнку зображено трикутник, дві сторони якого дорівнюють 4 см і 10 см, а кут між ними становить 30&deg;. Знайдіть площу цього трикутника.<br><div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 190" width="100%" style="max-width:280px;"><defs><style>.main-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }.aux-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }.vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }.value-label { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #000000; }.point { fill: #000000; }</style></defs><rect x="0" y="0" width="280" height="190" fill="#ffffff" /><polygon points="40,150 240,150 170,75" class="main-line" /><path d="M 85,150 A 45,45 0 0,0 79,127.5" class="aux-line" /><circle cx="40" cy="150" r="3" class="point" /><circle cx="240" cy="150" r="3" class="point" /><circle cx="170" cy="75" r="3" class="point" /><text x="25" y="155" class="vertex-label">A</text><text x="250" y="155" class="vertex-label">B</text><text x="170" y="65" text-anchor="middle" class="vertex-label">C</text><text x="140" y="168" text-anchor="middle" class="value-label">10 см</text><text x="100" y="105" text-anchor="middle" transform="rotate(-30, 100, 105)" dy="-8" class="value-label">4 см</text><text x="95" y="145" class="value-label">30&deg;</text></svg></div>`, hint: `Використайте формулу: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; a &middot; b &middot; sin(&alpha;).`, options: [ { label: "А", text: "10 см&sup2;", isCorrect: true, rationale: `Правильно: S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 4 &middot; 10 &middot; sin(30&deg;) = 20 &middot; 0.5 = 10 см&sup2;.` }, { label: "Б", text: "20 см&sup2;", isCorrect: false }, { label: "В", text: "10&radic;<span class='sqrt-content'>3</span> см&sup2;", isCorrect: false }, { label: "Г", text: "40 см&sup2;", isCorrect: false } ] },
+                { id: 38, type: "single", question: `У трикутнику ABC проведено медіану AM. Площа трикутника ABC дорівнює 60 см&sup2;. Знайдіть площу трикутника ABM.<br><div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 200" width="100%" style="max-width:280px;"><defs><style>.main-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }.aux-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }.vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }.point { fill: #000000; }</style></defs><rect x="0" y="0" width="280" height="200" fill="#ffffff" /><polygon points="100,40 40,160 240,160" class="main-line" /><line x1="100" y1="40" x2="140" y2="160" class="main-line" /><line x1="90" y1="155" x2="90" y2="165" class="aux-line" /><line x1="190" y1="155" x2="190" y2="165" class="aux-line" /><circle cx="100" cy="40" r="3" class="point" /><circle cx="40" cy="160" r="3" class="point" /><circle cx="240" cy="160" r="3" class="point" /><circle cx="140" cy="160" r="3" class="point" /><text x="95" y="30" class="vertex-label">A</text><text x="25" y="165" class="vertex-label">B</text><text x="250" y="165" class="vertex-label">C</text><text x="140" y="180" text-anchor="middle" class="vertex-label">M</text></svg></div>`, hint: `Медіана розбиває трикутник на два рівновеликі трикутники.`, options: [ { label: "А", text: "20 см&sup2;", isCorrect: false }, { label: "Б", text: "30 см&sup2;", isCorrect: true, rationale: `Правильно: Площа ABM = <span class='frac'><span class='frac-num'>S(ABC)</span><span class='frac-den'>2</span></span> = <span class='frac'><span class='frac-num'>60</span><span class='frac-den'>2</span></span> = 30 см&sup2;.` }, { label: "В", text: "40 см&sup2;", isCorrect: false }, { label: "Г", text: "60 см&sup2;", isCorrect: false } ] },
+                { id: 39, type: "single", question: `Гіпотенуза прямокутного трикутника дорівнює 25 см, а один із катетів — 7 см. Знайдіть площу цього трикутника.`, hint: `Знайдіть другий катет за теоремою Піфагора, а потім обчисліть площу.`, options: [ { label: "А", text: "84 см&sup2;", isCorrect: true, rationale: `Правильно: Інший катет дорівнює &radic;<span class='sqrt-content'>25&sup2; - 7&sup2;</span> = 24 см. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 7 &middot; 24 = 84 см&sup2;.` }, { label: "Б", text: "168 см&sup2;", isCorrect: false }, { label: "В", text: "175 см&sup2;", isCorrect: false }, { label: "Г", text: "42 см&sup2;", isCorrect: false } ] },
+                { id: 40, type: "single", question: `Точка M — середина сторони квадрата ABCD. Сторона квадрата дорівнює 8 см. Знайдіть площу зафарбованого трикутника ABM.<br><div class="svg-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 210" width="100%" style="max-width:200px;"><defs><style>.main-line { stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }.shaded { fill: #e6e6e6; stroke: #000000; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }.aux-line { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }.vertex-label { font-family: 'Times New Roman', Times, serif; font-size: 14px; font-style: italic; fill: #000000; }.value-label { font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; fill: #000000; }.point { fill: #000000; }</style></defs><rect x="0" y="0" width="200" height="210" fill="#ffffff" /><polygon points="40,160 160,160 100,40" class="shaded" /><polygon points="40,160 160,160 160,40 40,40" class="main-line" /><line x1="70" y1="35" x2="70" y2="45" class="aux-line" /><line x1="130" y1="35" x2="130" y2="45" class="aux-line" /><circle cx="40" cy="160" r="3" class="point" /><circle cx="160" cy="160" r="3" class="point" /><circle cx="160" cy="40" r="3" class="point" /><circle cx="40" cy="40" r="3" class="point" /><circle cx="100" cy="40" r="3" class="point" /><text x="20" y="170" class="vertex-label">A</text><text x="170" y="170" class="vertex-label">B</text><text x="170" y="35" class="vertex-label">C</text><text x="20" y="35" class="vertex-label">D</text><text x="100" y="28" text-anchor="middle" class="vertex-label">M</text><text x="100" y="185" text-anchor="middle" class="value-label">8 см</text></svg></div>`, hint: `У зафарбованому трикутнику основа є стороною квадрата, а висота дорівнює іншій стороні.`, options: [ { label: "А", text: "16 см&sup2;", isCorrect: false }, { label: "Б", text: "32 см&sup2;", isCorrect: true, rationale: `Правильно: Основа трикутника AB = 8 см. Висота дорівнює стороні квадрата (8 см). S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 8 &middot; 8 = 32 см&sup2;.` }, { label: "В", text: "64 см&sup2;", isCorrect: false }, { label: "Г", text: "12 см&sup2;", isCorrect: false } ] },
+                { id: 41, type: "matching", question: `Установіть відповідність між довжинами катетів прямокутного трикутника (1-3) та його площею (А-Д).`, hint: `Площа прямокутного трикутника дорівнює півдобутку його катетів.`, leftItems: ["1) 2 см і 7 см", "2) 4 см і 9 см", "3) 8 см і 5 см"], rightItems: ["А) 7 см&sup2;", "Б) 14 см&sup2;", "В) 18 см&sup2;", "Г) 20 см&sup2;", "Д) 22 см&sup2;"], correctAnswers: { 0: "А", 1: "В", 2: "Г" }, rationale: `1 &rArr; А (S = <span class='frac'><span class='frac-num'>2 &middot; 7</span><span class='frac-den'>2</span></span> = 7); <br> 2 &rArr; В (S = <span class='frac'><span class='frac-num'>4 &middot; 9</span><span class='frac-den'>2</span></span> = 18); <br> 3 &rArr; Г (S = <span class='frac'><span class='frac-num'>8 &middot; 5</span><span class='frac-den'>2</span></span> = 20).` },
+                { id: 42, type: "matching", question: `Установіть відповідність між коефіцієнтом подібності двох трикутників k (1-3) і відношенням їхніх площ (А-Д).`, hint: `Відношення площ подібних трикутників дорівнює квадрату коефіцієнта подібності.`, leftItems: ["1) k = 2", "2) k = 5", "3) k = 10"], rightItems: ["А) 4", "Б) 10", "В) 20", "Г) 25", "Д) 100"], correctAnswers: { 0: "А", 1: "Г", 2: "Д" }, rationale: `1 &rArr; А (2&sup2; = 4); <br> 2 &rArr; Г (5&sup2; = 25); <br> 3 &rArr; Д (10&sup2; = 100).` },
+                { id: 43, type: "matching", question: `Установіть відповідність між стороною a та проведеною до неї висотою h (1-3) та площею трикутника (А-Д).`, hint: `Площа обчислюється за формулою S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; a &middot; h.`, leftItems: ["1) a = 16 см, h = 3 см", "2) a = 20 см, h = 4 см", "3) a = 8 см, h = 11 см"], rightItems: ["А) 24 см&sup2;", "Б) 40 см&sup2;", "В) 44 см&sup2;", "Г) 48 см&sup2;", "Д) 88 см&sup2;"], correctAnswers: { 0: "А", 1: "Б", 2: "В" }, rationale: `1 &rArr; А (S = <span class='frac'><span class='frac-num'>16 &middot; 3</span><span class='frac-den'>2</span></span> = 24); <br> 2 &rArr; Б (S = <span class='frac'><span class='frac-num'>20 &middot; 4</span><span class='frac-den'>2</span></span> = 40); <br> 3 &rArr; В (S = <span class='frac'><span class='frac-num'>8 &middot; 11</span><span class='frac-den'>2</span></span> = 44).` },
+                { id: 44, type: "short", question: `Площа прямокутного трикутника дорівнює 54 см&sup2;, а один з його катетів — 9 см. Обчисліть довжину гіпотенузи (у см).`, hint: `Знайдіть другий катет через площу, а потім використайте теорему Піфагора.`, correctAnswer: "15", rationale: `Другий катет b = <span class='frac'><span class='frac-num'>2 &middot; 54</span><span class='frac-den'>9</span></span> = 12 см. Гіпотенуза c = &radic;<span class='sqrt-content'>9&sup2; + 12&sup2;</span> = 15 см.` },
+                { id: 45, type: "short", question: `Периметр рівнобедреного трикутника дорівнює 64 см, а його основа — 14 см. Знайдіть площу цього трикутника (у см&sup2;).`, hint: `Знайдіть бічну сторону, потім висоту до основи.`, correctAnswer: "168", rationale: `Бічна сторона = <span class='frac'><span class='frac-num'>64 - 14</span><span class='frac-den'>2</span></span> = 25 см. Висота h = &radic;<span class='sqrt-content'>25&sup2; - 7&sup2;</span> = 24 см. S = <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> &middot; 14 &middot; 24 = 168 см&sup2;.` }
+            ]
+        ];
+
+        let currentPoolIndex = 0;
+        let currentQuestions = [];
+        let userAnswers = {};
+        let totalSeconds = 900;
+        let timerInterval = null;
+        let elapsedSeconds = 0;
+
+        const startScreen = document.getElementById('start-screen');
+        const testContent = document.getElementById('test-content');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const stickyTimerBar = document.getElementById('sticky-timer-bar');
+        const timerDisplay = document.getElementById('timer-display');
+        const resultsScreen = document.getElementById('results-screen');
+        
+        const startBtn = document.getElementById('start-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const restartBtn = document.getElementById('restart-btn');
+
+        const resScoreVal = document.getElementById('res-score-val');
+        const resTimeVal = document.getElementById('res-time-val');
+        const resPctVal = document.getElementById('res-pct-val');
+        const analysisText = document.getElementById('analysis-text');
+        const reviewWrapper = document.getElementById('review-wrapper');
+
+        function startQuiz() {
+            currentQuestions = allQuizPools[currentPoolIndex];
+
+            startScreen.style.display = 'none';
+            testContent.style.display = 'block';
+            stickyTimerBar.style.display = 'flex';
+            resultsScreen.style.display = 'none';
+
+            userAnswers = {};
+            elapsedSeconds = 0;
+            totalSeconds = 900;
+
+            renderAllQuestions();
+            startTimer();
+        }
+
+        function toggleHint(id) {
+            const hintBox = document.getElementById(`hint-${id}`);
+            if (hintBox.style.display === 'block') {
+                hintBox.style.display = 'none';
+            } else {
+                hintBox.style.display = 'block';
+            }
+        }
+
+        function renderAllQuestions() {
+            questionsWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'single-q-card';
+                card.id = `q-card-${q.id}`;
+
+                let html = `
+                    <div class="q-number-header">ЗАВДАННЯ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    html += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        html += `
+                            <button class="option-btn" onclick="selectSingleOption(${q.id}, ${oIdx}, this)">
+                                <span class="opt-label">${opt.label}</span>
+                                <span>${opt.text}</span>
+                            </button>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'matching') {
+                    html += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        html += `
+                            <div class="matching-row">
+                                <span class="matching-label">${item}</span>
+                                <select class="matching-select" onchange="selectMatchingOption(${q.id}, ${lIdx}, this.value)">
+                                    <option value="">-- Оберіть --</option>
+                                    ${q.rightItems.map(r => `<option value="${r[0]}">${r}</option>`).join('')}
+                                </select>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'short') {
+                    html += `
+                        <div style="margin-top: 10px;">
+                            <input type="text" class="short-input" placeholder="Введіть число..." oninput="selectShortAnswer(${q.id}, this.value)" />
+                        </div>
+                    `;
+                }
+
+                if (q.hint) {
+                    html += `
+                        <div style="margin-top: 15px;">
+                            <button class="hint-btn" onclick="toggleHint(${q.id})">💡 Показати підказку</button>
+                            <div id="hint-${q.id}" class="hint-box">${q.hint}</div>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = html;
+                questionsWrapper.appendChild(card);
+            });
+        }
+
+        function selectSingleOption(qId, optionIndex, btn) {
+            userAnswers[qId] = optionIndex;
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        function selectMatchingOption(qId, rowIdx, val) {
+            if (!userAnswers[qId]) userAnswers[qId] = {};
+            userAnswers[qId][rowIdx] = val;
+        }
+
+        function selectShortAnswer(qId, val) {
+            userAnswers[qId] = val.trim().replace(',', '.');
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                elapsedSeconds++;
+                updateTimerDisplay();
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Час вичерпано! Тест буде автоматично завершено.");
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            stickyTimerBar.style.display = 'none';
+            testContent.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            let totalPoints = 0;
+            let maxPoints = 15;
+
+            reviewWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                let isCorrect = false;
+
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'single-q-card';
+
+                let reviewHtml = `
+                    <div class="q-number-header">ЗАВДАННЯ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    const selectedIdx = userAnswers[q.id];
+                    reviewHtml += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        let btnClass = 'option-btn disabled';
+                        if (opt.isCorrect) btnClass += ' correct';
+                        if (selectedIdx === oIdx && !opt.isCorrect) btnClass += ' wrong';
+
+                        reviewHtml += `
+                            <div class="${btnClass}">
+                                <span class="opt-label">${opt.label}</span>
+                                <span>${opt.text}</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (selectedIdx !== undefined && q.options[selectedIdx].isCorrect) {
+                        isCorrect = true;
+                    }
+
+                    const correctOpt = q.options.find(o => o.isCorrect);
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            <em>${correctOpt.rationale}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'matching') {
+                    const uMatch = userAnswers[q.id] || {};
+                    let matchCorrectCount = 0;
+
+                    reviewHtml += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        const correctVal = q.correctAnswers[lIdx];
+                        const userVal = uMatch[lIdx] || 'не обрано';
+                        const isRowCorrect = userVal === correctVal;
+                        if (isRowCorrect) matchCorrectCount++;
+
+                        reviewHtml += `
+                            <div class="matching-row" style="border-color: ${isRowCorrect ? '#34A853' : '#EA4335'};">
+                                <span class="matching-label">${item}</span>
+                                <span>Ваша відповідь: <strong>${userVal}</strong> (Правильно: <strong>${correctVal}</strong>)</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (matchCorrectCount === 3) {
+                        isCorrect = true;
+                    }
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>Правильних співвідношень: ${matchCorrectCount} з 3.</strong><br>
+                            <em>${q.rationale}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'short') {
+                    const uVal = userAnswers[q.id] || '';
+                    isCorrect = (uVal === q.correctAnswer);
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            Ваша відповідь: <strong>${uVal || 'не вказано'}</strong>. Правильна відповідь: <strong>${q.correctAnswer}</strong>.<br>
+                            <em>Пояснення: ${q.rationale}</em>
+                        </div>
+                    `;
+                }
+
+                if (isCorrect) totalPoints += 1;
+
+                reviewCard.innerHTML = reviewHtml;
+                reviewWrapper.appendChild(reviewCard);
+            });
+
+            const elapsedMin = Math.floor(elapsedSeconds / 60);
+            const elapsedSec = elapsedSeconds % 60;
+            const pct = Math.round((totalPoints / maxPoints) * 100);
+
+            resScoreVal.textContent = `${totalPoints} з ${maxPoints}`;
+            resTimeVal.textContent = `${elapsedMin.toString().padStart(2, '0')}:${elapsedSec.toString().padStart(2, '0')}`;
+            resPctVal.textContent = `${pct}%`;
+
+            if (pct >= 85) {
+                analysisText.innerHTML = `<strong>Відмінний результат!</strong> Ви чудово володієте темою.`;
+            } else if (pct >= 65) {
+                analysisText.innerHTML = `<strong>Хороший результат!</strong> Ви добре орієнтуєтеся в геометрії, але зверніть увагу на точність обчислень та властивості фігур.`;
+            } else if (pct >= 40) {
+                analysisText.innerHTML = `<strong>Задовільно.</strong> Є базові знання, але варто більше потренуватися у розв'язуванні геометричних задач.`;
+            } else {
+                analysisText.innerHTML = `<strong>Потребує повторення.</strong> Виникли труднощі при виконанні завдань. Рекомендується повторити теоретичний матеріал.`;
+            }
+
+            currentPoolIndex = (currentPoolIndex + 1) % allQuizPools.length;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prepareNextAttempt() {
+            startScreen.style.display = 'block';
+            resultsScreen.style.display = 'none';
+            testContent.style.display = 'none';
+            stickyTimerBar.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', prepareNextAttempt);
+    </script>
+</body>
+</html>
