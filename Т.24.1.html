@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест НМТ: Куля. Сфера | TETA School</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #71C9EE;
+            --light-bg: #E6FEFE;
+            --dark-text: #201F20;
+            --accent-red: #7D1111;
+            --accent-red-hover: #5c0c0c;
+            --white: #FFFFFF;
+            --card-shadow: 0 10px 30px rgba(0, 83, 134, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            padding: 35px 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(113, 201, 238, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 20px;
+        }
+
+        .logo-container {
+            width: 220px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .logo-container svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .test-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .test-subtitle {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        .sticky-timer-bar {
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .timer-badge {
+            background-color: #FFF5F5;
+            color: var(--accent-red);
+            border: 1px solid rgba(125, 17, 17, 0.2);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .start-screen h1 {
+            color: var(--accent-red);
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .info-card {
+            background: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-left: 5px solid var(--accent-red);
+        }
+
+        .info-card ul {
+            list-style: none;
+            line-height: 1.8;
+            font-size: 0.98rem;
+        }
+
+        .info-card ul li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+        }
+
+        .info-card ul li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        .questions-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .single-q-card {
+            background: #FDFEFE;
+            border: 2px solid var(--accent-red);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.05);
+            transition: var(--transition);
+        }
+
+        .single-q-card:hover {
+            box-shadow: 0 6px 16px rgba(125, 17, 17, 0.12);
+        }
+
+        .q-number-header {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--accent-red);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .svg-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .svg-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-btn {
+            background: #F8FCFD;
+            border: 2px solid #E2E8F0;
+            border-radius: 10px;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.98rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--dark-text);
+            width: 100%;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--secondary);
+            background: #F0F9FF;
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary);
+            background: #E6FEFE;
+            font-weight: 600;
+        }
+
+        .option-btn.correct {
+            background-color: #DEF7EC !important;
+            border-color: #0E9F6E !important;
+            color: #03543F !important;
+        }
+
+        .option-btn.wrong {
+            background-color: #FDE8E8 !important;
+            border-color: var(--accent-red) !important;
+            color: var(--accent-red) !important;
+        }
+
+        .opt-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .option-btn.selected .opt-label {
+            background: var(--primary);
+            color: white;
+        }
+
+        .option-btn.correct .opt-label { background: #0E9F6E; color: #FFF; }
+        .option-btn.wrong .opt-label { background: var(--accent-red); color: #FFF; }
+
+        .matching-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .matching-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #F8FCFD;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #E2E8F0;
+            gap: 10px;
+        }
+
+        .matching-label { font-weight: 600; font-size: 0.92rem; flex: 1; }
+
+        .matching-select {
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1.5px solid var(--secondary);
+            font-size: 0.9rem;
+            background: white;
+            color: var(--dark-text);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .short-input {
+            width: 100%;
+            max-width: 220px;
+            padding: 10px 14px;
+            border: 2px solid #E2E8F0;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .short-input:focus { border-color: var(--primary); }
+
+        .feedback-box {
+            margin-top: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct { background-color: #E6F4EA; border: 1px solid #34A853; color: #137333; }
+        .feedback-box.wrong { background-color: #FCE8E6; border: 1px solid #EA4335; color: #C5221F; }
+
+        .btn-primary {
+            background-color: var(--accent-red);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 28px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(125, 17, 17, 0.25);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-red-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(125, 17, 17, 0.35);
+        }
+
+        .finish-btn-wrapper {
+            margin-top: 35px;
+            text-align: center;
+        }
+
+        .results-screen {
+            display: none;
+            padding: 10px 0;
+        }
+
+        .results-screen h1.res-title,
+        .analysis-card h3.res-analysis-title,
+        .results-screen h2.res-review-title {
+            color: var(--accent-red) !important;
+            font-weight: 800;
+        }
+
+        .results-summary-card {
+            background: var(--light-bg);
+            border-radius: 16px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid var(--accent-red);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .res-stat-item {
+            text-align: center;
+        }
+
+        .res-stat-val {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-red);
+        }
+
+        .res-stat-lbl {
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .analysis-card {
+            background: #FFF;
+            border: 2px solid var(--accent-red);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: left;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 0.2em;
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .frac > span {
+            display: block;
+            padding: 0.1em;
+        }
+        .frac span.frac-den {
+            border-top: 1px solid #000;
+        }
+        
+        .sqrt-content {
+            border-top: 1px solid currentColor;
+            padding-top: 1px;
+            margin-left: 1px;
+        }
+
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 0;
+            display: inline-block;
+        }
+        .hint-btn:hover {
+            color: var(--accent-red);
+        }
+        .hint-box {
+            display: none;
+            background: #FFF9E6;
+            border-left: 4px solid #FFC107;
+            padding: 12px 15px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #4B5563;
+            border-radius: 6px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 20px 15px; }
+            .question-text { font-size: 1rem; }
+            .matching-row { flex-direction: column; align-items: flex-start; }
+            .matching-select { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo Header -->
+        <div class="header">
+            <div class="logo-container">
+                <svg id="_Шар_2" data-name="Шар 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 439.66 153.62">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #7d1111;
+      }
+    </style>
+  </defs>
+  <g id="_Шар_1-2" data-name="Шар 1">
+    <g>
+      <g>
+        <polygon class="cls-1" points="167.14 44.14 166.14 44.14 166.14 45.14 166.14 52.19 166.14 53.19 167.14 53.19 193.55 53.19 193.55 108.79 193.55 109.79 194.55 109.79 202.45 109.79 203.45 109.79 203.45 108.79 203.45 53.19 229.77 53.19 230.77 53.19 230.77 52.19 230.77 45.14 230.77 44.14 229.77 44.14 167.14 44.14"/>
+        <polygon class="cls-1" points="377.96 53.19 377.96 52.19 377.96 45.14 377.96 44.14 376.96 44.14 314.33 44.14 313.33 44.14 313.33 45.14 313.33 52.19 313.33 53.19 314.33 53.19 340.74 53.19 340.74 108.79 340.74 109.79 341.74 109.79 349.64 109.79 350.64 109.79 350.64 108.79 350.64 53.19 376.96 53.19 377.96 53.19"/>
+        <path class="cls-1" d="M438.94,108.35l-31.4-63.65-.27-.56h-10.58l-.27.56-31.32,63.65-.71,1.44h10.8l.27-.56,7.38-15.22h38.27l7.38,15.22.27.56h10.89l-.71-1.44ZM416.89,85.3h-29.83l14.92-30.77,14.92,30.77Z"/>
+        <polygon class="cls-1" points="240.74 44.14 239.74 44.14 239.74 45.14 239.74 48.96 239.74 49.96 239.74 72.94 239.74 73.94 239.74 80.65 239.74 81.65 239.74 108.79 239.74 109.79 240.74 109.79 248.63 109.79 303.37 109.79 304.37 109.79 304.37 108.79 304.37 101.75 304.37 100.75 303.37 100.75 249.63 100.75 249.63 81.65 285.55 81.65 286.55 81.65 286.55 80.65 286.55 73.94 286.55 72.94 285.55 72.94 249.63 72.94 249.63 53.19 303.37 53.19 304.37 53.19 304.37 52.19 304.37 45.14 304.37 44.14 303.37 44.14 240.74 44.14"/>
+      </g>
+      <path class="cls-1" d="M76.81,0C34.39,0,0,34.39,0,76.81s34.39,76.81,76.81,76.81,76.81-34.39,76.81-76.81S119.23,0,76.81,0ZM79.95,99.56c0-.2.17-.37.37-.37h5.04c4.26,0,11.11-4.08,14.17-7.58,5.47-6.27,6.95-14.54,3.94-22.13-3.06-7.72-10.18-13.04-18.57-13.87-.11-.01-.36,0-.6.01-.31.01-.61.02-.73,0-.18-.02-.32-.18-.32-.37v-6.58c0-.16.11-.31.27-.35.65-.19,5.67.62,6.08.71,9.21,1.9,17.9,9.74,21.13,19.06,2.93,8.46,1.74,17.64-3.28,25.18-5.17,7.79-13.44,12.59-22.7,13.19-.34.02-1.96.08-3.19.08-.58,0-1.07-.01-1.3-.05-.18-.03-.31-.18-.31-.37v-6.58ZM79.61,45.79v24.57c-.8,5.17-4.35,7.32-8.46,9.82l-.4.24c-.92.56-2.07,1.19-3.29,1.87-4.35,2.4-10.3,5.68-11.94,8.99-.3.6-.46,1.4-.63,2.24-.43,2.07-.91,4.42-3.71,4.5-.99.03-1.88-.31-2.57-.99-.81-.8-1.27-1.98-1.25-3.25.07-6.69,6.57-11.8,9.36-13.69,1.77-1.2,3.95-2.36,6.05-3.47,2.79-1.48,5.67-3.02,7.69-4.69,1.11-.92,1.47-1.83,1.73-3.2l.06-31.54c-.31-2.59-1.48-4.53-3.49-5.71-2.7-1.59-6.75-1.61-10.57-.05-4.59,1.87-10.23,7.73-9.01,13.02.1.43.23.81.36,1.18.29.83.57,1.61.41,2.8-.2,1.41-1.2,2.53-2.63,2.93-1.45.41-2.91-.03-3.82-1.14-1.3-1.59-1.68-3.92-1.84-5.88-1.9.54-3.51,1.28-4.8,2.18-3.76,2.65-5.46,6.75-5.05,12.19.01.17,0,.56,0,.96,0,.21-.01.49-.01.7.56-.09,1.8-.41,2.59-.61.75-.19,1.35-.34,1.6-.38,2.66-.41,10.79-.86,13.18,2.4.68.93.8,2.22.32,3.38-.47,1.12-1.39,1.89-2.49,2.05-.97.15-2.25-.17-3.61-.51-.97-.24-1.97-.49-2.77-.53-3.96-.2-9.09,1.55-12.2,4.15-5.08,4.24-7.78,13.63-3.8,19.85.22.34,1.74,1.98,2.38,2.43.09-.34.26-1.03.39-1.56.22-.87.42-1.69.54-2.03,2.63-7.45,10.32-14.59,18.66-13.65,1.94.22,2.9,1.83,2.96,3.24.07,1.45-.78,3.1-2.82,3.52-.77.16-1.42.22-1.98.28-1.15.11-2.06.2-3.56,1.01-5.15,2.79-7.83,8.21-7.16,14.5.76,7.12,5.51,13.14,11.82,14.98l.22.07c.69.22,1.08.27,1.14.14.17-.36.3-.86.43-1.39.13-.51.27-1.04.46-1.49,2-4.83,8.11-9.93,13.67-9.52,1.3.09,2.4.82,2.95,1.94.55,1.13.45,2.46-.28,3.57-.76,1.15-2,1.36-3.19,1.56-.5.09-.96.17-1.39.31-3.12,1.04-5.46,4.25-5.82,7.99-.32,3.37,1.03,6.26,3.63,7.72,2.33,1.31,4.83,1.39,7.03.2,2.37-1.28,3.97-3.88,4.18-6.79.3-4.21.13-8.73-.03-13.09-.17-4.58-.34-9.31.01-13.73.11-1.37.55-2.53,1.36-3.56,1.27-1.63,3.67-3.06,5.71-3.41.11-.02.22.01.3.08.08.07.13.17.13.28v33.87c-.74,8.34-7.02,12.99-12.91,13.91-.81.13-1.6.19-2.38.19-5.69,0-10.63-3.27-12.95-8.79-.1-.24-.25-.78-.41-1.36-.09-.33-.21-.75-.28-.97-.17-.03-.46-.07-.69-.09-.42-.05-.87-.11-1.06-.16-8.48-2.07-14.78-7.79-17.74-16.1-.11-.3-.22-.79-.34-1.31-.15-.65-.39-1.64-.55-1.87-.12-.11-.95-.56-1.62-.92-.93-.5-1.89-1.02-2.31-1.35-4.64-3.61-7.42-9.3-7.65-15.6-.24-6.65,2.41-13.14,7.09-17.36.18-.16.6-.47,1.09-.83.54-.39,1.43-1.05,1.56-1.22.03-.21-.27-1.59-.47-2.51-.19-.85-.36-1.66-.4-2.11-.78-10.79,5.76-19.7,16.27-22.17.24-.06.81-.11,1.36-.17.28-.03.63-.06.82-.09.07-.16.18-.46.27-.69.18-.47.36-.95.48-1.17,4.33-8.02,14.7-13.18,23.62-11.76,6.76,1.08,11.18,5.61,12.45,12.74v4.22c-.03,1.75-.03,3.62,0,5.71ZM58,53.2c-.36-.37-.87-.75-1.42-1.14-1.2-.88-2.57-1.87-2.74-3.26-.22-1.73,1.16-3.51,2.96-3.79,1.72-.27,4.28,1.8,4.57,2.04,4.24,3.51,6.26,8.15,5.84,13.41-.15,1.88-1.74,5.94-3.33,7.2-.86.68-1.79,1.04-2.67,1.04-.2,0-.4-.02-.59-.06-.97-.19-1.79-.84-2.38-1.88-.97-1.72-.31-2.77.4-3.89.28-.44.57-.9.78-1.44,1.31-3.25.86-5.87-1.42-8.24ZM136.43,81.99c-1.27.63-2.72,1.12-4.11,1.6-1.43.49-2.9,1-4.2,1.65.06.93-.41,2.37-.87,3.77-.34,1.04-.76,2.34-.66,2.69.07.09,1,1.2,1.26,1.49.5.56,1.08,1.14,1.71,1.75.87.86,1.77,1.74,2.43,2.6.8,1.06,1.12,1.92.51,3.36-.64,1.52-2.1,3.74-3.27,5.53-.26.4-.51.78-.73,1.12-.19.29-.39.64-.6,1-1.06,1.83-2.5,4.35-4.8,3.77l-8.53-2.78c-.5.46-1,.94-1.5,1.41-.73.69-1.48,1.41-2.25,2.08-.17.14-.4.3-.64.46-.45.3-1.12.75-1.1,1.06.16.94.44,1.97.74,3.06.4,1.48.82,3.01.92,4.39.07.97.04,1.77-.87,2.53-.02.02-.05.04-.08.05l-11.51,5.38c-.69.25-1.27.4-1.81.4-.8,0-1.5-.34-2.31-1.22-.31-.33-.96-1.21-1.72-2.22-1.01-1.36-2.68-3.59-3.17-3.95l-1.1.19c-2.56.44-5.2.9-7.86.82-.2,0-.36-.17-.36-.37v-6.57c0-.19.15-.36.34-.37.19-.01.58,0,.95.01.3.01.59.02.71.01,1.12-.1,2.42-.39,3.79-.71,2.12-.48,4.3-.98,5.98-.75,1.28.17,2.14,1.04,2.99,2,.29.33.89,1.18,1.57,2.16.65.94,1.62,2.32,1.95,2.66.7-.18,3.71-1.49,4.37-1.86-.05-.48-.41-1.99-.66-3.02-.3-1.24-.56-2.32-.59-2.73-.29-3.55,2.11-5.29,4.43-6.97.64-.47,1.31-.95,1.92-1.47.57-.49,1.08-.99,1.57-1.49,1.78-1.78,3.45-3.46,6.94-2.53.7.19,1.56.55,2.48.94,1.14.49,2.33.99,3.07,1.07.18.02.18.02.26-.02.2-.22,2.03-3.18,2.21-3.6q.09-.2.05-.32c-.12-.44-1.47-1.61-2.45-2.47-.76-.66-1.48-1.29-1.83-1.72-2.11-2.57-1.41-4.44-.6-6.61.24-.63.48-1.28.68-2,.26-.93.39-1.81.52-2.66.4-2.55.74-4.75,4.08-6.08.32-.13,1.19-.37,2.2-.65,1.12-.31,2.95-.82,3.41-1.04.09-.74.04-3.41-.04-4.16-.05-.49-.1-.6-.12-.62,0,.02-.16.02-.28.02-.17,0-.38,0-.63-.07-.44-.1-.99-.21-1.59-.32-2.14-.41-4.8-.92-5.99-1.8-1.46-1.08-2.47-4.03-3.29-6.4-.23-.67-.44-1.29-.64-1.78-.22-.56-.49-1.08-.75-1.59-.87-1.7-1.69-3.3-.26-5.49.22-.34.86-1.08,1.6-1.94.82-.95,2.07-2.39,2.17-2.69-.07-.18-.9-1.22-1.51-1.98-.82-1.02-1.39-1.74-1.66-2.24-.83.27-1.73.78-2.68,1.3-1.68.93-3.41,1.89-5.01,1.75-1.61-.14-3.25-1.49-4.7-2.67-.52-.43-1.01-.83-1.45-1.14-.59-.41-1.21-.77-1.81-1.12-2.06-1.19-4.19-2.43-4.51-5.43-.05-.45-.03-1.47-.01-2.65.02-1.25.05-3.11-.05-3.57-.57-.29-3.67-1.42-4.07-1.47-.48.54-.87,1.32-1.25,2.08-.36.72-.74,1.47-1.17,2.02-1.19,1.52-2.67,2.32-4.39,2.37-.27.01-1.78-.13-2.66-.26-.18-.03-.31-.18-.31-.37v-6.91c0-.11.05-.21.13-.28.08-.07.19-.1.3-.08l.34.05c.62.1,1.57.26,1.92.08.14-.14,1.18-1.64,1.55-2.19.15-.23.37-.63.63-1.09,1.01-1.83,1.78-3.15,2.46-3.35,1.11-.34,4.08.68,6.78,1.65l1.22.43c2.16.74,4.53,1.58,5.19,2.17,1.24,1.09,1.09,2.26.94,3.39-.04.33-.09.67-.1,1.01-.02.92,0,1.84,0,2.76.01.91.02,1.81,0,2.72l5.26,3.87h.42s6.93-3.1,6.93-3.1c2.44-.74,3.26.2,4.61,1.75,1.6,1.84,5.07,6.28,6.3,8.58.62,1.15.82,1.98.2,3.32-.56,1.21-1.52,2.44-2.46,3.63-.68.86-1.32,1.68-1.81,2.47l2.28,6.04.4.4c1.08.26,2.25.45,3.39.65,1.55.26,3.15.53,4.61.96,1.31.38,1.82.92,2.13,2.19,0,.02,0,.03,0,.05l1.3,11.8c-.12,1.14-.68,1.88-1.76,2.42Z"/>
+    </g>
+  </g>
+</svg>
+            </div>
+            <div id="variant-indicator" class="test-title">НМТ Контроль знань</div>
+            <div class="test-subtitle">Тема: Куля. Сфера</div>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="start-screen">
+            <h1>Перевірте свої знання з теми. Успіхів!</h1>
+            
+            <div class="info-card">
+                <ul>
+                    <li><strong>Кількість завдань:</strong> 15</li>
+                    <li><strong>Час на виконання:</strong> 15 хвилин</li>
+                    <li><strong>Завдання 1–10:</strong> вибір однієї правильної відповіді (1 бал)</li>
+                    <li><strong>Завдання 11–13:</strong> встановлення відповідності (1 бал за повністю вірне співвідношення)</li>
+                    <li><strong>Завдання 14–15:</strong> коротка відповідь (1 бал)</li>
+                </ul>
+            </div>
+
+            <button id="start-btn" class="btn-primary" style="margin-top: 10px; width: 100%; max-width: 280px;">Розпочати тест</button>
+        </div>
+
+        <!-- Timer Bar -->
+        <div id="sticky-timer-bar" class="sticky-timer-bar" style="display: none;">
+            <span style="font-weight: 700; color: var(--accent-red);">Виконайте всі завдання нижче:</span>
+            <div class="timer-badge">
+                <span>⏱️</span>
+                <span id="timer-display">15:00</span>
+            </div>
+        </div>
+
+        <!-- Questions List Screen -->
+        <div id="test-content" style="display: none;">
+            <div id="questions-wrapper" class="questions-wrapper"></div>
+            
+            <div class="finish-btn-wrapper">
+                <button id="finish-btn" class="btn-primary" style="min-width: 260px;">Завершити тест</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="results-screen">
+            <h1 class="res-title" style="font-size: 1.8rem; margin-bottom: 10px;">Результати тестування</h1>
+            <p style="color: #666; font-size: 1rem;">Нижче наведено детальний аналіз вашої роботи.</p>
+
+            <div class="results-summary-card">
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-score-val">0 з 15</div>
+                    <div class="res-stat-lbl">Виконаних завдань</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-time-val">00:00</div>
+                    <div class="res-stat-lbl">Витрачений час</div>
+                </div>
+                <div class="res-stat-item">
+                    <div class="res-stat-val" id="res-pct-val">0%</div>
+                    <div class="res-stat-lbl">Успішність</div>
+                </div>
+            </div>
+
+            <div class="analysis-card">
+                <h3 class="res-analysis-title" style="font-size: 1.15rem; margin-bottom: 10px;">Аналіз результату:</h3>
+                <p id="analysis-text">Завантаження аналізу...</p>
+            </div>
+
+            <h2 class="res-review-title" style="font-size: 1.3rem; margin: 30px 0 15px; text-align: left;">Розбір завдань:</h2>
+            <div id="review-wrapper" class="questions-wrapper"></div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button id="restart-btn" class="btn-primary" style="min-width: 240px;">Пройти ще раз</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            © TETA School. Підготовка до НМТ з математики.
+        </div>
+    </div>
+
+    <script>
+        const allQuizPools = [
+            // ================== ВАРІАНТ 1 ==================
+            [
+                {
+                    id: 1, type: "single",
+                    question: `Яка геометрична фігура утворюється внаслідок обертання півкруга навколо його діаметра?`,
+                    hint: `При обертанні фігури з внутрішньою областю утворюється тіло, а не тільки його поверхня.`,
+                    options: [
+                        { label: "А", text: "Сфера", isCorrect: false },
+                        { label: "Б", text: "Куля", isCorrect: true, rationale: `Правильно: Обертання півкруга утворює кулю (тоді як сфера утворюється обертанням півкола).` },
+                        { label: "В", text: "Круг", isCorrect: false },
+                        { label: "Г", text: "Конус", isCorrect: false },
+                        { label: "Д", text: "Циліндр", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 2, type: "single",
+                    question: `Укажіть формулу для обчислення площі поверхні сфери радіуса R (у см).`,
+                    hint: `Площа поверхні сфери в 4 рази більша за площу її великого круга.`,
+                    options: [
+                        { label: "А", text: "S = 2&pi;R&sup2;", isCorrect: false },
+                        { label: "Б", text: "S = &pi;R&sup2;", isCorrect: false },
+                        { label: "В", text: "S = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup2;", isCorrect: false },
+                        { label: "Г", text: "S = 4&pi;R&sup2;", isCorrect: true, rationale: `Правильно: Площа поверхні сфери обчислюється за формулою S = 4&pi;R&sup2;.` },
+                        { label: "Д", text: "S = 4&pi;R&sup3;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 3, type: "single",
+                    question: `Знайдіть площу поверхні сфери (у см&sup2;), якщо її радіус дорівнює 5 см.`,
+                    hint: `Підставте R = 5 у формулу площі поверхні сфери: S = 4&pi;R&sup2;.`,
+                    options: [
+                        { label: "А", text: "25&pi; см&sup2;", isCorrect: false },
+                        { label: "Б", text: "50&pi; см&sup2;", isCorrect: false },
+                        { label: "В", text: "75&pi; см&sup2;", isCorrect: false },
+                        { label: "Г", text: "100&pi; см&sup2;", isCorrect: true, rationale: `Правильно: S = 4&pi;R&sup2; = 4&pi; &middot; 5&sup2; = 4 &middot; 25&pi; = 100&pi; см&sup2;.` },
+                        { label: "Д", text: "125&pi; см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 4, type: "single",
+                    question: `Об'єм кулі дорівнює <span class='frac'><span class='frac-num'>500</span><span class='frac-den'>3</span></span>&pi; см&sup3;. Знайдіть її радіус (у см).`,
+                    hint: `Прирівняйте формулу об'єму кулі V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3; до заданого значення та знайдіть R.`,
+                    options: [
+                        { label: "А", text: "4 см", isCorrect: false },
+                        { label: "Б", text: "5 см", isCorrect: true, rationale: `Правильно: <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3; = <span class='frac'><span class='frac-num'>500</span><span class='frac-den'>3</span></span>&pi; &rArr; R&sup3; = 125 &rArr; R = 5 см.` },
+                        { label: "В", text: "10 см", isCorrect: false },
+                        { label: "Г", text: "15 см", isCorrect: false },
+                        { label: "Д", text: "25 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 5, type: "single",
+                    question: `Свинцеву кулю радіуса 4 см переплавили в однакові кульки радіуса 2 см (див. малюнок). Скільки таких кульок отримали? Втратами матеріалу знехтувати.<br>
+                    <div class="svg-container">
+                        <svg viewBox="0 0 400 120" width="100%" style="max-width: 400px;">
+                            <circle cx="60" cy="60" r="50" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="2"/>
+                            <line x1="60" y1="60" x2="110" y2="60" stroke="#000" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <circle cx="60" cy="60" r="3" fill="#000"/>
+                            <text x="75" y="55" font-family="Arial" font-weight="bold">4 см</text>
+                            
+                            <path d="M 130 60 L 190 60" fill="none" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrow-v1)"/>
+                            <defs>
+                                <marker id="arrow-v1" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                    <path d="M0,0 L0,6 L9,3 z" fill="#e74c3c" />
+                                </marker>
+                            </defs>
+                            <circle cx="230" cy="60" r="25" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="1.5"/>
+                            <circle cx="290" cy="60" r="25" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="1.5"/>
+                            <circle cx="350" cy="60" r="25" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="1.5"/>
+                            
+                            <line x1="230" y1="60" x2="255" y2="60" stroke="#000" stroke-width="1" stroke-dasharray="3,3"/>
+                            <text x="235" y="55" font-size="12">2 см</text>
+                            <text x="385" y="65" font-size="20" font-weight="bold">...</text>
+                        </svg>
+                    </div>`,
+                    hint: `Об'єм кулі пропорційний кубу її радіуса. Знайдіть відношення об'ємів.`,
+                    options: [
+                        { label: "А", text: "2", isCorrect: false },
+                        { label: "Б", text: "4", isCorrect: false },
+                        { label: "В", text: "8", isCorrect: true, rationale: `Правильно: Кількість кульок дорівнює відношенню об'ємів. <span class='frac'><span class='frac-num'>V<sub>1</sub></span><span class='frac-den'>V<sub>2</sub></span></span> = (<span class='frac'><span class='frac-num'>4</span><span class='frac-den'>2</span></span>)&sup3; = 2&sup3; = 8.` },
+                        { label: "Г", text: "16", isCorrect: false },
+                        { label: "Д", text: "32", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 6, type: "single",
+                    question: `Кулю перетнуто площиною на відстані 8 см від центра (див. малюнок). Знайдіть радіус кулі (у см), якщо радіус перерізу дорівнює 6 см.<br>
+                    <div class="svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 240 240" width="100%" style="max-width: 240px;">
+                          <rect x="10" y="10" width="240" height="240" fill="#ffffff" />
+                          <circle cx="130" cy="130" r="100" stroke="#000" stroke-width="1.5" fill="none" />
+                          <path d="M 30 130 A 100 25 0 0 1 230 130" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" fill="none" />
+                          <path d="M 30 130 A 100 25 0 0 0 230 130" stroke="#000" stroke-width="1.5" fill="none" />
+                          <ellipse cx="130" cy="70" rx="80" ry="22" fill="#808080" fill-opacity="0.15" stroke="none" />
+                          <path d="M 50 70 A 80 22 0 0 1 210 70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" fill="none" />
+                          <path d="M 50 70 A 80 22 0 0 0 210 70" stroke="#000" stroke-width="1.5" fill="none" />
+                          <line x1="130" y1="130" x2="130" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="70" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="130" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <polyline points="130,78 138,78 138,70" stroke="#000" stroke-width="1" fill="none" />
+                          <circle cx="130" cy="130" r="2.5" fill="#000" />
+                          <circle cx="130" cy="70" r="2.5" fill="#000" />
+                          <circle cx="210" cy="70" r="2.5" fill="#000" />
+                          <text x="120" y="145" font-family="'Times New Roman', serif" font-style="italic">O</text>
+                          <text x="110" y="65" font-family="'Times New Roman', serif" font-style="italic">O<tspan dy="2" style="font-size: 10px;">1</tspan></text>
+                          <text x="215" y="75" font-family="'Times New Roman', serif" font-style="italic">A</text>
+                          <text x="125" y="100" text-anchor="middle" transform="rotate(-90, 125, 100)">8 см</text>
+                          <text x="170" y="65" text-anchor="middle">6 см</text>
+                          <text x="175" y="112" style="font-size: 15px;">?</text>
+                        </svg>
+                    </div>`,
+                    hint: `Радіус кулі є гіпотенузою прямокутного трикутника, катети якого дорівнюють відстані до площини і радіусу перерізу.`,
+                    options: [
+                        { label: "А", text: "10 см", isCorrect: true, rationale: `Правильно: R = &radic;<span class='sqrt-content'>8&sup2; + 6&sup2;</span> = &radic;<span class='sqrt-content'>100</span> = 10 см.` },
+                        { label: "Б", text: "12 см", isCorrect: false },
+                        { label: "В", text: "14 см", isCorrect: false },
+                        { label: "Г", text: "15 см", isCorrect: false },
+                        { label: "Д", text: "100 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 7, type: "single",
+                    question: `У скільки разів збільшиться площа поверхні сфери, якщо її радіус збільшити у 3 рази?`,
+                    hint: `Площа поверхні сфери пропорційна квадрату її радіуса.`,
+                    options: [
+                        { label: "А", text: "у 3 рази", isCorrect: false },
+                        { label: "Б", text: "у 6 разів", isCorrect: false },
+                        { label: "В", text: "у 9 разів", isCorrect: true, rationale: `Правильно: Площа пропорційна R&sup2;. Якщо R збільшити у 3 рази, площа збільшиться у 3&sup2; = 9 разів.` },
+                        { label: "Г", text: "у 12 разів", isCorrect: false },
+                        { label: "Д", text: "у 27 разів", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 8, type: "single",
+                    question: `Радіус сфери дорівнює 8 см. Якою із запропонованих НЕ може бути відстань між двома будь-якими точками цієї сфери?`,
+                    hint: `Найбільша можлива відстань між точками на сфері дорівнює її діаметру.`,
+                    options: [
+                        { label: "А", text: "5 см", isCorrect: false },
+                        { label: "Б", text: "10 см", isCorrect: false },
+                        { label: "В", text: "15 см", isCorrect: false },
+                        { label: "Г", text: "16 см", isCorrect: false },
+                        { label: "Д", text: "18 см", isCorrect: true, rationale: `Правильно: Діаметр сфери 16 см. Відстань не може перевищувати 16 см, тому 18 см не може бути.` }
+                    ]
+                },
+                {
+                    id: 9, type: "single",
+                    question: `До сфери радіусом 5 см проведено дотичну площину &alpha; (див. малюнок). Точка A лежить у цій площині на відстані 12 см від точки дотику T. Знайдіть відстань від точки A до центра сфери O (у см).<br>
+                    <div class="svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 260 200" width="100%" style="max-width: 260px;">
+                          <rect x="10" y="10" width="260" height="200" fill="#ffffff" />
+                          <polygon points="50,170 190,170 210,110 70,110" fill="#808080" fill-opacity="0.15" stroke="none" />
+                          <polygon points="50,170 190,170 210,110 70,110" stroke="#000" stroke-width="1" fill="none" />
+                          <circle cx="130" cy="80" r="60" fill="#ffffff" fill-opacity="0.85" stroke="none" />
+                          <circle cx="130" cy="80" r="60" stroke="#000" stroke-width="1.5" fill="none" />
+                          <path d="M 70 80 A 60 20 0 0 1 190 80" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" fill="none" />
+                          <path d="M 70 80 A 60 20 0 0 0 190 80" stroke="#000" stroke-width="1.5" fill="none" />
+                          <line x1="130" y1="80" x2="130" y2="140" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="140" x2="180" y2="155" stroke="#000" stroke-width="1.5" />
+                          <line x1="130" y1="80" x2="180" y2="155" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <polyline points="130,132 138,134.4 138,142.4" stroke="#000" stroke-width="1" fill="none" />
+                          <circle cx="130" cy="80" r="2.5" fill="#000" />
+                          <circle cx="130" cy="140" r="2.5" fill="#000" />
+                          <circle cx="180" cy="155" r="2.5" fill="#000" />
+                          <text x="115" y="75" font-family="'Times New Roman', serif" font-style="italic">O</text>
+                          <text x="118" y="155" font-family="'Times New Roman', serif" font-style="italic">T</text>
+                          <text x="185" y="165" font-family="'Times New Roman', serif" font-style="italic">A</text>
+                          <text x="60" y="160" font-family="'Times New Roman', serif" font-style="italic">&alpha;</text>
+                          <text x="125" y="110" text-anchor="middle" transform="rotate(-90, 125, 110)">5 см</text>
+                          <text x="155" y="163" text-anchor="middle" transform="rotate(16.7, 155, 163)">12 см</text>
+                          <text x="155" y="115" style="font-size: 15px;">?</text>
+                        </svg>
+                    </div>`,
+                    hint: `Радіус сфери, проведений у точку дотику, перпендикулярний до дотичної площини. Використайте теорему Піфагора.`,
+                    options: [
+                        { label: "А", text: "13 см", isCorrect: true, rationale: `Правильно: ОА = &radic;<span class='sqrt-content'>5&sup2; + 12&sup2;</span> = 13 см.` },
+                        { label: "Б", text: "14 см", isCorrect: false },
+                        { label: "В", text: "15 см", isCorrect: false },
+                        { label: "Г", text: "17 см", isCorrect: false },
+                        { label: "Д", text: "&radic;<span class='sqrt-content'>119</span> см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 10, type: "single",
+                    question: `Знайдіть об'єм кулі (у см&sup3;), якщо площа її поверхні дорівнює 36&pi; см&sup2;.`,
+                    hint: `Знайдіть радіус з формули площі поверхні (S = 4&pi;R&sup2;), а потім обчисліть об'єм.`,
+                    options: [
+                        { label: "А", text: "27&pi; см&sup3;", isCorrect: false },
+                        { label: "Б", text: "36&pi; см&sup3;", isCorrect: true, rationale: `Правильно: 4&pi;R&sup2; = 36&pi; &rArr; R = 3. Об'єм V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3; = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;(27) = 36&pi; см&sup3;.` },
+                        { label: "В", text: "48&pi; см&sup3;", isCorrect: false },
+                        { label: "Г", text: "72&pi; см&sup3;", isCorrect: false },
+                        { label: "Д", text: "108&pi; см&sup3;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 11, type: "matching",
+                    question: `Установіть відповідність між геометричною величиною кулі (1-3) та її числовим значенням (А-Д), якщо радіус кулі R = 6 см.`,
+                    hint: `Застосуйте формули: S(великого круга) = &pi;R&sup2;, S(сфери) = 4&pi;R&sup2;, V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3;.`,
+                    leftItems: ["1) Площа великого круга кулі (у см&sup2;)", "2) Площа поверхні сфери (у см&sup2;)", "3) Об'єм кулі (у см&sup3;)"],
+                    rightItems: ["А) 36&pi; см&sup2;", "Б) 144&pi; см&sup2;", "В) 216&pi; см&sup3;", "Г) 288&pi; см&sup3;", "Д) 72&pi; см&sup2;"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "Г" },
+                    rationale: "1 &rArr; А (&pi; &middot; 6&sup2; = 36&pi; см&sup2;);<br>2 &rArr; Б (4 &middot; &pi; &middot; 6&sup2; = 144&pi; см&sup2;);<br>3 &rArr; Г (<span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span> &middot; &pi; &middot; 6&sup3; = 288&pi; см&sup3;)."
+                },
+                {
+                    id: 12, type: "matching",
+                    question: `На малюнку зображено кулю радіусом 10 см, яку перетнуто січною площиною на відстані 6 см від центра. Установіть відповідність між величиною (1-3) та її значенням (А-Д).<br>
+                    <div class="svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 240 240" width="100%" style="max-width: 240px;">
+                          <rect x="10" y="10" width="240" height="240" fill="#ffffff" />
+                          <circle cx="130" cy="130" r="100" stroke="#000" stroke-width="1.5" fill="none" />
+                          <path d="M 30 130 A 100 25 0 0 1 230 130" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" fill="none" />
+                          <path d="M 30 130 A 100 25 0 0 0 230 130" stroke="#000" stroke-width="1.5" fill="none" />
+                          <ellipse cx="130" cy="70" rx="80" ry="22" fill="#808080" fill-opacity="0.15" stroke="none" />
+                          <path d="M 50 70 A 80 22 0 0 1 210 70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" fill="none" />
+                          <path d="M 50 70 A 80 22 0 0 0 210 70" stroke="#000" stroke-width="1.5" fill="none" />
+                          <line x1="130" y1="130" x2="130" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="70" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="130" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <polyline points="130,78 138,78 138,70" stroke="#000" stroke-width="1" fill="none" />
+                          <text x="120" y="145" font-family="'Times New Roman', serif" font-style="italic">O</text>
+                          <text x="110" y="65" font-family="'Times New Roman', serif" font-style="italic">O<tspan dy="2" style="font-size: 10px;">1</tspan></text>
+                          <text x="215" y="75" font-family="'Times New Roman', serif" font-style="italic">A</text>
+                          <text x="122" y="100" text-anchor="middle" transform="rotate(-90, 122, 100)">6 см</text>
+                          <text x="180" y="115" text-anchor="middle" transform="rotate(-36.8, 180, 115)">10 см</text>
+                          <text x="170" y="65" text-anchor="middle">r</text>
+                        </svg>
+                    </div>`,
+                    hint: `Знайдіть радіус перерізу за теоремою Піфагора.`,
+                    leftItems: ["1) Радіус перерізу r (у см)", "2) Довжина кола перерізу (у см)", "3) Площа перерізу (у см&sup2;)"],
+                    rightItems: ["А) 8 см", "Б) 16&pi; см", "В) 64&pi; см&sup2;", "Г) 36&pi; см&sup2;", "Д) 16 см"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "В" },
+                    rationale: "1 &rArr; А (r = &radic;<span class='sqrt-content'>10&sup2; - 6&sup2;</span> = 8 см);<br>2 &rArr; Б (C = 2&pi;r = 16&pi; см);<br>3 &rArr; В (S = &pi;r&sup2; = 64&pi; см&sup2;)."
+                },
+                {
+                    id: 13, type: "matching",
+                    question: `Установіть відповідність між заданими параметрами двох сфер (1-3) та їх взаємним розміщенням (А-Д). (R<sub>1</sub>, R<sub>2</sub> - радіуси, d - відстань між центрами)`,
+                    hint: `Зовнішній дотик: d = R<sub>1</sub>+R<sub>2</sub>. Внутрішній: d = |R<sub>1</sub>-R<sub>2</sub>|. Перетинаються: |R<sub>1</sub>-R<sub>2</sub>| < d < R<sub>1</sub>+R<sub>2</sub>.`,
+                    leftItems: ["1) R<sub>1</sub> = 6 см, R<sub>2</sub> = 4 см, d = 10 см", "2) R<sub>1</sub> = 8 см, R<sub>2</sub> = 3 см, d = 5 см", "3) R<sub>1</sub> = 5 см, R<sub>2</sub> = 5 см, d = 8 см"],
+                    rightItems: ["А) Зовнішній дотик", "Б) Внутрішній дотик", "В) Перетинаються по колу", "Г) Не мають спільних точок (лежать ззовні)", "Д) Не мають спільних точок (одна всередині іншої)"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "В" },
+                    rationale: "1 &rArr; А (d = 10, що дорівнює 6+4);<br>2 &rArr; Б (d = 5, що дорівнює 8-3);<br>3 &rArr; В (d = 8, що менше 5+5 та більше 0)."
+                },
+                {
+                    id: 14, type: "short",
+                    question: `У кулі проведено переріз. Відрізок, що сполучає центр кулі з точкою кола перерізу, дорівнює 12 см і утворює з площиною перерізу кут 30&deg;. Знайдіть площу перерізу (у см&sup2;). У відповідь запишіть значення <span class='frac'><span class='frac-num'>S</span><span class='frac-den'>&pi;</span></span>.`,
+                    hint: `Цей відрізок - радіус кулі. Радіус перерізу є катетом, прилеглим до кута 30&deg;.`,
+                    correctAnswer: "108",
+                    rationale: `Радіус перерізу r = R &middot; cos(30&deg;) = 12 &middot; <span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>3</span></span><span class='frac-den'>2</span></span> = 6&radic;<span class='sqrt-content'>3</span>. Площа S = &pi;r&sup2; = &pi;(6&radic;<span class='sqrt-content'>3</span>)&sup2; = 108&pi;. <span class='frac'><span class='frac-num'>S</span><span class='frac-den'>&pi;</span></span> = 108.`
+                },
+                {
+                    id: 15, type: "short",
+                    question: `Перерізи кулі двома паралельними площинами, між якими лежить центр кулі, мають площі 64&pi; см&sup2; і 225&pi; см&sup2;. Відстань між цими площинами дорівнює 23 см. Знайдіть площу поверхні кулі (у см&sup2;). У відповідь запишіть <span class='frac'><span class='frac-num'>S</span><span class='frac-den'>&pi;</span></span>.`,
+                    hint: `Знайдіть радіуси перерізів. Виразіть відстані до площин через радіус кулі (R) і використайте те, що сума цих відстаней дорівнює 23.`,
+                    correctAnswer: "1156",
+                    rationale: `Радіуси перерізів: r<sub>1</sub> = 8, r<sub>2</sub> = 15. Відстані до центру: d<sub>1</sub> = &radic;<span class='sqrt-content'>R&sup2; - 8&sup2;</span>, d<sub>2</sub> = &radic;<span class='sqrt-content'>R&sup2; - 15&sup2;</span>. Оскільки центр між ними: d<sub>1</sub> + d<sub>2</sub> = 23. Розв'язуючи систему, знаходимо R = 17. S = 4&pi;R&sup2; = 1156&pi;. Відповідь: 1156.`
+                }
+            ],
+            // ================== ВАРІАНТ 2 ==================
+            [
+                {
+                    id: 16, type: "single",
+                    question: `Яка геометрична фігура утворюється внаслідок обертання півкола навколо його діаметра?`,
+                    hint: `Зверніть увагу, що півколо - це лише лінія (без внутрішньої області).`,
+                    options: [
+                        { label: "А", text: "Сфера", isCorrect: true, rationale: `Правильно: Півколо (лінія) при обертанні утворює сферу (поверхню).` },
+                        { label: "Б", text: "Куля", isCorrect: false },
+                        { label: "В", text: "Круг", isCorrect: false },
+                        { label: "Г", text: "Конус", isCorrect: false },
+                        { label: "Д", text: "Циліндр", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 17, type: "single",
+                    question: `Укажіть формулу для обчислення об'єму кулі радіуса R (у см).`,
+                    hint: `Об'єм кулі пропорційний кубу радіуса з коефіцієнтом <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>.`,
+                    options: [
+                        { label: "А", text: "V = 4&pi;R&sup2;", isCorrect: false },
+                        { label: "Б", text: "V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3;", isCorrect: true, rationale: `Правильно: Стандартна формула об'єму кулі V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3;.` },
+                        { label: "В", text: "V = <span class='frac'><span class='frac-num'>2</span><span class='frac-den'>3</span></span>&pi;R&sup3;", isCorrect: false },
+                        { label: "Г", text: "V = &pi;R&sup3;", isCorrect: false },
+                        { label: "Д", text: "V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 18, type: "single",
+                    question: `Знайдіть об'єм кулі (у см&sup3;), якщо її діаметр дорівнює 6 см.`,
+                    hint: `Спочатку знайдіть радіус (половина діаметра), а потім застосуйте формулу об'єму.`,
+                    options: [
+                        { label: "А", text: "12&pi; см&sup3;", isCorrect: false },
+                        { label: "Б", text: "18&pi; см&sup3;", isCorrect: false },
+                        { label: "В", text: "36&pi; см&sup3;", isCorrect: true, rationale: `Правильно: R = 3. V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi; &middot; 3&sup3; = 36&pi; см&sup3;.` },
+                        { label: "Г", text: "144&pi; см&sup3;", isCorrect: false },
+                        { label: "Д", text: "288&pi; см&sup3;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 19, type: "single",
+                    question: `Площа сфери дорівнює 144&pi; см&sup2;. Знайдіть її радіус (у см).`,
+                    hint: `Прирівняйте формулу S = 4&pi;R&sup2; до даного значення і знайдіть R.`,
+                    options: [
+                        { label: "А", text: "3 см", isCorrect: false },
+                        { label: "Б", text: "6 см", isCorrect: true, rationale: `Правильно: 4&pi;R&sup2; = 144&pi; &rArr; R&sup2; = 36 &rArr; R = 6 см.` },
+                        { label: "В", text: "12 см", isCorrect: false },
+                        { label: "Г", text: "36 см", isCorrect: false },
+                        { label: "Д", text: "72 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 20, type: "single",
+                    question: `Свинцеву кулю радіуса 9 см переплавили в однакові кульки радіуса 3 см (див. малюнок). Скільки таких кульок отримали? Втратами матеріалу знехтувати.<br>
+                    <div class="svg-container">
+                        <svg viewBox="0 0 400 120" width="100%" style="max-width: 400px;">
+                            <circle cx="60" cy="60" r="50" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="2"/>
+                            <line x1="60" y1="60" x2="110" y2="60" stroke="#000" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <circle cx="60" cy="60" r="3" fill="#000"/>
+                            <text x="75" y="55" font-family="Arial" font-weight="bold">9 см</text>
+                            
+                            <path d="M 130 60 L 190 60" fill="none" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrow-v2)"/>
+                            <defs>
+                                <marker id="arrow-v2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                    <path d="M0,0 L0,6 L9,3 z" fill="#e74c3c" />
+                                </marker>
+                            </defs>
+                            <circle cx="230" cy="60" r="25" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="1.5"/>
+                            <circle cx="290" cy="60" r="25" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="1.5"/>
+                            <circle cx="350" cy="60" r="25" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="1.5"/>
+                            
+                            <line x1="230" y1="60" x2="255" y2="60" stroke="#000" stroke-width="1" stroke-dasharray="3,3"/>
+                            <text x="235" y="55" font-size="12">3 см</text>
+                            <text x="385" y="65" font-size="20" font-weight="bold">...</text>
+                        </svg>
+                    </div>`,
+                    hint: `Кількість дорівнює відношенню кубів радіусів.`,
+                    options: [
+                        { label: "А", text: "3", isCorrect: false },
+                        { label: "Б", text: "9", isCorrect: false },
+                        { label: "В", text: "27", isCorrect: true, rationale: `Правильно: <span class='frac'><span class='frac-num'>V<sub>1</sub></span><span class='frac-den'>V<sub>2</sub></span></span> = (<span class='frac'><span class='frac-num'>9</span><span class='frac-den'>3</span></span>)&sup3; = 3&sup3; = 27.` },
+                        { label: "Г", text: "81", isCorrect: false },
+                        { label: "Д", text: "12", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 21, type: "single",
+                    question: `Радіус кулі дорівнює 13 см (див. малюнок). Знайдіть відстань від центра кулі до площини перерізу (у см), якщо радіус перерізу дорівнює 12 см.<br>
+                    <div class="svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 240 240" width="100%" style="max-width: 240px;">
+                          <rect x="10" y="10" width="240" height="240" fill="#ffffff" />
+                          <circle cx="130" cy="130" r="100" stroke="#000" stroke-width="1.5" fill="none" />
+                          <path d="M 30 130 A 100 25 0 0 1 230 130" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" fill="none" />
+                          <path d="M 30 130 A 100 25 0 0 0 230 130" stroke="#000" stroke-width="1.5" fill="none" />
+                          <ellipse cx="130" cy="70" rx="80" ry="22" fill="#808080" fill-opacity="0.15" stroke="none" />
+                          <path d="M 50 70 A 80 22 0 0 1 210 70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" fill="none" />
+                          <path d="M 50 70 A 80 22 0 0 0 210 70" stroke="#000" stroke-width="1.5" fill="none" />
+                          <line x1="130" y1="130" x2="130" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="70" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="130" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <polyline points="130,78 138,78 138,70" stroke="#000" stroke-width="1" fill="none" />
+                          <text x="120" y="145" font-family="'Times New Roman', serif" font-style="italic">O</text>
+                          <text x="110" y="65" font-family="'Times New Roman', serif" font-style="italic">O<tspan dy="2" style="font-size: 10px;">1</tspan></text>
+                          <text x="215" y="75" font-family="'Times New Roman', serif" font-style="italic">A</text>
+                          <text x="125" y="100" text-anchor="middle" transform="rotate(-90, 125, 100)">?</text>
+                          <text x="170" y="65" text-anchor="middle">12 см</text>
+                          <text x="175" y="112" style="font-size: 13px;">13 см</text>
+                        </svg>
+                    </div>`,
+                    hint: `Застосуйте теорему Піфагора, де радіус кулі є гіпотенузою.`,
+                    options: [
+                        { label: "А", text: "1 см", isCorrect: false },
+                        { label: "Б", text: "5 см", isCorrect: true, rationale: `Правильно: Відстань = &radic;<span class='sqrt-content'>13&sup2; - 12&sup2;</span> = &radic;<span class='sqrt-content'>169 - 144</span> = &radic;<span class='sqrt-content'>25</span> = 5 см.` },
+                        { label: "В", text: "7 см", isCorrect: false },
+                        { label: "Г", text: "10 см", isCorrect: false },
+                        { label: "Д", text: "25 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 22, type: "single",
+                    question: `У скільки разів зменшиться об'єм кулі, якщо її радіус зменшити у 2 рази?`,
+                    hint: `Об'єм кулі пропорційний кубу її радіуса.`,
+                    options: [
+                        { label: "А", text: "у 2 рази", isCorrect: false },
+                        { label: "Б", text: "у 4 рази", isCorrect: false },
+                        { label: "В", text: "у 6 разів", isCorrect: false },
+                        { label: "Г", text: "у 8 разів", isCorrect: true, rationale: `Правильно: Об'єм зменшиться у 2&sup3; = 8 разів.` },
+                        { label: "Д", text: "у 16 разів", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 23, type: "single",
+                    question: `Діаметр кулі дорівнює 12 см. Точки А і В лежать на поверхні кулі. Яке найбільше можливе значення довжини відрізка АВ (у см)?`,
+                    hint: `Найбільший можливий відрізок, що з'єднує дві точки на сфері, проходить через її центр.`,
+                    options: [
+                        { label: "А", text: "6 см", isCorrect: false },
+                        { label: "Б", text: "12 см", isCorrect: true, rationale: `Правильно: Найбільша відстань — це діаметр кулі, тобто 12 см.` },
+                        { label: "В", text: "18 см", isCorrect: false },
+                        { label: "Г", text: "24 см", isCorrect: false },
+                        { label: "Д", text: "12&pi; см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 24, type: "single",
+                    question: `Точка M віддалена від центра кулі O на 17 см (див. малюнок). З площини &alpha;, що дотикається до кулі в точці T, проведено відрізок MT довжиною 15 см. Знайдіть радіус кулі (у см).<br>
+                    <div class="svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 260 200" width="100%" style="max-width: 260px;">
+                          <rect x="10" y="10" width="260" height="200" fill="#ffffff" />
+                          <polygon points="50,170 190,170 210,110 70,110" fill="#808080" fill-opacity="0.15" stroke="none" />
+                          <polygon points="50,170 190,170 210,110 70,110" stroke="#000" stroke-width="1" fill="none" />
+                          <circle cx="130" cy="80" r="60" stroke="#000" stroke-width="1.5" fill="none" />
+                          <line x1="130" y1="80" x2="130" y2="140" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="140" x2="180" y2="155" stroke="#000" stroke-width="1.5" />
+                          <line x1="130" y1="80" x2="180" y2="155" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <polyline points="130,132 138,134.4 138,142.4" stroke="#000" stroke-width="1" fill="none" />
+                          <text x="115" y="75" font-family="'Times New Roman', serif" font-style="italic">O</text>
+                          <text x="118" y="155" font-family="'Times New Roman', serif" font-style="italic">T</text>
+                          <text x="185" y="165" font-family="'Times New Roman', serif" font-style="italic">M</text>
+                          <text x="125" y="110" text-anchor="middle" transform="rotate(-90, 125, 110)">?</text>
+                          <text x="155" y="163" text-anchor="middle" transform="rotate(16.7, 155, 163)">15 см</text>
+                          <text x="155" y="115" transform="rotate(37, 155, 115)">17 см</text>
+                        </svg>
+                    </div>`,
+                    hint: `Трикутник OTM - прямокутний (радіус, проведений в точку дотику, перпендикулярний дотичній площині).`,
+                    options: [
+                        { label: "А", text: "8 см", isCorrect: true, rationale: `Правильно: R = &radic;<span class='sqrt-content'>17&sup2; - 15&sup2;</span> = &radic;<span class='sqrt-content'>289 - 225</span> = 8 см.` },
+                        { label: "Б", text: "9 см", isCorrect: false },
+                        { label: "В", text: "10 см", isCorrect: false },
+                        { label: "Г", text: "12 см", isCorrect: false },
+                        { label: "Д", text: "&radic;<span class='sqrt-content'>514</span> см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 25, type: "single",
+                    question: `Знайдіть площу поверхні кулі (у см&sup2;), якщо її об'єм дорівнює <span class='frac'><span class='frac-num'>32</span><span class='frac-den'>3</span></span>&pi; см&sup3;.`,
+                    hint: `Знайдіть радіус з формули об'єму, а потім обчисліть площу.`,
+                    options: [
+                        { label: "А", text: "8&pi; см&sup2;", isCorrect: false },
+                        { label: "Б", text: "16&pi; см&sup2;", isCorrect: true, rationale: `Правильно: <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3; = <span class='frac'><span class='frac-num'>32</span><span class='frac-den'>3</span></span>&pi; &rArr; R&sup3; = 8 &rArr; R = 2. S = 4&pi;(2&sup2;) = 16&pi; см&sup2;.` },
+                        { label: "В", text: "32&pi; см&sup2;", isCorrect: false },
+                        { label: "Г", text: "64&pi; см&sup2;", isCorrect: false },
+                        { label: "Д", text: "4&pi; см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 26, type: "matching",
+                    question: `Установіть відповідність між геометричною величиною кулі (1-3) та її числовим значенням (А-Д), якщо радіус кулі R = 3 см.`,
+                    hint: `Застосуйте формули: S(великого круга) = &pi;R&sup2;, S(сфери) = 4&pi;R&sup2;, V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3;.`,
+                    leftItems: ["1) Площа великого круга кулі (у см&sup2;)", "2) Площа поверхні сфери (у см&sup2;)", "3) Об'єм кулі (у см&sup3;)"],
+                    rightItems: ["А) 36&pi; см&sup2;", "Б) 9&pi; см&sup2;", "В) 18&pi; см&sup3;", "Г) 27&pi; см&sup3;", "Д) 81&pi; см&sup2;"],
+                    correctAnswers: { 0: "Б", 1: "А", 2: "А" },
+                    rationale: "1 &rArr; Б (&pi; &middot; 3&sup2; = 9&pi; см&sup2;);<br>2 &rArr; А (4 &middot; &pi; &middot; 3&sup2; = 36&pi; см&sup2;);<br>3 &rArr; А (<span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span> &middot; &pi; &middot; 3&sup3; = 36&pi; см&sup3;)."
+                },
+                {
+                    id: 27, type: "matching",
+                    question: `На малюнку зображено кулю радіусом 17 см, яку перетнуто січною площиною на відстані 8 см від центра. Установіть відповідність між величиною (1-3) та її значенням (А-Д).<br>
+                    <div class="svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 240 240" width="100%" style="max-width: 240px;">
+                          <rect x="10" y="10" width="240" height="240" fill="#ffffff" />
+                          <circle cx="130" cy="130" r="100" stroke="#000" stroke-width="1.5" fill="none" />
+                          <ellipse cx="130" cy="70" rx="80" ry="22" fill="#808080" fill-opacity="0.15" stroke="none" />
+                          <line x1="130" y1="130" x2="130" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="70" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="130" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <polyline points="130,78 138,78 138,70" stroke="#000" stroke-width="1" fill="none" />
+                          <text x="120" y="145" font-family="'Times New Roman', serif" font-style="italic">O</text>
+                          <text x="110" y="65" font-family="'Times New Roman', serif" font-style="italic">O<tspan dy="2" style="font-size: 10px;">1</tspan></text>
+                          <text x="215" y="75" font-family="'Times New Roman', serif" font-style="italic">A</text>
+                          <text x="122" y="100" text-anchor="middle" transform="rotate(-90, 122, 100)">8 см</text>
+                          <text x="180" y="115" text-anchor="middle" transform="rotate(-36.8, 180, 115)">17 см</text>
+                          <text x="170" y="65" text-anchor="middle">r</text>
+                        </svg>
+                    </div>`,
+                    hint: `Радіус перерізу знаходиться за теоремою Піфагора.`,
+                    leftItems: ["1) Радіус перерізу r (у см)", "2) Довжина кола перерізу (у см)", "3) Площа перерізу (у см&sup2;)"],
+                    rightItems: ["А) 30&pi; см", "Б) 15 см", "В) 225&pi; см&sup2;", "Г) 289&pi; см&sup2;", "Д) 17 см"],
+                    correctAnswers: { 0: "Б", 1: "А", 2: "В" },
+                    rationale: "1 &rArr; Б (r = &radic;<span class='sqrt-content'>17&sup2; - 8&sup2;</span> = 15 см);<br>2 &rArr; А (2&pi;r = 30&pi; см);<br>3 &rArr; В (&pi;r&sup2; = 225&pi; см&sup2;)."
+                },
+                {
+                    id: 28, type: "matching",
+                    question: `Установіть відповідність між заданими параметрами двох сфер (1-3) та їх взаємним розміщенням (А-Д).`,
+                    hint: `Зовнішній дотик: d = R<sub>1</sub>+R<sub>2</sub>. Внутрішній: d = |R<sub>1</sub>-R<sub>2</sub>|. Перетинаються: |R<sub>1</sub>-R<sub>2</sub>| < d < R<sub>1</sub>+R<sub>2</sub>.`,
+                    leftItems: ["1) R<sub>1</sub> = 7 см, R<sub>2</sub> = 2 см, d = 9 см", "2) R<sub>1</sub> = 10 см, R<sub>2</sub> = 4 см, d = 6 см", "3) R<sub>1</sub> = 6 см, R<sub>2</sub> = 5 см, d = 15 см"],
+                    rightItems: ["А) Зовнішній дотик", "Б) Внутрішній дотик", "В) Перетинаються по колу", "Г) Не мають спільних точок (лежать ззовні)", "Д) Не мають спільних точок (одна всередині іншої)"],
+                    correctAnswers: { 0: "А", 1: "Б", 2: "Г" },
+                    rationale: "1 &rArr; А (d = 9 = 7+2);<br>2 &rArr; Б (d = 6 = 10-4);<br>3 &rArr; Г (d = 15 > 6+5, лежать ззовні)."
+                },
+                {
+                    id: 29, type: "short",
+                    question: `У кулі проведено переріз. Відрізок, що сполучає центр кулі з точкою кола перерізу, дорівнює 8 см і утворює з площиною перерізу кут 45&deg;. Знайдіть площу перерізу (у см&sup2;). У відповідь запишіть значення <span class='frac'><span class='frac-num'>S</span><span class='frac-den'>&pi;</span></span>.`,
+                    hint: `Радіус перерізу дорівнює проекції радіуса кулі на площину перерізу.`,
+                    correctAnswer: "32",
+                    rationale: `Радіус перерізу r = R &middot; cos(45&deg;) = 8 &middot; <span class='frac'><span class='frac-num'>&radic;<span class='sqrt-content'>2</span></span><span class='frac-den'>2</span></span> = 4&radic;<span class='sqrt-content'>2</span>. S = &pi;(4&radic;<span class='sqrt-content'>2</span>)&sup2; = 32&pi;. <span class='frac'><span class='frac-num'>S</span><span class='frac-den'>&pi;</span></span> = 32.`
+                },
+                {
+                    id: 30, type: "short",
+                    question: `Перерізи кулі двома паралельними площинами, між якими лежить центр кулі, мають площі 9&pi; см&sup2; і 16&pi; см&sup2;. Відстань між цими площинами дорівнює 7 см. Знайдіть площу поверхні кулі (у см&sup2;). У відповідь запишіть <span class='frac'><span class='frac-num'>S</span><span class='frac-den'>&pi;</span></span>.`,
+                    hint: `Радіуси перерізів - 3 та 4. Знайдіть радіус кулі через систему рівнянь для відстаней до центру.`,
+                    correctAnswer: "100",
+                    rationale: `r<sub>1</sub> = 3, r<sub>2</sub> = 4. Відстані d<sub>1</sub> + d<sub>2</sub> = 7. Розв'язавши, маємо d<sub>1</sub> = 4, d<sub>2</sub> = 3, і R = 5. Площа поверхні: S = 4&pi;R&sup2; = 100&pi;. Відповідь: 100.`
+                }
+            ],
+            // ================== ВАРІАНТ 3 ==================
+            [
+                {
+                    id: 31, type: "single",
+                    question: `Навколо якої прямої потрібно обертати круг, щоб утворилася куля?`,
+                    hint: `Куля утворюється при обертанні навколо осі симетрії круга.`,
+                    options: [
+                        { label: "А", text: "Навколо дотичної до цього круга", isCorrect: false },
+                        { label: "Б", text: "Навколо хорди, що не є його діаметром", isCorrect: false },
+                        { label: "В", text: "Навколо його діаметра", isCorrect: true, rationale: `Правильно: Круг утворює кулю лише при обертанні навколо свого діаметра.` },
+                        { label: "Г", text: "Навколо прямої, що лежить поза кругом", isCorrect: false },
+                        { label: "Д", text: "Навколо радіуса", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 32, type: "single",
+                    question: `Укажіть формулу для обчислення радіуса кулі R (у см), якщо відомий її об'єм V.`,
+                    hint: `Виразіть R з формули V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3;.`,
+                    options: [
+                        { label: "А", text: "R = <sup>3</sup>&radic;<span class='sqrt-content'><span class='frac'><span class='frac-num'>3V</span><span class='frac-den'>4&pi;</span></span></span>", isCorrect: true, rationale: `Правильно: V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3; &rArr; R&sup3; = <span class='frac'><span class='frac-num'>3V</span><span class='frac-den'>4&pi;</span></span> &rArr; R = <sup>3</sup>&radic;<span class='sqrt-content'><span class='frac'><span class='frac-num'>3V</span><span class='frac-den'>4&pi;</span></span></span>.` },
+                        { label: "Б", text: "R = <sup>3</sup>&radic;<span class='sqrt-content'><span class='frac'><span class='frac-num'>4V</span><span class='frac-den'>3&pi;</span></span></span>", isCorrect: false },
+                        { label: "В", text: "R = &radic;<span class='sqrt-content'><span class='frac'><span class='frac-num'>V</span><span class='frac-den'>4&pi;</span></span></span>", isCorrect: false },
+                        { label: "Г", text: "R = &radic;<span class='sqrt-content'><span class='frac'><span class='frac-num'>3V</span><span class='frac-den'>4&pi;</span></span></span>", isCorrect: false },
+                        { label: "Д", text: "R = <sup>3</sup>&radic;<span class='sqrt-content'><span class='frac'><span class='frac-num'>V</span><span class='frac-den'>4&pi;</span></span></span>", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 33, type: "single",
+                    question: `Знайдіть площу поверхні сфери (у см&sup2;), якщо її діаметр дорівнює 8 см.`,
+                    hint: `Радіус дорівнює половині діаметра.`,
+                    options: [
+                        { label: "А", text: "16&pi; см&sup2;", isCorrect: false },
+                        { label: "Б", text: "32&pi; см&sup2;", isCorrect: false },
+                        { label: "В", text: "64&pi; см&sup2;", isCorrect: true, rationale: `Правильно: R = 4. S = 4&pi;R&sup2; = 4&pi;(16) = 64&pi; см&sup2;.` },
+                        { label: "Г", text: "128&pi; см&sup2;", isCorrect: false },
+                        { label: "Д", text: "256&pi; см&sup2;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 34, type: "single",
+                    question: `Площа великого круга кулі дорівнює 49&pi; см&sup2;. Знайдіть радіус кулі (у см).`,
+                    hint: `Площа великого круга дорівнює &pi;R&sup2;.`,
+                    options: [
+                        { label: "А", text: "7 см", isCorrect: true, rationale: `Правильно: &pi;R&sup2; = 49&pi; &rArr; R&sup2; = 49 &rArr; R = 7 см.` },
+                        { label: "Б", text: "14 см", isCorrect: false },
+                        { label: "В", text: "24,5 см", isCorrect: false },
+                        { label: "Г", text: "49 см", isCorrect: false },
+                        { label: "Д", text: "&radic;<span class='sqrt-content'>7</span> см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 35, type: "single",
+                    question: `Свинцеву кулю радіуса 10 см переплавили в однакові кульки радіуса 5 см (див. малюнок). Скільки таких кульок отримали? Втратами матеріалу знехтувати.<br>
+                    <div class="svg-container">
+                        <svg viewBox="0 0 400 120" width="100%" style="max-width: 400px;">
+                            <circle cx="60" cy="60" r="50" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="2"/>
+                            <line x1="60" y1="60" x2="110" y2="60" stroke="#000" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <circle cx="60" cy="60" r="3" fill="#000"/>
+                            <text x="75" y="55" font-family="Arial" font-weight="bold">10 см</text>
+                            <path d="M 130 60 L 190 60" fill="none" stroke="#e74c3c" stroke-width="3" marker-end="url(#arrow-v3)"/>
+                            <defs>
+                                <marker id="arrow-v3" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                    <path d="M0,0 L0,6 L9,3 z" fill="#e74c3c" />
+                                </marker>
+                            </defs>
+                            <circle cx="230" cy="60" r="25" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="1.5"/>
+                            <circle cx="290" cy="60" r="25" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="1.5"/>
+                            <circle cx="350" cy="60" r="25" fill="rgba(149, 165, 166, 0.5)" stroke="#7f8c8d" stroke-width="1.5"/>
+                            <line x1="230" y1="60" x2="255" y2="60" stroke="#000" stroke-width="1" stroke-dasharray="3,3"/>
+                            <text x="235" y="55" font-size="12">5 см</text>
+                            <text x="385" y="65" font-size="20" font-weight="bold">...</text>
+                        </svg>
+                    </div>`,
+                    hint: `Кількість дорівнює кубу відношення радіусів.`,
+                    options: [
+                        { label: "А", text: "2", isCorrect: false },
+                        { label: "Б", text: "4", isCorrect: false },
+                        { label: "В", text: "8", isCorrect: true, rationale: `Правильно: <span class='frac'><span class='frac-num'>V<sub>1</sub></span><span class='frac-den'>V<sub>2</sub></span></span> = (<span class='frac'><span class='frac-num'>10</span><span class='frac-den'>5</span></span>)&sup3; = 2&sup3; = 8.` },
+                        { label: "Г", text: "10", isCorrect: false },
+                        { label: "Д", text: "20", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 36, type: "single",
+                    question: `Кулю радіусом 15 см перетнуто площиною на відстані 9 см від центра (див. малюнок). Знайдіть радіус перерізу (у см).<br>
+                    <div class="svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 240 240" width="100%" style="max-width: 240px;">
+                          <rect x="10" y="10" width="240" height="240" fill="#ffffff" />
+                          <circle cx="130" cy="130" r="100" stroke="#000" stroke-width="1.5" fill="none" />
+                          <ellipse cx="130" cy="70" rx="80" ry="22" fill="#808080" fill-opacity="0.15" stroke="none" />
+                          <line x1="130" y1="130" x2="130" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="70" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="130" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <polyline points="130,78 138,78 138,70" stroke="#000" stroke-width="1" fill="none" />
+                          <text x="120" y="145" font-family="'Times New Roman', serif" font-style="italic">O</text>
+                          <text x="110" y="65" font-family="'Times New Roman', serif" font-style="italic">O<tspan dy="2" style="font-size: 10px;">1</tspan></text>
+                          <text x="215" y="75" font-family="'Times New Roman', serif" font-style="italic">A</text>
+                          <text x="125" y="100" text-anchor="middle" transform="rotate(-90, 125, 100)">9 см</text>
+                          <text x="170" y="65" text-anchor="middle">?</text>
+                          <text x="175" y="112" style="font-size: 13px;">15 см</text>
+                        </svg>
+                    </div>`,
+                    hint: `Використайте теорему Піфагора: катет (радіус перерізу) = &radic;<span class='sqrt-content'>R&sup2; - d&sup2;</span>.`,
+                    options: [
+                        { label: "А", text: "8 см", isCorrect: false },
+                        { label: "Б", text: "12 см", isCorrect: true, rationale: `Правильно: r = &radic;<span class='sqrt-content'>15&sup2; - 9&sup2;</span> = &radic;<span class='sqrt-content'>225 - 81</span> = 12 см.` },
+                        { label: "В", text: "14 см", isCorrect: false },
+                        { label: "Г", text: "16 см", isCorrect: false },
+                        { label: "Д", text: "3&radic;<span class='sqrt-content'>34</span> см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 37, type: "single",
+                    question: `Радіуси двох сфер відносяться як 2 : 5. Як відносяться площі їх поверхонь?`,
+                    hint: `Площі подібних фігур відносяться як квадрат коефіцієнта подібності.`,
+                    options: [
+                        { label: "А", text: "2 : 5", isCorrect: false },
+                        { label: "Б", text: "4 : 25", isCorrect: true, rationale: `Правильно: Площі відносяться як квадрати радіусів, тобто 2&sup2; : 5&sup2; = 4 : 25.` },
+                        { label: "В", text: "8 : 125", isCorrect: false },
+                        { label: "Г", text: "4 : 10", isCorrect: false },
+                        { label: "Д", text: "&radic;<span class='sqrt-content'>2</span> : &radic;<span class='sqrt-content'>5</span>", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 38, type: "single",
+                    question: `Радіус сфери дорівнює 7 см. Якою із запропонованих може бути відстань між двома будь-якими точками цієї сфери?`,
+                    hint: `Відстань не може перевищувати діаметр сфери.`,
+                    options: [
+                        { label: "А", text: "15 см", isCorrect: false },
+                        { label: "Б", text: "16 см", isCorrect: false },
+                        { label: "В", text: "17 см", isCorrect: false },
+                        { label: "Г", text: "14 см", isCorrect: true, rationale: `Правильно: Діаметр 14 см. Це максимальна можлива відстань між двома точками на сфері.` },
+                        { label: "Д", text: "20 см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 39, type: "single",
+                    question: `Куля радіусом 7 см дотикається до площини &alpha; у точці T (див. малюнок). Точка B лежить у цій площині, а відстань від B до центра кулі O дорівнює 25 см. Знайдіть відстань від B до точки дотику T (у см).<br>
+                    <div class="svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 260 200" width="100%" style="max-width: 260px;">
+                          <rect x="10" y="10" width="260" height="200" fill="#ffffff" />
+                          <polygon points="50,170 190,170 210,110 70,110" fill="#808080" fill-opacity="0.15" stroke="none" />
+                          <circle cx="130" cy="80" r="60" stroke="#000" stroke-width="1.5" fill="none" />
+                          <line x1="130" y1="80" x2="130" y2="140" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="140" x2="180" y2="155" stroke="#000" stroke-width="1.5" />
+                          <line x1="130" y1="80" x2="180" y2="155" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <polyline points="130,132 138,134.4 138,142.4" stroke="#000" stroke-width="1" fill="none" />
+                          <text x="115" y="75" font-family="'Times New Roman', serif" font-style="italic">O</text>
+                          <text x="118" y="155" font-family="'Times New Roman', serif" font-style="italic">T</text>
+                          <text x="185" y="165" font-family="'Times New Roman', serif" font-style="italic">B</text>
+                          <text x="60" y="160" font-family="'Times New Roman', serif" font-style="italic">&alpha;</text>
+                          <text x="125" y="110" text-anchor="middle" transform="rotate(-90, 125, 110)">7 см</text>
+                          <text x="155" y="163" text-anchor="middle" transform="rotate(16.7, 155, 163)" style="font-size: 15px;">?</text>
+                          <text x="155" y="115" transform="rotate(37, 155, 115)">25 см</text>
+                        </svg>
+                    </div>`,
+                    hint: `Трикутник OTB є прямокутним. Шукаємо невідомий катет.`,
+                    options: [
+                        { label: "А", text: "18 см", isCorrect: false },
+                        { label: "Б", text: "20 см", isCorrect: false },
+                        { label: "В", text: "24 см", isCorrect: true, rationale: `Правильно: За теоремою Піфагора BT = &radic;<span class='sqrt-content'>25&sup2; - 7&sup2;</span> = &radic;<span class='sqrt-content'>625 - 49</span> = &radic;<span class='sqrt-content'>576</span> = 24 см.` },
+                        { label: "Г", text: "26 см", isCorrect: false },
+                        { label: "Д", text: "&radic;<span class='sqrt-content'>674</span> см", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 40, type: "single",
+                    question: `Площа великого круга кулі дорівнює 16&pi; см&sup2;. Знайдіть об'єм цієї кулі (у см&sup3;).`,
+                    hint: `З площі великого круга знайдіть радіус, потім підставте у формулу об'єму.`,
+                    options: [
+                        { label: "А", text: "64&pi; см&sup3;", isCorrect: false },
+                        { label: "Б", text: "<span class='frac'><span class='frac-num'>256</span><span class='frac-den'>3</span></span>&pi; см&sup3;", isCorrect: true, rationale: `Правильно: &pi;R&sup2; = 16&pi; &rArr; R = 4. V = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3; = <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi; &middot; 64 = <span class='frac'><span class='frac-num'>256</span><span class='frac-den'>3</span></span>&pi; см&sup3;.` },
+                        { label: "В", text: "<span class='frac'><span class='frac-num'>64</span><span class='frac-den'>3</span></span>&pi; см&sup3;", isCorrect: false },
+                        { label: "Г", text: "256&pi; см&sup3;", isCorrect: false },
+                        { label: "Д", text: "128&pi; см&sup3;", isCorrect: false }
+                    ]
+                },
+                {
+                    id: 41, type: "matching",
+                    question: `Установіть відповідність між геометричною величиною кулі (1-3) та її числовим значенням (А-Д), якщо радіус кулі R = 5 см.`,
+                    hint: `Формула великого круга - &pi;R&sup2;, поверхні сфери - 4&pi;R&sup2;, об'єму - <span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span>&pi;R&sup3;.`,
+                    leftItems: ["1) Площа великого круга кулі (у см&sup2;)", "2) Площа поверхні сфери (у см&sup2;)", "3) Об'єм кулі (у см&sup3;)"],
+                    rightItems: ["А) 100&pi; см&sup2;", "Б) 25&pi; см&sup2;", "В) <span class='frac'><span class='frac-num'>500</span><span class='frac-den'>3</span></span>&pi; см&sup3;", "Г) 50&pi; см&sup2;", "Д) 125&pi; см&sup3;"],
+                    correctAnswers: { 0: "Б", 1: "А", 2: "В" },
+                    rationale: "1 &rArr; Б (&pi; &middot; 5&sup2; = 25&pi; см&sup2;);<br>2 &rArr; А (4 &middot; &pi; &middot; 5&sup2; = 100&pi; см&sup2;);<br>3 &rArr; В (<span class='frac'><span class='frac-num'>4</span><span class='frac-den'>3</span></span> &middot; &pi; &middot; 5&sup3; = <span class='frac'><span class='frac-num'>500</span><span class='frac-den'>3</span></span>&pi; см&sup3;)."
+                },
+                {
+                    id: 42, type: "matching",
+                    question: `На малюнку зображено кулю радіусом 13 см, яку перетнуто січною площиною на відстані 12 см від центра. Установіть відповідність між величиною (1-3) та її значенням (А-Д).<br>
+                    <div class="svg-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="10 10 240 240" width="100%" style="max-width: 240px;">
+                          <rect x="10" y="10" width="240" height="240" fill="#ffffff" />
+                          <circle cx="130" cy="130" r="100" stroke="#000" stroke-width="1.5" fill="none" />
+                          <ellipse cx="130" cy="70" rx="80" ry="22" fill="#808080" fill-opacity="0.15" stroke="none" />
+                          <line x1="130" y1="130" x2="130" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="70" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <line x1="130" y1="130" x2="210" y2="70" stroke="#000" stroke-width="1.5" stroke-dasharray="5,5" />
+                          <polyline points="130,78 138,78 138,70" stroke="#000" stroke-width="1" fill="none" />
+                          <text x="120" y="145" font-family="'Times New Roman', serif" font-style="italic">O</text>
+                          <text x="110" y="65" font-family="'Times New Roman', serif" font-style="italic">O<tspan dy="2" style="font-size: 10px;">1</tspan></text>
+                          <text x="215" y="75" font-family="'Times New Roman', serif" font-style="italic">A</text>
+                          <text x="122" y="100" text-anchor="middle" transform="rotate(-90, 122, 100)">12 см</text>
+                          <text x="180" y="115" text-anchor="middle" transform="rotate(-36.8, 180, 115)">13 см</text>
+                          <text x="170" y="65" text-anchor="middle">r</text>
+                        </svg>
+                    </div>`,
+                    hint: `Застосуйте теорему Піфагора для знаходження радіуса перерізу.`,
+                    leftItems: ["1) Радіус перерізу r (у см)", "2) Довжина кола перерізу (у см)", "3) Площа перерізу (у см&sup2;)"],
+                    rightItems: ["А) 25&pi; см&sup2;", "Б) 5 см", "В) 10&pi; см", "Г) 5&pi; см", "Д) 10 см"],
+                    correctAnswers: { 0: "Б", 1: "В", 2: "А" },
+                    rationale: "1 &rArr; Б (r = &radic;<span class='sqrt-content'>13&sup2; - 12&sup2;</span> = 5 см);<br>2 &rArr; В (2&pi;r = 10&pi; см);<br>3 &rArr; А (&pi;r&sup2; = 25&pi; см&sup2;)."
+                },
+                {
+                    id: 43, type: "matching",
+                    question: `Установіть відповідність між заданими параметрами двох сфер (1-3) та їх взаємним розміщенням (А-Д).`,
+                    hint: `Зовнішній дотик: d = R<sub>1</sub>+R<sub>2</sub>. Внутрішній: d = |R<sub>1</sub>-R<sub>2</sub>|. Перетинаються: |R<sub>1</sub>-R<sub>2</sub>| < d < R<sub>1</sub>+R<sub>2</sub>.`,
+                    leftItems: ["1) R<sub>1</sub> = 9 см, R<sub>2</sub> = 6 см, d = 11 см", "2) R<sub>1</sub> = 5 см, R<sub>2</sub> = 5 см, d = 10 см", "3) R<sub>1</sub> = 12 см, R<sub>2</sub> = 4 см, d = 7 см"],
+                    rightItems: ["А) Зовнішній дотик", "Б) Внутрішній дотик", "В) Перетинаються по колу", "Г) Не мають спільних точок (лежать ззовні)", "Д) Не мають спільних точок (одна всередині іншої)"],
+                    correctAnswers: { 0: "В", 1: "А", 2: "Д" },
+                    rationale: "1 &rArr; В (3 < 11 < 15);<br>2 &rArr; А (d = 10 = 5+5);<br>3 &rArr; Д (d = 7 < 12-4=8, лежать одна в одній)."
+                },
+                {
+                    id: 44, type: "short",
+                    question: `У кулі проведено переріз. Відрізок, що сполучає центр кулі з точкою кола перерізу, дорівнює 10 см і утворює з площиною перерізу кут 60&deg;. Знайдіть площу перерізу (у см&sup2;). У відповідь запишіть значення <span class='frac'><span class='frac-num'>S</span><span class='frac-den'>&pi;</span></span>.`,
+                    hint: `Радіус перерізу є катетом, що лежить проти кута 30&deg; або прилягає до кута 60&deg;.`,
+                    correctAnswer: "25",
+                    rationale: `Радіус перерізу r = R &middot; cos(60&deg;) = 10 &middot; <span class='frac'><span class='frac-num'>1</span><span class='frac-den'>2</span></span> = 5. S = &pi; &middot; 5&sup2; = 25&pi;. Відповідь: 25.`
+                },
+                {
+                    id: 45, type: "short",
+                    question: `Перерізи кулі двома паралельними площинами, між якими лежить центр кулі, мають площі 144&pi; см&sup2; і 25&pi; см&sup2;. Відстань між цими площинами дорівнює 17 см. Знайдіть площу поверхні кулі (у см&sup2;). У відповідь запишіть <span class='frac'><span class='frac-num'>S</span><span class='frac-den'>&pi;</span></span>.`,
+                    hint: `Знайдіть радіуси перерізів, а потім за допомогою системи рівнянь знайдіть відстані від центру до площин і радіус кулі.`,
+                    correctAnswer: "676",
+                    rationale: `r<sub>1</sub> = 12, r<sub>2</sub> = 5. Оскільки центр між ними: d<sub>1</sub> + d<sub>2</sub> = 17. Звідси d<sub>1</sub> = 5, d<sub>2</sub> = 12 (єдиний розв'язок у цілих числах), R = 13. Площа поверхні: S = 4&pi;R&sup2; = 4&pi;(169) = 676&pi;. Відповідь: 676.`
+                }
+            ]
+        ];
+
+        let currentPoolIndex = 0;
+        let currentQuestions = [];
+        let userAnswers = {};
+        let totalSeconds = 900;
+        let timerInterval = null;
+        let elapsedSeconds = 0;
+
+        const startScreen = document.getElementById('start-screen');
+        const testContent = document.getElementById('test-content');
+        const questionsWrapper = document.getElementById('questions-wrapper');
+        const stickyTimerBar = document.getElementById('sticky-timer-bar');
+        const timerDisplay = document.getElementById('timer-display');
+        const resultsScreen = document.getElementById('results-screen');
+        const variantIndicator = document.getElementById('variant-indicator');
+        
+        const startBtn = document.getElementById('start-btn');
+        const finishBtn = document.getElementById('finish-btn');
+        const restartBtn = document.getElementById('restart-btn');
+
+        const resScoreVal = document.getElementById('res-score-val');
+        const resTimeVal = document.getElementById('res-time-val');
+        const resPctVal = document.getElementById('res-pct-val');
+        const analysisText = document.getElementById('analysis-text');
+        const reviewWrapper = document.getElementById('review-wrapper');
+
+        function startQuiz() {
+            currentQuestions = allQuizPools[currentPoolIndex];
+            variantIndicator.textContent = `НМТ Контроль знань`;
+
+            startScreen.style.display = 'none';
+            testContent.style.display = 'block';
+            stickyTimerBar.style.display = 'flex';
+            resultsScreen.style.display = 'none';
+
+            userAnswers = {};
+            elapsedSeconds = 0;
+            totalSeconds = 900;
+
+            renderAllQuestions();
+            startTimer();
+        }
+
+        function toggleHint(id) {
+            const hintBox = document.getElementById(`hint-${id}`);
+            if (hintBox.style.display === 'block') {
+                hintBox.style.display = 'none';
+            } else {
+                hintBox.style.display = 'block';
+            }
+        }
+
+        function renderAllQuestions() {
+            questionsWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'single-q-card';
+                card.id = `q-card-${q.id}`;
+
+                let html = `
+                    <div class="q-number-header">ЗАВДАННЯ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    html += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        html += `
+                            <button class="option-btn" onclick="selectSingleOption(${q.id}, ${oIdx}, this)">
+                                <span class="opt-label">${opt.label}</span>
+                                <span>${opt.text}</span>
+                            </button>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'matching') {
+                    html += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        html += `
+                            <div class="matching-row">
+                                <span class="matching-label">${item}</span>
+                                <select class="matching-select" onchange="selectMatchingOption(${q.id}, ${lIdx}, this.value)">
+                                    <option value="">-- Оберіть --</option>
+                                    ${q.rightItems.map(r => `<option value="${r[0]}">${r}</option>`).join('')}
+                                </select>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (q.type === 'short') {
+                    html += `
+                        <div style="margin-top: 10px;">
+                            <input type="text" class="short-input" placeholder="Введіть число..." oninput="selectShortAnswer(${q.id}, this.value)" />
+                        </div>
+                    `;
+                }
+
+                if (q.hint) {
+                    html += `
+                        <div style="margin-top: 15px;">
+                            <button class="hint-btn" onclick="toggleHint(${q.id})">💡 Показати підказку</button>
+                            <div id="hint-${q.id}" class="hint-box">${q.hint}</div>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = html;
+                questionsWrapper.appendChild(card);
+            });
+        }
+
+        function selectSingleOption(qId, optionIndex, btn) {
+            userAnswers[qId] = optionIndex;
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+        }
+
+        function selectMatchingOption(qId, rowIdx, val) {
+            if (!userAnswers[qId]) userAnswers[qId] = {};
+            userAnswers[qId][rowIdx] = val;
+        }
+
+        function selectShortAnswer(qId, val) {
+            userAnswers[qId] = val.trim().replace(',', '.');
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                totalSeconds--;
+                elapsedSeconds++;
+                updateTimerDisplay();
+
+                if (totalSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Час вичерпано! Тест буде автоматично завершено.");
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            stickyTimerBar.style.display = 'none';
+            testContent.style.display = 'none';
+            resultsScreen.style.display = 'block';
+
+            let totalPoints = 0;
+            let maxPoints = 15;
+
+            reviewWrapper.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                let isCorrect = false;
+
+                const reviewCard = document.createElement('div');
+                reviewCard.className = 'single-q-card';
+
+                let reviewHtml = `
+                    <div class="q-number-header">ЗАВДАННЯ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                `;
+
+                if (q.type === 'single') {
+                    const selectedIdx = userAnswers[q.id];
+                    reviewHtml += `<div class="options-list">`;
+                    q.options.forEach((opt, oIdx) => {
+                        let btnClass = 'option-btn disabled';
+                        if (opt.isCorrect) btnClass += ' correct';
+                        if (selectedIdx === oIdx && !opt.isCorrect) btnClass += ' wrong';
+
+                        reviewHtml += `
+                            <div class="${btnClass}">
+                                <span class="opt-label">${opt.label}</span>
+                                <span>${opt.text}</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (selectedIdx !== undefined && q.options[selectedIdx].isCorrect) {
+                        isCorrect = true;
+                    }
+
+                    const correctOpt = q.options.find(o => o.isCorrect);
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            <em>${correctOpt.rationale}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'matching') {
+                    const uMatch = userAnswers[q.id] || {};
+                    let matchCorrectCount = 0;
+
+                    reviewHtml += `<div class="matching-container">`;
+                    q.leftItems.forEach((item, lIdx) => {
+                        const correctVal = q.correctAnswers[lIdx];
+                        const userVal = uMatch[lIdx] || 'не обрано';
+                        const isRowCorrect = userVal === correctVal;
+                        if (isRowCorrect) matchCorrectCount++;
+
+                        reviewHtml += `
+                            <div class="matching-row" style="border-color: ${isRowCorrect ? '#34A853' : '#EA4335'};">
+                                <span class="matching-label">${item}</span>
+                                <span>Ваша відповідь: <strong>${userVal}</strong> (Правильно: <strong>${correctVal}</strong>)</span>
+                            </div>
+                        `;
+                    });
+                    reviewHtml += `</div>`;
+
+                    if (matchCorrectCount === 3) {
+                        isCorrect = true;
+                    }
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>Правильних співвідношень: ${matchCorrectCount} з 3.</strong><br>
+                            <em>${q.rationale}</em>
+                        </div>
+                    `;
+
+                } else if (q.type === 'short') {
+                    const uVal = userAnswers[q.id] || '';
+                    isCorrect = (uVal === q.correctAnswer);
+
+                    reviewHtml += `
+                        <div class="feedback-box ${isCorrect ? 'correct' : 'wrong'}" style="display:block;">
+                            <strong>${isCorrect ? '✓ Правильно!' : '✗ Невірно.'}</strong><br>
+                            Ваша відповідь: <strong>${uVal || 'не вказано'}</strong>. Правильна відповідь: <strong>${q.correctAnswer}</strong>.<br>
+                            <em>Пояснення: ${q.rationale}</em>
+                        </div>
+                    `;
+                }
+
+                if (isCorrect) totalPoints += 1;
+
+                reviewCard.innerHTML = reviewHtml;
+                reviewWrapper.appendChild(reviewCard);
+            });
+
+            const elapsedMin = Math.floor(elapsedSeconds / 60);
+            const elapsedSec = elapsedSeconds % 60;
+            const pct = Math.round((totalPoints / maxPoints) * 100);
+
+            resScoreVal.textContent = `${totalPoints} з ${maxPoints}`;
+            resTimeVal.textContent = `${elapsedMin.toString().padStart(2, '0')}:${elapsedSec.toString().padStart(2, '0')}`;
+            resPctVal.textContent = `${pct}%`;
+
+            if (pct >= 85) {
+                analysisText.innerHTML = `<strong>Відмінний результат!</strong> Ви чудово володієте темою просторової геометрії.`;
+            } else if (pct >= 65) {
+                analysisText.innerHTML = `<strong>Хороший результат!</strong> Ви добре орієнтуєтеся в просторі, але зверніть увагу на точність обчислень та властивості фігур.`;
+            } else if (pct >= 40) {
+                analysisText.innerHTML = `<strong>Задовільно.</strong> Є базові знання, але варто більше потренуватися у розв'язуванні стереометричних задач.`;
+            } else {
+                analysisText.innerHTML = `<strong>Потребує повторення.</strong> Виникли труднощі при виконанні завдань. Рекомендується повторити теоретичний матеріал з теми «Куля. Сфера».`;
+            }
+
+            currentPoolIndex = (currentPoolIndex + 1) % allQuizPools.length;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prepareNextAttempt() {
+            startQuiz();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        startBtn.addEventListener('click', startQuiz);
+        finishBtn.addEventListener('click', finishQuiz);
+        restartBtn.addEventListener('click', prepareNextAttempt);
+    </script>
+</body>
+</html>
